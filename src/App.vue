@@ -77,9 +77,8 @@ body {
 }
 
 .mobileHidden {
-  display: none;
-  @media screen and (min-width: 1008px) {
-    display: block;
+  @media screen and (max-width: 1007px) {
+    display: none;
   }
 }
 
@@ -95,6 +94,7 @@ body {
 .page {
   padding-top: 44px;
   padding-bottom: 44px;
+  min-height: calc(100vh - 178px);
 }
 
 .button {

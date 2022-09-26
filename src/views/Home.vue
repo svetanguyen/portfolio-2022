@@ -5,8 +5,7 @@
         <img :src="require(`../assets/images/profile.jpg`)" alt="profile" />
       </div>
       <div class="intro__content column">
-        <section-header title="Hang_Nguyen" />
-        <div class="intro__content-body">
+        <window-component title="Hang_Nguyen">
           <img :src="require(`../assets/images/profile.jpg`)" alt="profile" />
           <p>
             I am a Front-End Web Developer passionate about creating interactive
@@ -22,18 +21,18 @@
               >My works</router-link
             >
           </div>
-        </div>
+        </window-component>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import SectionHeader from "../components/SectionHeader.vue";
+import WindowComponent from "../components/Window.vue";
 export default {
   name: "home-page",
   components: {
-    SectionHeader,
+    WindowComponent,
   },
 };
 </script>
@@ -43,6 +42,15 @@ export default {
   .intro {
     &__image-container {
       display: none;
+    }
+    .window-component {
+      img {
+        margin-bottom: 25px;
+        display: block;
+        @media screen and (min-width: 1008px) {
+          display: none;
+        }
+      }
     }
     @media screen and (min-width: 1008px) {
       display: flex;
@@ -59,34 +67,6 @@ export default {
       }
     }
     &__content {
-      box-shadow: inset -2px -2px 0px #000000, inset 2px 2px 0px #ffffff,
-        inset -4px -4px 0px #717171, inset 4px 4px 0px rgba(255, 255, 255, 0.4);
-      border-radius: 16px;
-      overflow: hidden;
-
-      &-body {
-        background: #fff;
-        font-weight: 400;
-        padding: 24px 9px;
-        font-size: 18px;
-        line-height: 140%;
-        img {
-          margin-bottom: 25px;
-          display: block;
-        }
-        p {
-          padding: 0 15px;
-        }
-        @media screen and (min-width: 1008px) {
-          padding: 57px 66px;
-          font-size: 25px;
-        }
-        img {
-          @media screen and (min-width: 1008px) {
-            display: none;
-          }
-        }
-      }
       &-links {
         display: flex;
         justify-content: center;
@@ -94,14 +74,6 @@ export default {
 
         @media screen and (min-width: 1008px) {
           gap: 60px;
-        }
-      }
-      h4 {
-        font-size: 17px;
-        line-height: 1;
-        font-family: var(--body-font);
-        @media screen and (min-width: 1008px) {
-          font-size: 25px;
         }
       }
     }
