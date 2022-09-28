@@ -9,7 +9,12 @@
       <div class="relative w-full lg:flex lg:gap-5 justify-center">
         <card-component class="w-full lg:w-1/2 mb-6" v-for="(card, index) in projectCards" :key="index" :title="card.title" :description="card.description" :image="card.image" :alt="card.title" :link="card.link" />
       </div>
-      <window-component class="bg-white max-w-[715px] mx-auto mt-5 lg:mt-[164px] lg:mb-[75px]" title="Hang_Nguyen">
+      <img
+      class="absolute max-w-[366px] lg:max-w-none -bottom-[130px] lg:-bottom-8 -right-10 lg:-right-8"
+      :src="require(`../../assets/images/clouds.png`)"
+      alt="background"
+    />
+      <window-component class="relative bg-white max-w-[715px] mx-auto mt-5 lg:mt-[164px] lg:mb-[75px]" title="Hang_Nguyen">
         <p class="text-center mt-2 lg:mt-0 mb-8 text-base leading-snug">
           Interested in collaboration? Get in touch.
         </p>
@@ -17,12 +22,13 @@
           class="flex justify-center gap-x-2 lg:gap-x-[52px] lg:px-[109px] max-w-[300px] lg:max-w-none mx-auto"
         >
           <router-link
-            class="text-center rounded-tl-2xl rounded-br-2xl bg-button-gray shadow-sm text-lg py-3 px-[30px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+            class="text-center rounded-lg bg-button-gray shadow-sm text-lg py-3 px-[30px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
             :to="{ name: 'Contacts' }"
             >Contact me</router-link
           >
         </div>
       </window-component>
+      
   </div>
 </template>
 

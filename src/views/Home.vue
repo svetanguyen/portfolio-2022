@@ -13,7 +13,7 @@
           </p>
           <div class="px-4 lg:px-0 flex items-center justify-center lg:gap-7">
             <router-link
-              class="w-1/2 lg:w-auto text-center rounded-tl-2xl rounded-br-2xl bg-button-gray shadow-sm text-lg py-3 px-2 lg:px-[18px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+              class="w-1/2 lg:w-auto text-center rounded-lg bg-button-gray shadow-sm text-lg py-3 px-2 lg:px-[18px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
               :to="{ name: 'About' }"
               >More about me</router-link
             >

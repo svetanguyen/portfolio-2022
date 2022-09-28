@@ -31,7 +31,7 @@
           <div class="px-2">
             <a
               href="/"
-              class="w-[315px] max-w-[168px] lg:max-w-none block mx-auto text-center rounded-tl-2xl rounded-br-2xl bg-button-gray shadow-sm text-lg py-3 px-[18px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+              class="w-[315px] max-w-[168px] lg:max-w-none block mx-auto text-center rounded-lg bg-button-gray shadow-sm text-lg py-3 px-[18px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
               >Resume</a
             >
           </div>
@@ -84,18 +84,23 @@
           class="flex justify-center gap-x-2 lg:gap-x-[52px] lg:px-[109px] max-w-[300px] lg:max-w-none mx-auto"
         >
           <router-link
-            class="text-center w-1/2 rounded-tl-2xl rounded-br-2xl bg-button-gray shadow-sm text-lg py-3 px-[30px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+            class="text-center w-1/2 rounded-lg bg-button-gray shadow-sm text-lg py-3 px-[30px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
             :to="{ name: 'Works' }"
             >My works</router-link
           >
           <router-link
-            class="text-center w-1/2 rounded-tl-2xl rounded-br-2xl bg-button-gray shadow-sm text-lg py-3 px-[30px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+            class="text-center w-1/2 rounded-lg bg-button-gray shadow-sm text-lg py-3 px-[30px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
             :to="{ name: 'Contacts' }"
             >Contact me</router-link
           >
         </div>
       </window-component>
     </div>
+    <img
+      class="absolute bottom-0 hidden lg:block -right-3"
+      :src="require(`../assets/images/books.png`)"
+      alt="background"
+    />
   </div>
 </template>
 
