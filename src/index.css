@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@font-face {
+    font-family: "VT323";
+    src: url("./assets/fonts/VT323-Regular.eot");
+    src: url("./assets/fonts/VT323-Regular.eot?#iefix")
+        format("embedded-opentype"),
+      url("./assets/fonts/VT323-Regular.woff2") format("woff2"),
+      url("./assets/fonts/VT323-Regular.woff") format("woff"),
+      url("./assets/fonts/VT323-Regular.ttf") format("truetype"),
+      url("./assets/fonts/VT323-Regular.svg#VT323-Regular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "W95FA";
+    src: url("./assets/fonts/W95FARegular.eot");
+    src: url("./assets/fonts/W95FARegular.eot?#iefix") format("embedded-opentype"),
+      url("./assets/fonts/W95FARegular.woff2") format("woff2"),
+      url("./assets/fonts/W95FARegular.woff") format("woff"),
+      url("./assets/fonts/W95FARegular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }

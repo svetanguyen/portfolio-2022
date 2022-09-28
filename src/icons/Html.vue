@@ -1,26 +1,26 @@
 <template>
   <svg
-    width="71"
-    height="70"
-    viewBox="0 0 71 70"
+    width="74"
+    height="86"
+    viewBox="0 0 74 86"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g filter="url(#filter0_d_629_401)">
+    <g filter="url(#filter0_d_637_21)">
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"
-        d="M10.7949 6.5508H60.2067V23.0214H58.7094V39.492H57.212V55.9626H55.7147V57.4599H52.7201V58.9572H48.2281V60.4545H42.2388V61.9519H37.7468V63.4492H34.7521V61.9519H28.7628V60.4545H24.2709V58.9572H18.2816V57.4599H15.2869V49.9733H13.7896V33.5027H12.2922V17.0321H10.7949V6.5508ZM40.7414 51.4706V49.9733H45.2334V48.4759H48.2281V43.984H49.7254V29.0107H27.2655V23.0214H51.2227V17.0321H19.7789V21.5241H21.2762V35H43.7361V42.4866H42.2388V43.984H39.2441V45.4813H31.7575V43.984H28.7628V39.492H22.7735V48.4759H25.7682V49.9733H31.7575V51.4706H40.7414Z"
+        d="M0 0.54541H72V24.5454H69.8182V48.5454H67.6364V72.5454H65.4545V74.7272H61.0909V76.909H54.5455V79.0909H45.8182V81.2727H39.2727V83.4545H34.9091V81.2727H26.1818V79.0909H19.6364V76.909H10.9091V74.7272H6.54545V63.8181H4.36364V39.8181H2.18182V15.8181H0V0.54541ZM43.6364 66V63.8181H50.1818V61.6363H54.5455V55.0909H56.7273V33.2727H24V24.5454H58.9091V15.8181H13.0909V22.3636H15.2727V42H48V52.909H45.8182V55.0909H41.4545V57.2727H30.5455V55.0909H26.1818V48.5454H17.4545V61.6363H21.8182V63.8181H30.5455V66H43.6364Z"
         fill="#FFAFC2"
       />
     </g>
     <defs>
       <filter
-        id="filter0_d_629_401"
-        x="10.7949"
-        y="6.5508"
-        width="51.4121"
-        height="58.8984"
+        id="filter0_d_637_21"
+        x="0"
+        y="0.54541"
+        width="74"
+        height="84.9092"
         filterUnits="userSpaceOnUse"
         color-interpolation-filters="sRGB"
       >
@@ -40,12 +40,12 @@
         <feBlend
           mode="normal"
           in2="BackgroundImageFix"
-          result="effect1_dropShadow_629_401"
+          result="effect1_dropShadow_637_21"
         />
         <feBlend
           mode="normal"
           in="SourceGraphic"
-          in2="effect1_dropShadow_629_401"
+          in2="effect1_dropShadow_637_21"
           result="shape"
         />
       </filter>

@@ -1,23 +1,23 @@
 <template>
-  <div class="home-page page container">
-    <div class="intro">
-      <div class="intro__image-container column">
+  <div class="min-h-page overflow-hidden py-11 lg:py-24 max-w-container mx-auto px-6 lg:px-25">
+    <div class="flex items-center">
+      <div class="hidden lg:block rounded-2xl overflow-hidden">
         <img :src="require(`../assets/images/profile.jpg`)" alt="profile" />
       </div>
-      <div class="intro__content column">
-        <window-component title="Hang_Nguyen">
-          <img :src="require(`../assets/images/profile.jpg`)" alt="profile" />
-          <p>
+      <div class="lg:-ml-[82px] mx-auto">
+        <window-component class="bg-white" title="Hang_Nguyen">
+          <img class="lg:hidden pb-6 block max-h-[251px] w-full object-cover" :src="require(`../assets/images/profile.jpg`)" alt="profile" />
+          <p class="px-4 lg:px-0 mb-6 lg:mb-10 text-lg leading-[1.4] lg:text-2xl">
             I am a Front-End Web Developer passionate about creating interactive
             applications and experiences on the web.
           </p>
-          <div class="intro__content-links">
+          <div class="px-4 lg:px-0 flex items-center justify-center lg:gap-7">
             <router-link
-              class="link button button-grey bordered"
+              class="w-1/2 lg:w-auto text-center rounded-tl-2xl rounded-br-2xl bg-button-gray shadow-sm text-lg py-3 px-[18px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
               :to="{ name: 'About' }"
               >More about me</router-link
             >
-            <router-link class="link button" :to="{ name: 'Works' }"
+            <router-link class="w-1/2 lg:w-auto text-center text-lg py-3 px-[18px] hover:translate-x-[2px] hover:translate-y-[2px]" :to="{ name: 'Works' }"
               >My works</router-link
             >
           </div>
@@ -38,49 +38,4 @@ export default {
 </script>
 
 <style lang="scss">
-.home-page {
-  .intro {
-    &__image-container {
-      display: none;
-    }
-    .window-component {
-      img {
-        margin-bottom: 25px;
-        display: block;
-        @media screen and (min-width: 1008px) {
-          display: none;
-        }
-      }
-    }
-    @media screen and (min-width: 1008px) {
-      display: flex;
-      align-items: center;
-      &__image-container {
-        display: block;
-      }
-      .column {
-        width: 50%;
-        &:last-child {
-          margin-left: -82px;
-          width: calc(50% + 82px);
-        }
-      }
-    }
-    &__content {
-      &-links {
-        display: flex;
-        justify-content: center;
-        margin-top: 25px;
-
-        @media screen and (min-width: 1008px) {
-          gap: 60px;
-        }
-      }
-    }
-  }
-  img {
-    max-width: 100%;
-    border-radius: 16px;
-  }
-}
 </style>

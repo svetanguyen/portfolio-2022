@@ -1,0 +1,64 @@
+<template>
+  <svg
+    width="86"
+    height="72"
+    viewBox="0 0 86 72"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g filter="url(#filter0_d_637_192)">
+      <path
+        d="M0.544922 0.0908203H15.8176V2.27264H17.9995V6.63627H20.1813V10.9999H22.3631V15.3635H24.5449V17.5454H26.7267V21.909H28.9086V26.2726H31.0904V28.4545H33.2722V32.8181H35.454V37.1817H37.6358V39.3635H39.8176V43.7272H44.1813V39.3635H46.3631V34.9999H48.5449V32.8181H50.7267V28.4545H52.9086V24.0908H55.0904V21.909H57.2722V17.5454H59.454V13.1817H61.6358V8.81809H63.8176V6.63627H65.9995V2.27264H68.1813V0.0908203H83.454V2.27264H81.2722V6.63627H79.0904V8.81809H76.9086V13.1817H74.7267V17.5454H72.5449V21.909H70.3631V24.0908H68.1813V28.4545H65.9995V32.8181H63.8176V34.9999H61.6358V39.3635H59.454V43.7272H57.2722V48.0908H55.0904V50.2726H52.9086V54.6363H50.7267V58.9999H48.5449V63.3635H46.3631V65.5454H44.1813V69.909H39.8176V67.7272H37.6358V63.3635H35.454V58.9999H33.2722V56.8181H31.0904V52.4545H28.9086V48.0908H26.7267V43.7272H24.5449V41.5454H22.3631V37.1817H20.1813V32.8181H17.9995V28.4545H15.8176V26.2726H13.6358V21.909H11.454V17.5454H9.27219V15.3635H7.09038V10.9999H4.90856V6.63627H2.72674V2.27264H0.544922V0.0908203Z"
+        fill="#FFAFC2"
+      />
+      <path
+        d="M61.6358 8.81809H59.454V10.9999H57.2722V15.3635H55.0904V19.7272H52.9086V21.909H50.7267V26.2726H48.5449V30.6363H46.3631V32.8181H44.1813V37.1817H41.9995V39.3635H39.8176V34.9999H37.6358V30.6363H35.454V26.2726H33.2722V24.0908H31.0904V19.7272H28.9086V15.3635H26.7267V13.1817H24.5449V8.81809H22.3631V4.45446H20.1813V2.27264H17.9995V0.0908203H33.2722V4.45446H35.454V8.81809H37.6358V10.9999H39.8176V15.3635H44.1813V10.9999H46.3631V6.63627H48.5449V2.27264H50.7267V0.0908203H63.8176V4.45446H61.6358V8.81809Z"
+        fill="#FFAFC2"
+      />
+    </g>
+    <defs>
+      <filter
+        id="filter0_d_637_192"
+        x="0.544922"
+        y="0.0908203"
+        width="84.9082"
+        height="71.8181"
+        filterUnits="userSpaceOnUse"
+        color-interpolation-filters="sRGB"
+      >
+        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset dx="2" dy="2" />
+        <feComposite in2="hardAlpha" operator="out" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_637_192"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_637_192"
+          result="shape"
+        />
+      </filter>
+    </defs>
+  </svg>
+</template>
+
+<script>
+export default {
+  name: "vue-icon",
+};
+</script>
+
+<style scoped></style>
