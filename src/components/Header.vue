@@ -10,7 +10,7 @@
       <menu-icon @click="toggleMobileNav" class="lg:hidden" />
     </header>
     <transition name="mobile-nav">
-      <div class="mobile-nav fixed duration-500 ease-in-out transition-all	 top-0 left-0 w-full rounded-b-2xl bg-pink-light pr-1 pl-0.5 shadow-sm" v-show="mobileNav">
+      <div class="mobile-nav z-10 fixed duration-500 ease-in-out transition-all	 top-0 left-0 w-full rounded-b-2xl bg-pink-light pr-1 pl-0.5 shadow-sm" v-show="mobileNav">
         <div class="mobile-nav__header py-3 px-5 max-w-container mx-auto flex items-center justify-between border-b-2 border-b-border-gray">
           <h3 class="text-[46px] leading-none">navigation</h3>
           <close-icon @click="closeMobileNav" />

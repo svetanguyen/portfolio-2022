@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         'button-gray': '#ccc',
         'border-gray': '#aaa',
+        'gray-100': '#FCFCFC',
         'black': '#000',
         'white': '#fff',
         'pink': '#db8ee7',
