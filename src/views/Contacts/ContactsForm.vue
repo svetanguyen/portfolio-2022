@@ -3,7 +3,7 @@
     <form @submit.prevent="sendEmail">
       <div class="mb-4">
         <input
-          class="block w-full lg:py-1 px-2 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-4xl placeholder:leading-none rounded-lg border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-4xl leading-none py-2"
+          class="block w-full focus:outline-pink-bright focus-visible:outline-pink-bright lg:py-1 px-2 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-4xl placeholder:leading-none rounded-lg border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-4xl leading-none py-2"
           v-model="name"
           type="text"
           placeholder="Full Name"
@@ -15,7 +15,7 @@
       </div>
       <div class="mb-4">
         <input
-          class="block w-full lg:py-1 px-2 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-4xl placeholder:leading-none rounded-lg border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-4xl leading-none py-2"
+          class="focus:outline-pink-bright focus-visible:outline-pink-bright block w-full lg:py-1 px-2 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-4xl placeholder:leading-none rounded-lg border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-4xl leading-none py-2"
           v-model="email"
           type="email"
           placeholder="Email"
@@ -27,7 +27,7 @@
       </div>
       <div class="mb-4">
         <textarea
-          class="block lg:mb-14 w-full lg:py-1 px-2 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-4xl placeholder:leading-none rounded-lg border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-4xl leading-none py-2"
+          class="block focus:outline-pink-bright focus-visible:outline-pink-bright lg:mb-14 w-full lg:py-1 px-2 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-4xl placeholder:leading-none rounded-lg border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-4xl leading-none py-2"
           v-model="message"
           name="message"
           placeholder="Message"

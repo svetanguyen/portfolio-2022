@@ -4,11 +4,11 @@
         <window-component class="bg-yellow mb-10 lg:flex-1" title="sveta.exe">
           <div class="lg:flex flex-wrap justify-between items-end lg:mb-10 px-2 lg:px-0">
             <h2 class="text-[32px] lg:text-[50px] leading-snug">Get in touch</h2>
-            <p class="text-base opacity-60 mb-4 lg:mb-2 leading-snug lg:text-[21px]">phuonhhangnguyen0929@gmail.com</p>
+            <a href="mailto:phuonhhangnguyen0929@gmail.com" class="text-base opacity-60 mb-4 lg:mb-2 leading-snug lg:text-[21px]">phuonhhangnguyen0929@gmail.com</a>
           </div>
           <form-component class="px-2 lg:px-0" />
         </window-component>
-        <social-icons class="gap-8 flex justify-center lg:justify-start lg:mt-20 lg:flex-col lg:gap-16" :colored="true" :titled="true" />
+        <social-icons class="gap-8 flex justify-center lg:justify-start lg:mt-20 lg:flex-col lg:gap-16" :titled="true" />
       </div>
   </div>
 </template>

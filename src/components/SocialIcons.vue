@@ -1,13 +1,13 @@
 <template>
-  <ul class="social-icons" :class="{ colored: colored }">
+  <ul class="social-icons">
     <li class="shadowed">
-      <a class="text-center" target="_blank" href="https://www.instagram.com/svetocentrism/">
-        <Insta class="mx-auto" />
+      <a class="text-center" href="mailto:phuonhhangnguyen0929@gmail.com">
+        <GmailIcon class="mx-auto" />
         <p
           class="text-[17px] leading-snug text-black text-center mt-3 lg:text-white"
           v-if="titled"
         >
-          Instagram
+          Gmail
         </p>
       </a>
     </li>
@@ -40,14 +40,14 @@
 </template>
 
 <script>
-import Insta from "../icons/Instagram.vue";
+import GmailIcon from "../icons/Gmail.vue";
 import Linkedin from "../icons/Linkedin.vue";
 import Github from "../icons/Github.vue";
 export default {
   name: "social-icons",
-  props: ["colored", "titled"],
+  props: ["titled"],
   components: {
-    Insta,
+    GmailIcon,
     Linkedin,
     Github,
   },
@@ -65,29 +65,23 @@ export default {
       height: 45px;
     }
   }
-  &.colored {
-    li {
-      svg {
-        g {
-          &:first-child {
-            path {
-              fill: var(--yellow);
-            }
-          }
-          & + g {
-            path {
-              fill: var(--pink-bright);
-            }
-          }
-        }
-      }
-      &:hover {
+  li {
+    &:hover {
         p {
           background: #328adb;
           color: #fff;
         }
         svg {
-          g {
+          rect {
+            fill: #761B73;
+            & + g {
+              path {
+                fill: #ae9f5f;
+
+              }
+            }
+          }
+          g > g {
             &:first-child {
               path {
                 fill: #ae9f5f;
@@ -101,7 +95,6 @@ export default {
           }
         }
       }
-    }
   }
   svg {
     vertical-align: middle;

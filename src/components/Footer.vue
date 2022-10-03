@@ -3,7 +3,7 @@
       <nav class="max-w-container mx-auto px-6 lg:px-25 w-full">
           <div class="flex items-center justify-between mb-5 lg:hidden">
               <h2 class="text-[39px] leading-none lg:text-[65px]"><router-link :to="{name: 'Home'}">Sveta</router-link></h2>
-              <social-icons class="lg:hidden flex gap-4" :colored="true" />
+              <social-icons class="lg:hidden flex gap-4" />
           </div>
            <menu-links class="lg:hidden pb-6 lg:pb-0"/>
            <div class="flex items-center justify-between">
