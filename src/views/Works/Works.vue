@@ -35,7 +35,7 @@
 <script>
 import { mapState } from "vuex";
 import CardComponent from './Card.vue'
-import WindowComponent from '../../components/Window.vue'
+import WindowComponent from '../../components/Window/Window.vue'
 
 export default {
     name: 'works-page',

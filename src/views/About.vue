@@ -106,7 +106,7 @@
 
 <script>
 import { mapState } from "vuex";
-import WindowComponent from "../components/Window.vue";
+import WindowComponent from "../components/Window/Window.vue";
 import QuotesIcon from "../icons/Quotes.vue";
 import HtmlIcon from "../icons/Html.vue";
 import CssIcon from "../icons/Css.vue";

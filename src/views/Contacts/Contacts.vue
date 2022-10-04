@@ -15,7 +15,7 @@
 
 <script>
 // import SocialIcons from '../components/SocialIcons.vue'
-import WindowComponent from '../../components/Window.vue'
+import WindowComponent from '../../components/Window/Window.vue'
 import FormComponent from './ContactsForm.vue'
 import SocialIcons from '../../components/SocialIcons.vue'
 export default {

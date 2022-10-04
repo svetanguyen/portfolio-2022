@@ -17,9 +17,13 @@ export const store = createStore({
         { text: 'npm', type: 'NpmIcon' },
         { text: 'Hydrogen', type: 'HydrogenIcon' },
         { text: 'Tailwind', type: 'TailwindIcon' },
-      ]
+      ],
+      screenHeightBody: false
     },
-    mutations: {      
+    mutations: { 
+      updateScreenHeightBody (state, payload) {
+        state.screenHeightBody = payload
+      }     
     },
     actions: {
     },

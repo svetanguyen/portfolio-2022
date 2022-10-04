@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-page overflow-hidden py-11 lg:py-24 max-w-container mx-auto px-6 lg:px-25">
-    <div class="flex items-center">
-      <div class="hidden lg:block rounded-2xl overflow-hidden">
+  <div class="min-h-page overflow-hidden py-11 lg:py-24 max-w-container mx-auto px-6 lg:px-25" :class="{'h-full-screen': screenHeightBody}">
+    <div class="flex items-center justify-center">
+      <div class="lg:block rounded-2xl overflow-hidden ease-in-out transition-width duration-500" :class="{'lg:w-2/5 hidden': !tabs[0].minimized, 'lg:w-1/2': tabs[0].minimized}">
         <img :src="require(`../assets/images/profile.jpg`)" alt="profile" />
       </div>
-      <div class="lg:-ml-[82px] mx-auto">
-        <window-component class="bg-white" title="Hang_Nguyen">
+      <div v-if="!tabs[0].minimized" class="lg:-ml-[82px] mx-auto lg:w-3/5">
+        <window-component @minimize="onMinimize" :minimized="tabs[0].minimized" :index="0" class="bg-white" title="Hang_Nguyen">
           <img class="lg:hidden pb-6 block max-h-[251px] w-full object-cover" :src="require(`../assets/images/profile.jpg`)" alt="profile" />
           <p class="px-4 lg:px-0 mb-6 lg:mb-10 text-lg leading-[1.4] lg:text-2xl">
             I am a Front-End Web Developer passionate about creating interactive
@@ -25,15 +25,43 @@
       </div>
     </div>
   </div>
+  <taskbar-component :tabs="tabs" @unMinimize="onUnMinimize" />
 </template>
 
 <script>
-import WindowComponent from "../components/Window.vue";
+import TaskbarComponent from "../components/Taskbar.vue";
+import WindowComponent from "../components/Window/Window.vue";
+import {mapState} from 'vuex'
 export default {
   name: "home-page",
   components: {
     WindowComponent,
+    TaskbarComponent,
   },
+  computed: {
+    ...mapState(['screenHeightBody'])
+  },
+  watch:{
+    $route (){
+      this.$store.commit('updateScreenHeightBody', false)
+    }
+  },
+  data() {
+    return {
+      tabs: [
+        { icon: 'heart.png', minimized: false, title: 'Hang_Nguyen' },
+        { icon: 'heart.png', minimized: false, title: 'a' },
+      ]
+    }
+  },
+  methods: {
+    onUnMinimize(index) {
+      this.tabs[index].minimized = false
+    },
+    onMinimize(index) {
+      this.tabs[index].minimized = true
+    }
+  }
 };
 </script>
 
