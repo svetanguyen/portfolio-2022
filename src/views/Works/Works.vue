@@ -6,7 +6,7 @@
             alt="butterflies"
           />
       <h2 class="text-white font-mono text-[23px] lg:text-[62px] leading-none text-center capitalize mb-6 lg:mb-16">My works</h2>
-      <div class="relative w-full lg:flex lg:gap-5 justify-center">
+      <div class="relative w-full lg:flex justify-center flex-wrap">
         <card-component class="w-full lg:w-1/2 mb-6" v-for="(card, index) in projectCards" :key="index" :title="card.title" :description="card.description" :image="card.image" :alt="card.title" :link="card.link" />
       </div>
       <img

@@ -8,7 +8,7 @@
         <window-component class="bg-white" title="Hang_Nguyen">
           <img class="lg:hidden pb-6 block max-h-[251px] w-full object-cover" :src="require(`../assets/images/profile.jpg`)" alt="profile" />
           <p class="px-4 lg:px-0 mb-6 lg:mb-10 text-lg leading-[1.4] lg:text-2xl">
-            I am a Front-End Web Developer passionate about creating interactive
+            My name is Sveta and I am a Front-End Web Developer passionate about creating interactive
             applications and experiences on the web.
           </p>
           <div class="px-4 lg:px-0 flex items-center justify-center lg:gap-7">

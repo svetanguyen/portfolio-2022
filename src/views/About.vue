@@ -15,9 +15,8 @@
               class="absolute bottom-full -translate-y-[20px] lg:translate-0 left-0 lg:left-auto lg:bottom-full lg:right-full"
             />
             <p class="mb-5">
-              I’m a front end developer with experience in developing themes on
-              Shopify and a little bit of experience with working on apps
-              (VueJS).
+              My name is Sveta and I'm currently based in Toronto.
+              I’m a front end developer with experience working on various SPAs and Shopify platform.
             </p>
             <p>
               I am always willing to learn new challenging things and strive to
