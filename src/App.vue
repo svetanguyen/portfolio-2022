@@ -1,17 +1,14 @@
 <template>
-  <header-component />
   <router-view />
   <footer-component />
 </template>
 
 <script>
-import HeaderComponent from "./components/Header.vue";
 import FooterComponent from "./components/Footer.vue";
 
 export default {
   name: "App",
   components: {
-    HeaderComponent,
     FooterComponent
   },
 };
@@ -59,6 +56,12 @@ h5 {
 body {
   background: var(--background);
   min-height: 100vh;
+  overflow: hidden;
+  padding-bottom: 84px;
+}
+
+.router-link-active {
+  text-decoration: underline;
 }
 
 </style>

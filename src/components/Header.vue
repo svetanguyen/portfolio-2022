@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-pink-light shadow-sm">
+  <div class="bg-pink-light shadow-sm" :class="{'fixed top-0 left-0 w-full z-10': screenHeightBody}">
     <header class="max-w-container mx-auto py-4 lg:py-5 flex justify-between items-center px-6 lg:px-25">
       <nav class="flex w-full items-center justify-between">
         <h1 class="text-[39px] leading-none lg:text-[65px]">
-          <router-link :to="{ name: 'Home' }">Sveta</router-link>
+          <router-link class="no-underline" :to="{ name: 'Home' }">Sveta</router-link>
         </h1>
         <menu-links class="hidden lg:flex lg:gap-x-[45px]" />
       </nav>
@@ -25,12 +25,16 @@
 import menuIcon from "../icons/Menu.vue";
 import closeIcon from "../icons/Close.vue";
 import menuLinks from "./MenuLinks.vue";
+import {mapState} from 'vuex'
 export default {
   name: "header-component",
   data() {
     return {
       mobileNav: this.$store.state.mobileNav,
     };
+  },
+  computed: {
+    ...mapState(['screenHeightBody'])
   },
   watch: {
     $route() {
