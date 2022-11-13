@@ -48,6 +48,22 @@
         </window-component>
       </div>
     </div>
+          <div class="max-w-[600px] mx-auto mt-10">
+
+    <window-component
+      query="calculator"
+      @minimize="onMinimize"
+      :minimized="tabs[1].minimized"
+      @close="onClose"
+          :index="1"
+          class="bg-white"
+          title="Calculator"
+          :icon="tabs[1].icon"
+          :closed="tabs[1].closed"
+          >
+      <calculator-component />
+    </window-component>
+          </div>
   </div>
   <taskbar-component :tabs="tabs" @unMinimize="onUnMinimize" />
 </template>
@@ -57,12 +73,14 @@ import TaskbarComponent from "../components/Taskbar.vue";
 import WindowComponent from "../components/Window/Window.vue";
 import { mapState } from "vuex";
 import FilesComponent from "../components/Files.vue";
+import CalculatorComponent from "../components/Calculator.vue"
 export default {
   name: "home-page",
   components: {
     WindowComponent,
     TaskbarComponent,
     FilesComponent,
+    CalculatorComponent
   },
   computed: {
     ...mapState(["screenHeightBody"]),
@@ -74,6 +92,12 @@ export default {
           icon: "notepad.png",
           minimized: false,
           title: "Hang_Nguyen",
+          closed: false,
+        },
+        {
+          icon: "notepad.png",
+          minimized: false,
+          title: "Calculator",
           closed: false,
         },
       ],
