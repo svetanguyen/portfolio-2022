@@ -29,7 +29,9 @@
           </div>
           <div class="px-2">
             <a
-              href="/"
+              href="https://drive.google.com/file/d/1FTlAMC4kJaolMn6h2vkj6Kh0y1_lXHJk/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
               class="w-[315px] max-w-[168px] lg:max-w-none block mx-auto text-center rounded-lg bg-button-gray shadow-sm text-lg py-3 px-[18px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
               >Resume</a
             >
