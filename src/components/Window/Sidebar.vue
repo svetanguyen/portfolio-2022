@@ -11,7 +11,6 @@
           class="relative folder pl-4"
           :class="{
             closed: !mainFolderOpened,
-            'last-opened': folder4Opened,
           }"
         >
           <input
@@ -44,53 +43,6 @@
               <input
                 class="hidden"
                 type="checkbox"
-                id="folder1"
-                v-model="folder1Opened"
-              />
-              <label class="cursor-pointer" for="folder1">
-                <item-opened
-                  v-if="folder1Opened"
-                  class="absolute z-1 top-2 left-0 bg-white"
-                />
-                <item-closed
-                  v-if="!folder1Opened"
-                  class="absolute z-1 top-2 left-0 bg-white"
-                />
-              </label>
-              <div class="flex items-center gap-2">
-                <router-link
-                  class="flex items-center gap-2"
-                  :to="{ name: 'Home' }"
-                >
-                  <img
-                    class="w-5 h-5"
-                    :src="require(`../../assets/images/heart.png`)"
-                    alt="heart"
-                  />
-                  <span class="opacity-80 whitespace-nowrap"> Home </span>
-                </router-link>
-              </div>
-
-              <ul v-if="folder1Opened" class="pl-1">
-                <li class="flex items-center file relative gap-2">
-                  <router-link
-                    class="flex items-center gap-2"
-                    :to="{ name: 'Home', query: { max: 'hello' } }"
-                  >
-                    <img
-                      class="w-5 h-5"
-                      :src="require(`../../assets/images/notepad.png`)"
-                      alt="notepad"
-                    />
-                    <span class="opacity-80 whitespace-nowrap"> Hello </span>
-                  </router-link>
-                </li>
-              </ul>
-            </li>
-            <li class="relative folder pl-5">
-              <input
-                class="hidden"
-                type="checkbox"
                 id="folder2"
                 v-model="folder2Opened"
               />
@@ -107,7 +59,7 @@
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center gap-2"
-                  :to="{ name: 'About' }"
+                  :to="{ name: 'Home', query: { max: 'about', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'about'])] : [] } }"
                 >
                   <img
                     class="w-5 h-5"
@@ -121,7 +73,7 @@
                 <li class="file relative items-center">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'About', query: { max: 'info' } }"
+                    :to="{ name: 'Home', query: { max: 'info', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'info'])] : [] } }"
                   >
                     <img
                       class="w-5 h-5"
@@ -134,7 +86,7 @@
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'About', query: { max: 'skills' } }"
+                    :to="{ name: 'Home', query: { max: 'skills', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'skills'])] : [] } }"
                   >
                     <img
                       class="w-5 h-5"
@@ -147,7 +99,7 @@
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'About', query: { max: 'links' } }"
+                    :to="{ name: 'Home', query: { max: 'links', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'links'])] : [] } }"
                   >
                     <img
                       class="w-5 h-5"
@@ -179,7 +131,7 @@
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center gap-2"
-                  :to="{ name: 'Works' }"
+                  :to="{ name: 'Home',  query: { max: 'works', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'works'])] : [] } }"
                 >
                   <img
                     class="w-5 h-5"
@@ -193,7 +145,7 @@
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'Works', query: { max: 'contact' } }"
+                    :to="{ name: 'Home', query: { max: 'worksList', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'worksList'])] : [] } }"
                   >
                     <img
                       class="w-5 h-5"
@@ -201,33 +153,17 @@
                       alt="notepad"
                     />
                     <span class="opacity-80 whitespace-nowrap">
-                      Get in touch
+                      Works list
                     </span>
                   </router-link>
                 </li>
               </ul>
             </li>
-            <li class="relative folder pl-5">
-              <input
-                class="hidden"
-                type="checkbox"
-                id="folder4"
-                v-model="folder4Opened"
-              />
-              <label class="cursor-pointer" for="folder4">
-                <item-opened
-                  v-if="folder4Opened"
-                  class="absolute z-1 top-2 left-0 bg-white"
-                />
-                <item-closed
-                  v-if="!folder4Opened"
-                  class="absolute z-1 top-2 left-0 bg-white"
-                />
-              </label>
+            <li class="relative before:absolute before:-left-[47px] before:top-1/2 before:-translate-y-1/2 before:right-full before:border-dashed before:w-[70px] before:border-black before:border-b-[0.3px] pl-5">
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center gap-2"
-                  :to="{ name: 'Contacts' }"
+                  :to="{ name: 'Home',  query: { max: 'contact', 'open[]': $route?.query ? [...new Set([...$route?.query['open[]'], 'contact'])] : [] } }"
                 >
                   <img
                     class="w-5 h-5"
@@ -237,23 +173,6 @@
                   <span class="opacity-80 whitespace-nowrap"> Contact </span>
                 </router-link>
               </div>
-              <ul v-if="folder4Opened" class="pl-1">
-                <li class="flex file relative items-center gap-2">
-                  <router-link
-                    class="flex items-center gap-2"
-                    :to="{ name: 'Contacts', query: { max: 'form' } }"
-                  >
-                    <img
-                      class="w-5 h-5"
-                      :src="require(`../../assets/images/notepad.png`)"
-                      alt="notepad"
-                    />
-                    <span class="opacity-80 whitespace-nowrap">
-                      Contact form
-                    </span>
-                  </router-link>
-                </li>
-              </ul>
             </li>
           </ul>
         </li>
@@ -274,7 +193,6 @@ export default {
       folder1Opened: true,
       folder2Opened: true,
       folder3Opened: true,
-      folder4Opened: true,
     };
   },
   components: {

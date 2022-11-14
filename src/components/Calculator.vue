@@ -1,52 +1,52 @@
 <template>
-  <div>
+  <div class="lg:max-w-[500px] mx-auto">
     <div class="bg-white p-3">
-      <div class="grid grid-cols-4 bg-white gap-y-3">
-        <div class="col-span-4 bg-pink-light h-12 text-right p-2">
+      <div class="grid grid-cols-4 bg-white gap-3">
+        <div class="col-span-4 bg-pink-light h-12 text-right p-2 shadow-lg rounded-lg">
           <p>{{ result }}</p>
         </div>
-        <button class="col-span-2" @click="onReset">C</button>
-        <button class="col-span-1" @click="updateSign">+/-</button>
+        <button class="col-span-2 bg-button-gray shadow-sm" @click="onReset">C</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" @click="updateSign">+/-</button>
         <button
-          class="col-span-1"
+          class="col-span-1 bg-button-gray shadow-sm"
           data-operation="divide"
           @click="updateOperation"
         >
           ÷
         </button>
-        <button class="col-span-1" data-num="7" @click="updateNum">7</button>
-        <button class="col-span-1" data-num="8" @click="updateNum">8</button>
-        <button class="col-span-1" data-num="9" @click="updateNum">9</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" data-num="7" @click="updateNum">7</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" data-num="8" @click="updateNum">8</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" data-num="9" @click="updateNum">9</button>
         <button
-          class="col-span-1"
+          class="col-span-1 bg-button-gray shadow-sm"
           data-operation="multiply"
           @click="updateOperation"
         >
           x
         </button>
-        <button class="col-span-1" data-num="4" @click="updateNum">4</button>
-        <button class="col-span-1" data-num="5" @click="updateNum">5</button>
-        <button class="col-span-1" data-num="6" @click="updateNum">6</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" data-num="4" @click="updateNum">4</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" data-num="5" @click="updateNum">5</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" data-num="6" @click="updateNum">6</button>
         <button
-          class="col-span-1"
+          class="col-span-1 bg-button-gray shadow-sm"
           data-operation="substract"
           @click="updateOperation"
         >
           -
         </button>
-        <button class="col-span-1" data-num="1" @click="updateNum">1</button>
-        <button class="col-span-1" data-num="2" @click="updateNum">2</button>
-        <button class="col-span-1" data-num="3" @click="updateNum">3</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" data-num="1" @click="updateNum">1</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" data-num="2" @click="updateNum">2</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" data-num="3" @click="updateNum">3</button>
         <button
-          class="col-span-1"
+          class="col-span-1 bg-button-gray shadow-sm"
           data-operation="addition"
           @click="updateOperation"
         >
           +
         </button>
-        <button class="col-span-2" data-num="0" @click="updateNum">0</button>
-        <button class="col-span-1" @click="updateDecimal">.</button>
-        <button class="col-span-1" @click="onShowResult">=</button>
+        <button class="col-span-2 bg-button-gray shadow-sm" data-num="0" @click="updateNum">0</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" @click="updateDecimal">.</button>
+        <button class="col-span-1 bg-button-gray shadow-sm" @click="onShowResult">=</button>
       </div>
     </div>
   </div>

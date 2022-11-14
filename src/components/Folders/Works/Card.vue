@@ -1,10 +1,11 @@
 <template>
-    <div class="rounded-2xl relative shadow-sm pt-[70%] lg:pt-[30%] h-0 overflow-hidden">
+    <div class="px-3">
+<div class="rounded-2xl relative shadow-sm pt-[70%] lg:pt-[80%] h-0 overflow-hidden">
         <a class="rounded-2xl overflow-hidden absolute top-0 left-0 h-full w-full block" :href="link" target="_blank">
             <img
             v-if="image"
             class="absolute top-0 left-0 w-full h-full object-cover max-w-full"
-            :src="require(`../../assets/images/${image}`)"
+            :src="require(`../../../assets/images/${image}`)"
             :alt="alt"
           />
           <div class="relative text-center opacity-60 lg:opacity-0 hover:opacity-60 flex flex-col items-center justify-center bg-black text-white w-full h-full">
@@ -13,6 +14,7 @@
           </div>
         </a>
         
+    </div>
     </div>
 </template>
 

@@ -1,14 +1,16 @@
 <template>
   <div
     v-if="!minimized && !closed"
-    class="shadow-sm rounded-2xl overflow-hidden transition-all"
+    class="shadow-sm rounded-2xl overflow-hidden transition-all lg:min-w-[600px]"
     :class="{
-      'h-full-screen-mob lg:h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 w-full z-10':
-        maximized,
+      '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 w-full z-10':
+        maximized || windowWidth <= 1024,
+        'max-h-[70vh] fixed top-10 left-1/2 -translate-x-1/2': !maximized && windowWidth > 1024,
     }"
   >
     <div
       class="flex items-center justify-between bg-pink-light mt-0.5 mr-1 ml-0.5 rounded-t-2xl"
+      :class="{'absolute top-0 left-0 right-0': !maximized}"
     >
       <div class="flex items-center gap-x-2.5 mt-1 mx-0.5">
         <img class="w-6" :src="require(`../../assets/images/${icon}`)" alt="heart" />
@@ -24,19 +26,21 @@
         <maximize-icon
           @click="updateMaximize"
           class="opacity-40 cursor-pointer"
+          :class="{'pointer-events-none': windowWidth <= 1024}"
         />
         <close-window @click="onClose(index)" class="opacity-40 cursor-pointer" />
       </div>
     </div>
     <div
-      class="font-normal py-6 px-2 text-lg leading-snug mr-1 mb-1 ml-0.5 rounded-b-2xl lg:py-14 lg:px-16 text-[25px]"
+      class="font-normal py-6 px-2 text-lg leading-snug mr-1 mb-1 ml-0.5 rounded-b-2xl text-[25px]"
       :class="{
-        'flex h-full-screen-container-mob lg:h-full-screen-container bg-pink-light lg:!px-3 lg:!py-2':
+        'flex h-full-screen-container-mob lg:h-full-screen-container bg-pink-light lg:px-3 lg:py-2':
           maximized,
+          'lg:h-full lg:overflow-scroll mb-2 lg:py-14 lg:px-16 ': !maximized
       }"
     >
       <sidebar-component
-        v-if="maximized"
+        v-if="maximized && !hideSidebar"
         class="hidden lg:block w-1/3 overflow-hidden"
       />
       <div :class="{ 'flex-grow lg:ml-5 overflow-hidden': maximized }">
@@ -47,9 +51,10 @@
             Content
           </p>
         </div>
+        <div class="py-2 bg-white h-window-content" :class="{'shadow-lg': maximized}">
         <div
           :class="{
-            'bg-white p-5 py-[2px] flex-grow overflow-scroll h-window-content shadow-lg':
+            'px-5 my-[4px] flex-grow overflow-scroll h-full':
               maximized,
           }"
         >
@@ -57,6 +62,8 @@
             <slot></slot>
           </div>
         </div>
+        </div>
+       
       </div>
     </div>
   </div>
@@ -72,10 +79,10 @@ export default {
   name: "window-component",
   data() {
     return {
-      maximized: false,
+      maximized: this.windowWidth > 1024 ? false : true,
     };
   },
-  props: ["title", "minimized", "closed", "index", "query", "icon"],
+  props: ["title", "minimized", "closed", "index", "query", "icon", "hideSidebar", "windowWidth", "openedWindows"],
   components: {
     MinimizeIcon,
     MaximizeIcon,
@@ -89,17 +96,30 @@ export default {
     if (this.$route.query.max === this.query) {
       this.onMaximize();
     }
-    if (!this.$route.query.max) {
+    if (!this.$route.query.max && this.windowWidth > 1024) {
       this.onRestore();
+    }
+    if (this.windowWidth <= 1024) this.maximized = true;
+    if (!this.closed && this.$route.query['open[]']?.includes(this.query)) {
+      this.$router.push({ path: this.$route.path, query: { max: this.$route.query.max, 'open[]': [...this.openedWindows, this.query] }})
     }
   },
   watch: {
     $route(to) {
       if (to.query.max === this.query) {
         this.onMaximize();
+      } else {
+        this.onRestore();
       }
       if (!to.query.max) {
         this.onRestore();
+      }
+      if (this.windowWidth <= 1024) this.maximized = true;
+      if (to.query['open[]']?.includes(this.query) && this.closed) {
+        this.$emit("open", this.index);
+        this.$emit("unminimize", this.index)
+      } else if (!to.query['open[]']?.includes(this.query) && !this.closed) {
+        this.$emit("close", this.index);
       }
     },
   },
@@ -107,28 +127,27 @@ export default {
     minimize(index) {
       this.$emit("minimize", index);
       this.onRestore();
+      this.$router.push({ path: this.$route.path, query: { max: '', 'open[]': this.openedWindows.filter(item => item !== this.query) }})
     },
-    onClose(index) {
-      this.$emit("close", index);
+    onClose() {
+      this.$router.push({ path: this.$route.path, query: { max: '', 'open[]': this.openedWindows.filter(item => item !== this.query) }})
       this.onRestore();
     },
     onMaximize() {
       this.maximized = true;
-      this.$store.commit("updateScreenHeightBody", this.maximized);
-      document.body.style.overflow = "hidden";
+      this.$emit("open", this.index);
+      this.$emit("unminimize", this.index)
     },
     onRestore() {
       this.maximized = false;
-      this.$store.commit("updateScreenHeightBody", false);
-      document.body.style.overflow = "auto";
     },
     updateMaximize() {
+      if (this.windowWidth <= 1024) return
       this.maximized = !this.maximized;
-      this.$store.commit("updateScreenHeightBody", this.maximized);
       if (this.maximized) {
-        document.body.style.overflow = "hidden";
+        this.$router.push({ path: this.$route.path, query: { max: this.query, 'open[]': this.openedWindows}})
       } else {
-        document.body.style.overflow = "auto";
+        this.$router.push({ path: this.$route.path, query: { max: '', 'open[]': this.openedWindows }})
       }
     },
   },

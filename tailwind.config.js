@@ -31,7 +31,8 @@ module.exports = {
         'full-screen-mob': 'calc(100vh - 84px)',
         'full-screen-container': 'calc(100vh - 117px)',
         'full-screen-container-mob': 'calc(100vh - 123px)',
-        'window-content': 'calc(100% - 40px)'
+        'window-content': 'calc(100% - 40px)',
+        'window-content-mob': 'calc(100% - 42px)'
       },
       fontFamily: {
         'sans': ['VT323', 'ui-sans-serif', 'system-ui', 'sans-serif'],

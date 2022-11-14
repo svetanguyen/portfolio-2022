@@ -1,0 +1,40 @@
+<template>
+  <div>
+          <div
+            class="lg:flex flex-wrap justify-between items-end lg:mb-10 px-2 lg:px-0"
+          >
+            <h2 class="text-[32px] lg:text-[50px] leading-snug">
+              Get in touch
+            </h2>
+            <a
+              href="mailto:phuonhhangnguyen0929@gmail.com"
+              class="text-base opacity-60 mb-4 lg:mb-2 leading-snug lg:text-[21px]"
+              >phuonhhangnguyen0929@gmail.com</a
+            >
+          </div>
+          <form-component class="px-2 lg:px-0" />
+        </div>
+</template>
+
+<script>
+import FormComponent from './ContactForm.vue'
+export default {
+    name: 'ContactComponent',
+    components: {
+        FormComponent
+    },
+    props: ["query", "windowWidth"],
+    data() {
+        return {
+            files: [
+                {  name: "Contact", query: 'contact', icon: 'files.png' },
+            ],
+            maximized: !this.windowWidth
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>

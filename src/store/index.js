@@ -4,6 +4,7 @@ export const store = createStore({
     state: {
       projectCards: [
         { title: "Pokemon desktop game", image: "ig-clone.jpg", description: "Vanilla JS, HTML/CSS", link: "https://pokemon-fight-game.netlify.app/" },
+        { title: "Pokemon desktop game", image: "ig-clone.jpg", description: "Vanilla JS, HTML/CSS", link: "https://pokemon-fight-game.netlify.app/" },
         { title: "Instagram clone", image: "ig-clone.jpg", description: "React, Tailwind, HTML/CSS, Firebase", link: "https://insta-clone-5b854c.netlify.app/" },
       ],
       skills: [
@@ -18,12 +19,11 @@ export const store = createStore({
         { text: 'Hydrogen', type: 'HydrogenIcon' },
         { text: 'Tailwind', type: 'TailwindIcon' },
       ],
-      screenHeightBody: false
-    },
-    mutations: { 
-      updateScreenHeightBody (state, payload) {
-        state.screenHeightBody = payload
-      }     
+      folders: [
+        { query: 'home', icon: 'computer.png', component: 'HomeComponent' },
+        { query: 'about', icon: 'computer.png', component: 'AboutComponent' },
+      ],
+      screenHeightBody: true
     },
     actions: {
     },
