@@ -21,6 +21,7 @@
       @unminimize="onUnMinimize"
       :window-width="windowWidth"
       :openedWindows="openedWindows"
+      @drag="startDrag"
       :class="{'lg:h-[330px]': tab.height === 'sm', 'lg:h-[70vh]': tab.height !== 'sm'}"
     >
       <component
@@ -64,17 +65,20 @@ export default {
   created() {
     this.checkScreen();
     window.addEventListener("resize", this.checkScreen);
-    this.$router.push({ path: this.$route.path, query: { max: this.$route.query?.max, 'open[]': this.$route?.query && this.$route?.query["open[]"] ? [...new Set([...this.$route?.query["open[]"], 'hello'])]: ["hello"] }})
-    this.openedWindows = this.$route?.query && this.$route?.query["open[]"] ? [...new Set([...this.$route?.query["open[]"], 'hello'])]: []
+    this.$router.push({ path: this.$route.path, query: { max: this.$route.query?.max, open: this.$route.query?.open || 'hello'}})
+    this.openedWindows = this.$route?.query?.open || 'hello'
+    document.addEventListener("dragover", function(event) {
+      event.preventDefault();
+    });
   },
   watch: {
     $route(to) {
-      this.openedWindows = [...new Set(to.query['open[]'])]
+      this.openedWindows = to.query.open
     },
   },
   data() {
     return {
-      openedWindows: this.$route?.query && this.$route?.query["open[]"] ? [...new Set(this.$route?.query["open[]"])] : [],
+      openedWindows: this.$route?.query?.open || '',
       tabs: [
         {
           query: "hello",
@@ -170,7 +174,7 @@ export default {
   methods: {
     onUnMinimize(index) {
       this.tabs[index].minimized = false;
-      this.$router.push({ path: this.$route.path, query: {max: this.$route.query?.max, 'open[]': [...new Set([...this.openedWindows, this.tabs[index].query])] }})
+      this.$router.push({ path: this.$route.path, query: {max: this.$route.query?.max, open: this.tabs[index].query}})
     },
     onMinimize(index) {
       this.tabs[index].minimized = true;
@@ -191,6 +195,15 @@ export default {
         this.mobile = false;
         return;
       }
+    },
+     startDrag(evt, id) {
+      evt.dataTransfer.dropEffect = 'move'
+      evt.dataTransfer.effectAllowed = 'move'
+      evt.dataTransfer.setData('itemID', id)
+    },
+    onDrop(evt) {
+      const itemID = evt.dataTransfer.getData('itemID')
+      console.log('item', itemID)
     },
   },
 };

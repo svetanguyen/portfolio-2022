@@ -11,10 +11,7 @@
           name: 'Home',
           query: {
             max: 'about',
-            'open[]':
-              $route?.query && $route.query['open[]']
-                ? [...new Set([...$route?.query['open[]'], 'about'])]
-                : ['about'],
+            open: 'about',
           },
         }"
         >More about me</router-link
@@ -25,10 +22,7 @@
           name: 'Home',
           query: {
             max: 'worksList',
-            'open[]':
-              $route?.query && $route.query['open[]']
-                ? [...new Set([...$route?.query['open[]'], 'worksList'])]
-                : ['worksList'],
+            open: 'worksList',
           },
         }"
         >My works</router-link

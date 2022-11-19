@@ -59,7 +59,7 @@
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center gap-2"
-                  :to="{ name: 'Home', query: { max: 'about', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'about'])] : [] } }"
+                  :to="{ name: 'Home', query: { max: 'about', open: 'about' } }"
                 >
                   <img
                     class="w-5 h-5"
@@ -73,7 +73,7 @@
                 <li class="file relative items-center">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'Home', query: { max: 'info', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'info'])] : [] } }"
+                    :to="{ name: 'Home', query: { max: 'info', open: 'info' } }"
                   >
                     <img
                       class="w-5 h-5"
@@ -86,7 +86,7 @@
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'Home', query: { max: 'skills', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'skills'])] : [] } }"
+                    :to="{ name: 'Home', query: { max: 'skills', open: 'skills' } }"
                   >
                     <img
                       class="w-5 h-5"
@@ -99,7 +99,7 @@
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'Home', query: { max: 'links', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'links'])] : [] } }"
+                    :to="{ name: 'Home', query: { max: 'links', open: 'links' } }"
                   >
                     <img
                       class="w-5 h-5"
@@ -131,7 +131,7 @@
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center gap-2"
-                  :to="{ name: 'Home',  query: { max: 'works', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'works'])] : [] } }"
+                  :to="{ name: 'Home',  query: { max: 'works', open: 'works' } }"
                 >
                   <img
                     class="w-5 h-5"
@@ -145,7 +145,7 @@
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'Home', query: { max: 'worksList', 'open[]': $route?.query['open[]'] ? [...new Set([...$route?.query['open[]'], 'worksList'])] : [] } }"
+                    :to="{ name: 'Home', query: { max: 'worksList', open: 'worksList' } }"
                   >
                     <img
                       class="w-5 h-5"
@@ -163,7 +163,7 @@
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center gap-2"
-                  :to="{ name: 'Home',  query: { max: 'contact', 'open[]': $route?.query ? [...new Set([...$route?.query['open[]'], 'contact'])] : [] } }"
+                  :to="{ name: 'Home',  query: { max: 'contact', open: 'contact' } }"
                 >
                   <img
                     class="w-5 h-5"

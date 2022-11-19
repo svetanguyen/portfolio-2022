@@ -13,7 +13,7 @@
     <li>
       <router-link
         class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] lg:p-0"
-        :to="{ name: 'Home', query: {max: 'about', 'open[]': ['about']} }"
+        :to="{ name: 'Home', query: {max: 'about', open: 'about'} }"
       >
         <img :src="require(`../assets/images/document.png`)" alt="document" />
         About</router-link
@@ -22,7 +22,7 @@
     <li>
       <router-link
         class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] lg:p-0"
-        :to="{ name: 'Home', query: {max: 'works', 'open[]': ['works'] } }"
+        :to="{ name: 'Home', query: {max: 'works', open: 'works' } }"
       >
         <img :src="require(`../assets/images/folder.png`)" alt="folder" />
         Works</router-link
@@ -31,7 +31,7 @@
     <li>
       <router-link
         class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] lg:p-0"
-        :to="{ name: 'Home', query: {max: 'contact', 'open[]': ['contact']} }"
+        :to="{ name: 'Home', query: {max: 'contact', open: 'contact'} }"
       >
         <img :src="require(`../assets/images/files.png`)" alt="files" />
         Contacts</router-link
@@ -40,7 +40,7 @@
     <li>
       <router-link
         class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] lg:p-0"
-        :to="{ name: 'Home', query: {max: windowWidth > 1024 ? '' : 'calculator', 'open[]': ['calculator']} }"
+        :to="{ name: 'Home', query: {max: windowWidth > 1024 ? '' : 'calculator', open: 'calculator'} }"
       >
         <img :src="require(`../assets/images/files.png`)" alt="files" />
         Calculator</router-link

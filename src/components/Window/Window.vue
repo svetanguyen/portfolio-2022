@@ -1,12 +1,18 @@
 <template>
   <div
     v-if="!minimized && !closed"
+    ref="window"
     class="shadow-sm rounded-2xl overflow-hidden transition-all lg:min-w-[600px]"
     :class="{
       '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 w-full z-10':
         maximized || windowWidth <= 1024,
-        'max-h-[70vh] fixed top-10 left-1/2 -translate-x-1/2': !maximized && windowWidth > 1024,
+        'max-h-[70vh] absolute top-10 mx-auto w-[800px]': !maximized && windowWidth > 1024,
     }"
+    @dragstart="startDrag"
+      @drag="dragging"
+      :draggable="(maximized || windowWidth <= 1024) ? false : true"
+    :style="{top: (windowWidth <= 1024 || maximized) ? 0 : ((top && `${top}px`) || '40px'), left: (windowWidth <= 1024 || maximized) ? 0 : ((left && `${left}px`) || 'calc(50% - 400px)')}"
+    :id="`window-${index}`"
   >
     <div
       class="flex items-center justify-between bg-pink-light mt-0.5 mr-1 ml-0.5 rounded-t-2xl"
@@ -80,6 +86,12 @@ export default {
   data() {
     return {
       maximized: this.windowWidth > 1024 ? false : true,
+      top: null,
+      left: null,
+      startTop: 0,
+      startLeft: 0,
+      endTop: 0,
+      endLeft: 0
     };
   },
   props: ["title", "minimized", "closed", "index", "query", "icon", "hideSidebar", "windowWidth", "openedWindows"],
@@ -100,12 +112,18 @@ export default {
       this.onRestore();
     }
     if (this.windowWidth <= 1024) this.maximized = true;
-    if (!this.closed && this.$route.query['open[]']?.includes(this.query)) {
-      this.$router.push({ path: this.$route.path, query: { max: this.$route.query.max, 'open[]': [...this.openedWindows, this.query] }})
+    if (this.$route.query.open === this.query) {
+      this.$router.push({ path: this.$route.path, query: { max: this.$route.query.max, 'open': this.query }})
+    } else {
+      this.$router.push({ path: this.$route.path, query: { max: this.$route.query.max, 'open': this.$route.query.open }})
     }
+    document.body.addEventListener('drop', this.drop)
+    document.body.addEventListener('dragover', this.allowDrop)
+    document.body.addEventListener('dragend', this.endDrag)
   },
   watch: {
     $route(to) {
+      this.reset()
       if (to.query.max === this.query) {
         this.onMaximize();
       } else {
@@ -115,22 +133,30 @@ export default {
         this.onRestore();
       }
       if (this.windowWidth <= 1024) this.maximized = true;
-      if (to.query['open[]']?.includes(this.query) && this.closed) {
+      if (to.query.open === this.query && this.closed) {
         this.$emit("open", this.index);
         this.$emit("unminimize", this.index)
-      } else if (!to.query['open[]']?.includes(this.query) && !this.closed) {
+      } else if (to.query.open !== this.query && !this.closed) {
         this.$emit("close", this.index);
       }
     },
   },
   methods: {
+    reset() {
+      this.top = null
+      this.left = null
+      this.startTop = 0
+      this.startLeft = 0
+      this.endTop = 0
+      this.endLeft = 0
+    },
     minimize(index) {
       this.$emit("minimize", index);
       this.onRestore();
-      this.$router.push({ path: this.$route.path, query: { max: '', 'open[]': this.openedWindows.filter(item => item !== this.query) }})
+      this.$router.push({ path: this.$route.path, query: { max: '', 'open': this.query }})
     },
     onClose() {
-      this.$router.push({ path: this.$route.path, query: { max: '', 'open[]': this.openedWindows.filter(item => item !== this.query) }})
+      this.$router.push({ path: this.$route.path, query: { max: '', 'open': '' }})
       this.onRestore();
     },
     onMaximize() {
@@ -145,11 +171,51 @@ export default {
       if (this.windowWidth <= 1024) return
       this.maximized = !this.maximized;
       if (this.maximized) {
-        this.$router.push({ path: this.$route.path, query: { max: this.query, 'open[]': this.openedWindows}})
+        this.$router.push({ path: this.$route.path, query: { max: this.query, 'open': this.openedWindows}})
       } else {
-        this.$router.push({ path: this.$route.path, query: { max: '', 'open[]': this.openedWindows }})
+        this.$router.push({ path: this.$route.path, query: { max: '', 'open': this.openedWindows }})
       }
     },
+    startDrag(e) {
+      if (this.maximized || this.window <= 1024) return
+      this.startTop = e.clientY
+      this.startLeft = e.clientX
+      const window = document.querySelector(`#window-${this.index}`)
+      window.dataTransfer?.setData("text", `window-${this.index}`);
+    },
+    dragging() {
+      if (this.maximized || this.window <= 1024) return
+      const window = document.querySelector(`#window-${this.index}`)
+      this.getPosition(window)
+    },
+    drop(e) {
+      if (this.maximized || this.window <= 1024) return
+      e.preventDefault();
+      this.endTop = e.clientY
+      this.endLeft = e.clientX
+    },
+    endDrag() {
+      if (this.maximized || this.window <= 1024) return
+      const windowEl = document.querySelector(`#window-${this.index}`)
+      if (windowEl) {
+        this.top = this.endTop > this.startTop ? this.top + (this.endTop - this.startTop) : this.top - (this.startTop - this.endTop)
+        this.left = this.endLeft > this.startLeft ? this.left + (this.endLeft - this.startLeft) : this.left - (this.startLeft - this.endLeft)
+        windowEl.style.top = this.top
+        windowEl.style.left = this.left
+      }
+    },
+    allowDrop(e) {
+      e.preventDefault()
+    },
+    getPosition(windowEl) {
+      if (windowEl) {
+        var rect = windowEl?.getBoundingClientRect();
+        this.top = rect?.top
+        this.left = rect?.left
+      }
+      
+    }
+
   },
 };
 </script>

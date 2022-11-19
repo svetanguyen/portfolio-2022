@@ -39,7 +39,7 @@ export default {
   props: ["files", "text"],
   methods: {
     onOpen(index) {
-      this.$router.push({ path: '/', query: {max: this.files[index].maximized ? this.files[index].query : '' , 'open[]': this.$route.query['open[]'] ? [...new Set([...this.$route.query['open[]'], this.files[index].query])] : [this.files[index].query] }})
+      this.$router.push({ path: '/', query: {max: this.files[index].maximized ? this.files[index].query : '' , open: this.files[index].query }})
     },
   },
 };
