@@ -199,6 +199,37 @@ export default {
             "https://drive.google.com/file/d/1FTlAMC4kJaolMn6h2vkj6Kh0y1_lXHJk/view?usp=sharing",
         },
       ],
+      filesMobile: [
+        {
+          name: "My portfolio",
+          maximized: true,
+          icon: "computer.png",
+          query: "portfolio",
+        },
+        { name: "Hello", icon: "notepad.png", query: "hello" },
+        {
+          query: "about",
+          icon: "computer.png",
+          name: "About me",
+        },
+        {
+          query: "works",
+          icon: "computer.png",
+          name: "About me",
+        },
+        {
+          query: "contact",
+          icon: "computer.png",
+          name: "About me",
+        },
+        {
+          name: "Resume",
+          icon: "document.png",
+          query: "hello",
+          externalLink:
+            "https://drive.google.com/file/d/1FTlAMC4kJaolMn6h2vkj6Kh0y1_lXHJk/view?usp=sharing",
+        },
+      ],
     };
   },
   methods: {

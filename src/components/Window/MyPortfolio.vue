@@ -12,8 +12,7 @@ export default {
     data() {
         return {
             files: [
-                {  name: "Home", query: 'home', icon: 'computer.png' },
-                {  name: "About me", query: 'about', icon: 'computer.png' },
+                {  name: "About me", query: 'about', icon: 'document.png' },
                 {  name: "Works", query: 'works', icon: 'folder.png' },
                 {  name: "Contact", query: 'contact', icon: 'files.png' },
             ],

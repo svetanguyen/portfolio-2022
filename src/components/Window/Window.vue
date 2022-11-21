@@ -57,6 +57,7 @@
       </div>
       <div class="flex flex-wrap lg:flex-nowrap w-full px-2 pt-2">
         <button
+          v-if="!hideSidebar"
           class="bg-button-gray mr-1 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
           :class="{
             'opacity-50 pointer-events-none': !prevLinks.length,
@@ -69,6 +70,7 @@
           Back
         </button>
         <button
+          v-if="!hideSidebar"
           class="bg-button-gray mr-3 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
           :class="{
             'opacity-50 pointer-events-none': !nextLinks.length,
@@ -106,7 +108,10 @@
       />
       <div
         class="lg:ml-5 overflow-hidden w-full"
-        :class="{ 'lg:w-2/3': maximized && !hideSidebar, 'lg:w-3/4': !maximized && !hideSidebar }"
+        :class="{
+          'lg:w-2/3': maximized && !hideSidebar,
+          'lg:w-3/4': !maximized && !hideSidebar,
+        }"
       >
         <div class="py-2 bg-white h-full shadow-lg">
           <div
@@ -213,9 +218,9 @@ export default {
         this.$emit("close", this.index);
       }
     },
-    windowWidth: function(newVal) { 
-      if (newVal <= 1024) this.maximized = true
-    }
+    windowWidth: function (newVal) {
+      if (newVal <= 1024) this.maximized = true;
+    },
   },
   methods: {
     ...mapMutations([
