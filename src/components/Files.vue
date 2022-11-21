@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     onOpen(index) {
-      this.$router.push({ path: '/', query: {max: this.files[index].maximized ? this.files[index].query : '' , open: this.files[index].query }})
+      this.$router.push({ path: '/', query: {max: this.files[index].maximized || this.$route.query.max ? this.files[index].query : '' , open: this.files[index].query }})
     },
   },
 };
