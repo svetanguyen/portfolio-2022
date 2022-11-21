@@ -3,9 +3,10 @@ import { createStore } from 'vuex'
 export const store = createStore({
     state: {
       projectCards: [
-        { title: "Pokemon desktop game", image: "ig-clone.jpg", description: "Vanilla JS, HTML/CSS", link: "https://pokemon-fight-game.netlify.app/" },
-        { title: "Pokemon desktop game", image: "ig-clone.jpg", description: "Vanilla JS, HTML/CSS", link: "https://pokemon-fight-game.netlify.app/" },
-        { title: "Instagram clone", image: "ig-clone.jpg", description: "React, Tailwind, HTML/CSS, Firebase", link: "https://insta-clone-5b854c.netlify.app/" },
+        { title: "Pokemon desktop game", image: "pokemon.png", description: "Vanilla JS, HTML/CSS, REST API", link: "https://pokemon-fight-game.netlify.app/", github: "https://github.com/svetanguyen/PokemonDesk" },
+        { title: "Instagram clone", image: "ig-clone.jpg", description: "React, Tailwindcss, HTML/CSS, Firebase", link: "https://insta-clone-5b854c.netlify.app/", github: "https://github.com/svetanguyen/instagram-clone-freecodecamp" },
+        { title: "Weather app", image: "weather-app.png", description: "Vue.js, HTML/CSS, REST API", link: "https://weather-app-vue-1.netlify.app/", github: "https://github.com/svetanguyen/vue-weather" },
+        { title: "Portfolio", image: "portfolio.png", description: "React, HTML/CSS, Tailwindcss", link: "https://t1n.netlify.app/", github: "https://github.com/svetanguyen/t1n" },
       ],
       skills: [
         { text: 'React', type: 'ReactIcon' },
