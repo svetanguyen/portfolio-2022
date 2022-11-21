@@ -1,5 +1,5 @@
 <template>
-   <div :class="{ 'lg:pt-10': screenHeightBody }">
+   <div class="lg:pt-10">
           <p class="text-center mt-2 lg:mt-0 mb-8 text-base leading-snug">
             Check out my portfolio or contact me!
           </p>

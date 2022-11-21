@@ -1,8 +1,8 @@
 <template>
-  <ul>
+  <ul class="min-w-[150px]">
     <li>
       <router-link
-        class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] lg:p-0"
+        class="py-4 pl-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
         :to="{ name: 'Home' }"
       >
         <img :src="require(`../assets/images/heart.png`)" alt="heart" />
@@ -12,16 +12,17 @@
     </li>
     <li>
       <router-link
-        class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] lg:p-0"
+        class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
         :to="{ name: 'Home', query: {max: 'about', open: 'about'} }"
       >
         <img :src="require(`../assets/images/document.png`)" alt="document" />
-        About</router-link
+        <span>About</span>
+        </router-link
       >
     </li>
     <li>
       <router-link
-        class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] lg:p-0"
+        class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
         :to="{ name: 'Home', query: {max: 'works', open: 'works' } }"
       >
         <img :src="require(`../assets/images/folder.png`)" alt="folder" />
@@ -30,7 +31,7 @@
     </li>
     <li>
       <router-link
-        class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] lg:p-0"
+        class="p-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
         :to="{ name: 'Home', query: {max: 'contact', open: 'contact'} }"
       >
         <img :src="require(`../assets/images/files.png`)" alt="files" />
@@ -39,11 +40,11 @@
     </li>
     <li>
       <router-link
-        class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] lg:p-0"
-        :to="{ name: 'Home', query: {max: windowWidth > 1024 ? '' : 'calculator', open: 'calculator'} }"
+        class="p-4 text-[23px] lg:text-xl leading-none flex items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
+        :to="{ name: 'Home', query: {max: '', open: 'calculator'} }"
       >
         <img :src="require(`../assets/images/files.png`)" alt="files" />
-        Calculator</router-link
+        <span class="ml-3 block">Calculator</span></router-link
       >
     </li>
   </ul>

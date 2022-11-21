@@ -1,11 +1,8 @@
 <template>
   <div class="bg-pink-light">
-    <div class="bg-pink-light mb-1">
-      <p class="rounded-lg shadow-xl-hovered py-1 px-3 text-xl leading-snug opacity-80">All folders</p>
-      </div>
-    <div class="shadow-lg p-4 bg-white overflow-y-scroll overflow-x-hidden h-full">
+    <div class="shadow-lg p-4 bg-white overflow-scroll h-full">
       <ul
-        class="flex items-center text-xl relative text-ellipsis overflow-hidden"
+        class="flex items-center text-xl relative text-ellipsis"
       >
         <li
           class="relative folder pl-4"
@@ -59,54 +56,54 @@
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center gap-2"
-                  :to="{ name: 'Home', query: { max: 'about', open: 'about' } }"
+                  :to="{ name: 'Home', query: { max: $route.query.max ? 'about' : '', open: 'about' } }"
                 >
                   <img
                     class="w-5 h-5"
                     :src="require(`../../assets/images/document.png`)"
                     alt="document"
                   />
-                  <span class="opacity-80 whitespace-nowrap"> About me </span>
+                  <span :class="{'underline': $route.query.open === 'about'}" class="opacity-80 whitespace-nowrap"> About me </span>
                 </router-link>
               </div>
               <ul v-if="folder2Opened" class="pl-1">
                 <li class="file relative items-center">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'Home', query: { max: 'info', open: 'info' } }"
+                    :to="{ name: 'Home', query: { max: $route.query.max ? 'info' : '', open: 'info' } }"
                   >
                     <img
                       class="w-5 h-5"
                       :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
                     />
-                    <span class="opacity-80 whitespace-nowrap"> Info </span>
+                    <span :class="{'underline': $route.query.open === 'info'}" class="opacity-80 whitespace-nowrap"> Info </span>
                   </router-link>
                 </li>
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'Home', query: { max: 'skills', open: 'skills' } }"
+                    :to="{ name: 'Home', query: { max: $route.query.max ? 'skills' : '', open: 'skills' } }"
                   >
                     <img
                       class="w-5 h-5"
                       :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
                     />
-                    <span class="opacity-80 whitespace-nowrap"> Skills </span>
+                    <span :class="{'underline': $route.query.open === 'skills'}" class="opacity-80 whitespace-nowrap"> Skills </span>
                   </router-link>
                 </li>
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'Home', query: { max: 'links', open: 'links' } }"
+                    :to="{ name: 'Home', query: { max: $route.query.max ? 'links' : '', open: 'links' } }"
                   >
                     <img
                       class="w-5 h-5"
                       :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
                     />
-                    <span class="opacity-80 whitespace-nowrap"> Links </span>
+                    <span :class="{'underline': $route.query.open === 'links'}" class="opacity-80 whitespace-nowrap"> Links </span>
                   </router-link>
                 </li>
               </ul>
@@ -131,28 +128,28 @@
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center gap-2"
-                  :to="{ name: 'Home',  query: { max: 'works', open: 'works' } }"
+                  :to="{ name: 'Home',  query: { max: $route.query.max ? 'works' : '', open: 'works' } }"
                 >
                   <img
                     class="w-5 h-5"
                     :src="require(`../../assets/images/folder.png`)"
                     alt="folder"
                   />
-                  <span class="opacity-80 whitespace-nowrap"> Work </span>
+                  <span :class="{'underline': $route.query.open === 'works'}" class="opacity-80 whitespace-nowrap"> Work </span>
                 </router-link>
               </div>
               <ul v-if="folder3Opened" class="pl-1">
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center gap-2"
-                    :to="{ name: 'Home', query: { max: 'worksList', open: 'worksList' } }"
+                    :to="{ name: 'Home', query: { max: $route.query.max ? 'worksList' : '', open: 'worksList' } }"
                   >
                     <img
                       class="w-5 h-5"
                       :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
                     />
-                    <span class="opacity-80 whitespace-nowrap">
+                    <span :class="{'underline': $route.query.open === 'worksList'}" class="opacity-80 whitespace-nowrap">
                       Works list
                     </span>
                   </router-link>
@@ -163,14 +160,14 @@
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center gap-2"
-                  :to="{ name: 'Home',  query: { max: 'contact', open: 'contact' } }"
+                  :to="{ name: 'Home',  query: { max: $route.query.max ? 'contact' : '', open: 'contact' } }"
                 >
                   <img
                     class="w-5 h-5"
                     :src="require(`../../assets/images/files.png`)"
                     alt="files"
                   />
-                  <span class="opacity-80 whitespace-nowrap"> Contact </span>
+                  <span :class="{'underline': $route.query.open === 'contact'}" class="opacity-80 whitespace-nowrap"> Contact </span>
                 </router-link>
               </div>
             </li>

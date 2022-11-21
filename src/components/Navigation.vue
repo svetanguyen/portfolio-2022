@@ -3,8 +3,8 @@
         <p class="origin-center	rotate-180 bg-dark-pink py-6 px-2 text-white tracking-[1px] text-xl	leading-snug">
             Sveta Nguyen
         </p>
-        <div class="pl-4 py-3 lg:py-8 bg-pink-light pr-8">
-            <menu-links class="flex flex-col lg:gap-6" />
+        <div class="bg-pink-light flex-grow">
+            <menu-links />
         </div>
     </div>
 </template>

@@ -1,28 +1,28 @@
 <template>
   <div
-    class="main min-h-page overflow-hidden py-11 lg:py-24 max-w-container mx-auto px-6 lg:px-25 relative"
-    :class="{ 'h-full-screen-mob lg:h-full-screen': screenHeightBody }"
+    class="main min-h-page overflow-hidden py-11 lg:py-24 max-w-container mx-auto px-6 lg:px-25 relative h-full-screen-mob lg:h-full-screen"
   >
     <files-component class="absolute left-8 top-8 lg:top-20" :files="files" />
     <window-component
       v-for="(tab, index) in tabs"
       :key="index"
       :query="tab.query"
-      @minimize="onMinimize"
       :minimized="tab.minimized"
-      @close="onClose"
-      @open="onOpen"
       :index="index"
-      class="bg-white"
       :title="tab.title"
       :icon="tab.icon"
       :closed="tab.closed"
       :hide-sidebar="tab.hideSidebar"
-      @unminimize="onUnMinimize"
       :window-width="windowWidth"
+      :disable-maximize="tab.disableMaximize"
+      :small="tab.small"
       :openedWindows="openedWindows"
-      @drag="startDrag"
-      :class="{'lg:h-[330px]': tab.height === 'sm', 'lg:h-[70vh]': tab.height !== 'sm'}"
+      :folder="tab.folder"
+      class="bg-white"
+      @minimize="onMinimize"
+      @unminimize="onUnMinimize"
+      @close="onClose"
+      @open="onOpen"
     >
       <component
         v-if="tab.component"
@@ -33,13 +33,17 @@
       />
     </window-component>
   </div>
-  <taskbar-component :window-width="windowWidth" :tabs="tabs" @unMinimize="onUnMinimize" />
+  <taskbar-component
+    :window-width="windowWidth"
+    :tabs="tabs"
+    @unMinimize="onUnMinimize"
+  />
 </template>
 
 <script>
 import TaskbarComponent from "../components/Taskbar.vue";
 import WindowComponent from "../components/Window/Window.vue";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import FilesComponent from "../components/Files.vue";
 import CalculatorComponent from "../components/Calculator.vue";
 import HelloComponent from "../components/Folders/Hello.vue";
@@ -60,25 +64,36 @@ export default {
     FilesComponent,
   },
   computed: {
-    ...mapState(["screenHeightBody"]),
+    ...mapState(["updatedLinks"]),
   },
   created() {
     this.checkScreen();
     window.addEventListener("resize", this.checkScreen);
-    this.$router.push({ path: this.$route.path, query: { max: this.$route.query?.max, open: this.$route.query?.open || 'hello'}})
-    this.openedWindows = this.$route?.query?.open || 'hello'
-    document.addEventListener("dragover", function(event) {
-      event.preventDefault();
+    this.$router.push({
+      path: this.$route.path,
+      query: {
+        max: this.$route.query?.max,
+        open: this.$route.query?.open || "hello",
+      },
     });
+    this.openedWindows = this.$route?.query?.open || "hello";
   },
   watch: {
-    $route(to) {
-      this.openedWindows = to.query.open
+    $route(to, from) {
+      this.openedWindows = to.query.open;
+      if (!this.updatedLinks) {
+        if (from.query.open && from.query.open !== to.query.open) {
+          this.addPrev({query: from.query})
+        }
+      } else {
+        this.updateUpdatedLinks()
+      }
     },
   },
   data() {
     return {
-      openedWindows: this.$route?.query?.open || '',
+      openedWindows: this.$route?.query?.open || "",
+      windowWidth: 0,
       tabs: [
         {
           query: "hello",
@@ -87,7 +102,6 @@ export default {
           title: "Hello",
           closed: false,
           component: HelloComponent,
-          height: 'sm'
         },
         {
           query: "portfolio",
@@ -112,6 +126,7 @@ export default {
           title: "Info",
           closed: true,
           component: InfoComponent,
+          folder: 'About me'
         },
         {
           query: "skills",
@@ -120,6 +135,7 @@ export default {
           title: "Skills",
           closed: true,
           component: SkillsComponent,
+          folder: 'About me'
         },
         {
           query: "links",
@@ -128,6 +144,7 @@ export default {
           title: "Links",
           closed: true,
           component: LinksComponent,
+          folder: 'About me'
         },
         {
           query: "works",
@@ -144,7 +161,7 @@ export default {
           title: "Works",
           closed: true,
           component: WorksList,
-          hideSidebar: true,
+          folder: 'Works'
         },
         {
           query: "contact",
@@ -161,20 +178,39 @@ export default {
           title: "Calculator",
           closed: true,
           component: CalculatorComponent,
-          hideSidebar: true
+          hideSidebar: true,
+          disableMaximize: true,
+          small: true,
         },
       ],
       files: [
-        { name: "My portfolio", maximized: true, icon: "computer.png", query: "portfolio" },
+        {
+          name: "My portfolio",
+          maximized: true,
+          icon: "computer.png",
+          query: "portfolio",
+        },
         { name: "Hello", icon: "notepad.png", query: "hello" },
-        { name: "Resume", icon: "notepad.png", query: "hello", externalLink: 'https://drive.google.com/file/d/1FTlAMC4kJaolMn6h2vkj6Kh0y1_lXHJk/view?usp=sharing' },
+        {
+          name: "Resume",
+          icon: "notepad.png",
+          query: "hello",
+          externalLink:
+            "https://drive.google.com/file/d/1FTlAMC4kJaolMn6h2vkj6Kh0y1_lXHJk/view?usp=sharing",
+        },
       ],
     };
   },
   methods: {
+        ...mapMutations([
+      'addPrev', 'addNext', 'removePrev', 'removeNext', 'updateUpdatedLinks'
+    ]),
     onUnMinimize(index) {
       this.tabs[index].minimized = false;
-      this.$router.push({ path: this.$route.path, query: {max: this.$route.query?.max, open: this.tabs[index].query}})
+      this.$router.push({
+        path: this.$route.path,
+        query: { max: this.$route.query?.max, open: this.tabs[index].query },
+      });
     },
     onMinimize(index) {
       this.tabs[index].minimized = true;
@@ -187,7 +223,6 @@ export default {
     },
     checkScreen() {
       this.windowWidth = window.innerWidth;
-
       if (this.windowWidth < 1024) {
         this.mobile = true;
         return;
@@ -196,15 +231,6 @@ export default {
         return;
       }
     },
-     startDrag(evt, id) {
-      evt.dataTransfer.dropEffect = 'move'
-      evt.dataTransfer.effectAllowed = 'move'
-      evt.dataTransfer.setData('itemID', id)
-    },
-    onDrop(evt) {
-      const itemID = evt.dataTransfer.getData('itemID')
-      console.log('item', itemID)
-    },
   },
 };
 </script>
@@ -212,6 +238,10 @@ export default {
 <style lang="scss" scoped>
 .main {
   background: url("../assets/images/bg-1.png") no-repeat 0 0 / cover;
+  // cursor: url("../assets/imagπes/cursor.png"), auto;
+}
+body {
+  // cursor: url("../assets/images/cursor.png"), auto;
 }
 @media screen and (min-width: 1024px) {
   .main {

@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:px-12" :class="{ 'lg:pt-10': screenHeightBody }">
+  <div class="lg:px-12 lg:pt-10">
             <div
               class="relative mt-5 px-2 lg:px-0"
             >

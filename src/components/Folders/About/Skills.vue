@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt-5 pb-8">
     <h2
       class="mb-[33px] text-center text-[40px] font-normal leading-none lg:mb-[91px]"
     >

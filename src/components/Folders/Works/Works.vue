@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-4">
       <files-component class="flex gap-4" :files="files" text="black" />
   </div>
 </template>

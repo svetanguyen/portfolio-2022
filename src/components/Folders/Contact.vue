@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="px-4 py-10">
           <div
-            class="lg:flex flex-wrap justify-between items-end lg:mb-10 px-2 lg:px-0"
+            class="lg:flex flex-wrap justify-between items-end lg:mb-10"
           >
             <h2 class="text-[32px] lg:text-[50px] leading-snug">
               Get in touch
@@ -12,7 +12,7 @@
               >phuonhhangnguyen0929@gmail.com</a
             >
           </div>
-          <form-component class="px-2 lg:px-0" />
+          <form-component class="lg:px-0 pb-5" />
         </div>
 </template>
 

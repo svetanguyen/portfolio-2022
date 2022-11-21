@@ -55,8 +55,4 @@ body {
   padding-bottom: 84px;
 }
 
-.router-link-active {
-  text-decoration: underline;
-}
-
 </style>

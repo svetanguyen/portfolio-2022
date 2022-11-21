@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-pink-light shadow-sm" :class="{'fixed top-0 left-0 w-full z-10': screenHeightBody}">
+  <div class="bg-pink-light shadow-sm fixed top-0 left-0 w-full z-10">
     <header class="max-w-container mx-auto py-4 lg:py-5 flex justify-between items-center px-6 lg:px-25">
       <nav class="flex w-full items-center justify-between">
         <h1 class="text-[39px] leading-none lg:text-[65px]">
@@ -25,16 +25,12 @@
 import menuIcon from "../icons/Menu.vue";
 import closeIcon from "../icons/Close.vue";
 import menuLinks from "./MenuLinks.vue";
-import {mapState} from 'vuex'
 export default {
   name: "header-component",
   data() {
     return {
       mobileNav: this.$store.state.mobileNav,
     };
-  },
-  computed: {
-    ...mapState(['screenHeightBody'])
   },
   watch: {
     $route() {
@@ -63,9 +59,6 @@ export default {
 @media screen and (max-width: 1007px) {
   .link {
     padding-left: 16px;
-  }
-  .router-link-active {
-    background: var(--pink);
   }
 }
 }

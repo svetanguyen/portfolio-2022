@@ -23,11 +23,35 @@ export const store = createStore({
         { query: 'home', icon: 'computer.png', component: 'HomeComponent' },
         { query: 'about', icon: 'computer.png', component: 'AboutComponent' },
       ],
-      screenHeightBody: true
+      prevLinks: [],
+      nextLinks: [],
+      updatedLinks: false
     },
     actions: {
     },
     modules: {
+    },
+    mutations: {
+      addPrev(state, payload) {
+        state.prevLinks.push(payload.query)
+      },
+      addNext(state, payload) {
+        state.nextLinks.push(payload.query)
+      },
+      removePrev(state) {
+        state.prevLinks.pop()
+      },
+      removeNext(state) {
+        state.nextLinks.pop()
+      },
+      updateUpdatedLinks(state) {
+        state.updatedLinks = !state.updatedLinks
+      },
+      resetLinks(state) {
+        console.log('blya')
+        state.prevLinks = []
+        state.nextLinks = []
+      }
     }
 })
   
