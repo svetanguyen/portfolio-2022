@@ -14,6 +14,7 @@
       :image="card.image"
       :alt="card.title"
       :link="card.link"
+      :github="card.github"
     />
   </div>
 </template>

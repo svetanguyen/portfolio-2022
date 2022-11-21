@@ -193,7 +193,7 @@ export default {
         { name: "Hello", icon: "notepad.png", query: "hello" },
         {
           name: "Resume",
-          icon: "notepad.png",
+          icon: "document.png",
           query: "hello",
           externalLink:
             "https://drive.google.com/file/d/1FTlAMC4kJaolMn6h2vkj6Kh0y1_lXHJk/view?usp=sharing",

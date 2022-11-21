@@ -113,7 +113,7 @@
             :class="{
               'px-5 my-[4px] flex-grow': maximized,
             }"
-            class="h-full overflow-scroll"
+            class="h-full overflow-y-scroll"
           >
             <div class="h-full w-full">
               <slot></slot>

@@ -14,7 +14,8 @@ module.exports = {
         'pink-bright': '#D24ECD',
         'dark-pink': '#C39CA5',
         'background': 'linear-gradient(180deg,#c273ed 0%,#f1a6e2 78.96%,#feb4df 100%)',
-        'yellow': '#F9ECB7'
+        'yellow': '#F9ECB7',
+        'blue': '#328ADB'
       },
       lineHeight: {
         'snug': '140%'
@@ -27,7 +28,7 @@ module.exports = {
       },
       height: {
         'page': 'calc(100vh - 73px)',
-        'full-screen': 'calc(100vh - 84px)',
+        'full-screen': 'calc(100vh - 88px)',
         'full-screen-mob': 'calc(100vh - 84px)',
         'full-screen-container': 'calc(100vh - 117px)',
         'full-screen-container-mob': 'calc(100% - 95px)',
