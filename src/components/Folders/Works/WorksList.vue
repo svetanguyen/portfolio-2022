@@ -25,14 +25,13 @@ import CardComponent from "./Card.vue";
 export default {
   name: "works-list",
   components: { CardComponent },
-  props: ["query", "windowWidth"],
   data() {
     return {
-      maximized: !this.windowWidth,
+      maximized: true,
     };
   },
   created() {
-    if (this.$route.query.max === this.query) {
+    if (this.$route.query.max === 'worksList') {
       this.maximized = true;
     } else {
       this.maximized = false;
@@ -40,7 +39,7 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.query.max === this.query) {
+      if (to.query.max === 'worksList') {
         this.maximized = true;
       } else {
         this.maximized = false;

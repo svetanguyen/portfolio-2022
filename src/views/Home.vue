@@ -27,9 +27,6 @@
       <component
         v-if="tab.component"
         :is="tab.component"
-        @open="onOpen"
-        :query="tab.query"
-        :window-width="windowWidth"
       />
     </window-component>
   </div>
@@ -63,34 +60,7 @@ export default {
     TaskbarComponent,
     FilesComponent,
   },
-  computed: {
-    ...mapState(["updatedLinks"]),
-  },
-  created() {
-    this.checkScreen();
-    window.addEventListener("resize", this.checkScreen);
-    this.$router.push({
-      path: this.$route.path,
-      query: {
-        max: this.$route.query?.max,
-        open: this.$route.query?.open || "hello",
-      },
-    });
-    this.openedWindows = this.$route?.query?.open || "hello";
-  },
-  watch: {
-    $route(to, from) {
-      this.openedWindows = to.query.open;
-      if (!this.updatedLinks) {
-        if (from.query.open && from.query.open !== to.query.open) {
-          this.addPrev({query: from.query})
-        }
-      } else {
-        this.updateUpdatedLinks()
-      }
-    },
-  },
-  data() {
+   data() {
     return {
       openedWindows: this.$route?.query?.open || "",
       windowWidth: 0,
@@ -231,6 +201,33 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    ...mapState(["updatedLinks"]),
+  },
+  created() {
+    this.checkScreen();
+    window.addEventListener("resize", this.checkScreen);
+    this.$router.push({
+      path: this.$route.path,
+      query: {
+        max: this.$route.query?.max,
+        open: this.$route.query?.open || "hello",
+      },
+    });
+    this.openedWindows = this.$route?.query?.open || "hello";
+  },
+  watch: {
+    $route(to, from) {
+      this.openedWindows = to.query.open;
+      if (!this.updatedLinks) {
+        if (from.query.open && from.query.open !== to.query.open) {
+          this.addPrev({query: from.query})
+        }
+      } else {
+        this.updateUpdatedLinks()
+      }
+    },
   },
   methods: {
         ...mapMutations([

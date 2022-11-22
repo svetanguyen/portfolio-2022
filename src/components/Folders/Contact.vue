@@ -23,13 +23,11 @@ export default {
     components: {
         FormComponent
     },
-    props: ["query", "windowWidth"],
     data() {
         return {
             files: [
                 {  name: "Contact", query: 'contact', icon: 'files.png' },
             ],
-            maximized: !this.windowWidth
         }
     }
 }
