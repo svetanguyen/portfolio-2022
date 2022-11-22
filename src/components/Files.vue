@@ -7,9 +7,11 @@
     >
       <button tabindex="0" @click="onOpen(index)" v-if="!file.externalLink">
         <img
-          class="mx-auto mb-2 h-[50px]"
+          class="mx-auto mb-2 h-[50px] object-contain"
           :src="require(`../assets/images/${file.icon}`)"
           :alt="file.name"
+          width="60"
+          height="60"
         />
         <p :class="{ 'text-black': text === 'black' }">
           {{ file.name }}
@@ -27,6 +29,8 @@
             class="h-full mx-auto object-contain"
             :src="require(`../assets/images/${file.icon}`)"
             :alt="file.name"
+             width="60"
+            height="60"
           />
           <link-icon class="absolute w-4 h-4 left-3 -bottom-1" />
         </div>

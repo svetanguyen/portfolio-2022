@@ -29,6 +29,8 @@
               class="w-6"
               :src="require(`../assets/images/${tab.icon}`)"
               :alt="alt"
+              width="30"
+              height="30"
             />
             <p class="hidden lg:block">
               {{ tab.title }}

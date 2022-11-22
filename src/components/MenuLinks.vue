@@ -12,6 +12,8 @@
           class="w-7"
           :src="require(`../assets/images/heart.png`)"
           alt="document"
+          width="30"
+          height="30"
         />
         <span>About</span>
       </router-link>
@@ -28,6 +30,8 @@
           class="w-7"
           :src="require(`../assets/images/folder.png`)"
           alt="folder"
+          width="30"
+          height="30"
         />
         Works</router-link
       >
@@ -44,6 +48,8 @@
           class="w-7"
           :src="require(`../assets/images/files.png`)"
           alt="files"
+          width="30"
+          height="30"
         />
         Contacts</router-link
       >
@@ -57,6 +63,8 @@
           class="w-7"
           :src="require(`../assets/images/calculator.png`)"
           alt="calculator"
+          width="30"
+          height="30"
         />
         <span class="ml-3 block">Calculator</span></router-link
       >
