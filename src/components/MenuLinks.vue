@@ -2,16 +2,6 @@
   <ul class="min-w-[150px]">
     <li>
       <router-link
-        class="py-4 pl-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
-        :to="{ name: 'Home' }"
-      >
-        <img class="w-7" :src="require(`../assets/images/heart.png`)" alt="heart" />
-
-        Home
-      </router-link>
-    </li>
-    <li>
-      <router-link
         class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
         :to="{ name: 'Home', query: {max: 'about', open: 'about'} }"
       >
