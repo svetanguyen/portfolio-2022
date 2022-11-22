@@ -24,10 +24,7 @@
       @close="onClose"
       @open="onOpen"
     >
-      <component
-        v-if="tab.component"
-        :is="tab.component"
-      />
+      <component v-if="tab.component" :is="tab.component" />
     </window-component>
   </div>
   <taskbar-component
@@ -50,7 +47,6 @@ import WorksComponent from "../components/Folders/Works/Works.vue";
 import ContactComponent from "../components/Folders/Contact.vue";
 import InfoComponent from "../components/Folders/About/Info.vue";
 import SkillsComponent from "../components/Folders/About/Skills.vue";
-import LinksComponent from "../components/Folders/About/Links.vue";
 import WorksList from "../components/Folders/Works/WorksList.vue";
 
 export default {
@@ -60,7 +56,7 @@ export default {
     TaskbarComponent,
     FilesComponent,
   },
-   data() {
+  data() {
     return {
       openedWindows: this.$route?.query?.open || "",
       windowWidth: 0,
@@ -96,7 +92,7 @@ export default {
           title: "Info",
           closed: true,
           component: InfoComponent,
-          folder: 'About me'
+          folder: "About me",
         },
         {
           query: "skills",
@@ -105,16 +101,7 @@ export default {
           title: "Skills",
           closed: true,
           component: SkillsComponent,
-          folder: 'About me'
-        },
-        {
-          query: "links",
-          icon: "notepad.png",
-          minimized: false,
-          title: "Links",
-          closed: true,
-          component: LinksComponent,
-          folder: 'About me'
+          folder: "About me",
         },
         {
           query: "works",
@@ -128,10 +115,10 @@ export default {
           query: "worksList",
           icon: "notepad.png",
           minimized: false,
-          title: "Works",
+          title: "Projects",
           closed: true,
           component: WorksList,
-          folder: 'Works'
+          folder: "Works",
         },
         {
           query: "contact",
@@ -143,7 +130,7 @@ export default {
         },
         {
           query: "calculator",
-          icon: "notepad.png",
+          icon: "calculator.png",
           minimized: false,
           title: "Calculator",
           closed: true,
@@ -222,16 +209,20 @@ export default {
       this.openedWindows = to.query.open;
       if (!this.updatedLinks) {
         if (from.query.open && from.query.open !== to.query.open) {
-          this.addPrev({query: from.query})
+          this.addPrev({ query: from.query });
         }
       } else {
-        this.updateUpdatedLinks()
+        this.updateUpdatedLinks();
       }
     },
   },
   methods: {
-        ...mapMutations([
-      'addPrev', 'addNext', 'removePrev', 'removeNext', 'updateUpdatedLinks'
+    ...mapMutations([
+      "addPrev",
+      "addNext",
+      "removePrev",
+      "removeNext",
+      "updateUpdatedLinks",
     ]),
     onUnMinimize(index) {
       this.tabs[index].minimized = false;

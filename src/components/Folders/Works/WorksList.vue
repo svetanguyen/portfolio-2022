@@ -31,7 +31,7 @@ export default {
     };
   },
   created() {
-    if (this.$route.query.max === 'worksList') {
+    if (this.$route.query.max === "worksList") {
       this.maximized = true;
     } else {
       this.maximized = false;
@@ -39,7 +39,7 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.query.max === 'worksList') {
+      if (to.query.max === "worksList") {
         this.maximized = true;
       } else {
         this.maximized = false;

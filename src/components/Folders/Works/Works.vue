@@ -1,26 +1,29 @@
 <template>
   <div class="p-4">
-      <files-component class="flex gap-4" :files="files" text="black" />
+    <files-component class="flex" :files="files" text="black" />
   </div>
 </template>
 
 <script>
-import FilesComponent from '../../Files.vue'
+import FilesComponent from "../../Files.vue";
 export default {
-    name: 'WorkComponent',
-    components: {
-        FilesComponent
-    },
-    data() {
-        return {
-            files: [
-                {  name: "Works", query: 'worksList', icon: 'notepad.png' },
-            ],
-        }
-    }
-}
+  name: "WorkComponent",
+  components: {
+    FilesComponent,
+  },
+  data() {
+    return {
+      files: [
+        { name: "Projects", query: "worksList", icon: "notepad.png" },
+        {
+          name: "Github",
+          icon: "github.png",
+          externalLink: "https://github.com/svetanguyen",
+        },
+      ],
+    };
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

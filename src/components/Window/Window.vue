@@ -6,10 +6,9 @@
     :class="{
       '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full z-10':
         maximized || windowWidth <= 1024,
-      'h-[70vh] absolute top-10 mx-auto lg:resize pb-1':
-        !maximized && windowWidth > 1024,
-      'lg:w-[550px]': !maximized && small,
-      'lg:w-[950px]': !maximized && !small,
+      'h-[70vh] absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
+      'lg:w-[380px] lg:!min-w-0': !maximized && small,
+      'lg:w-[950px] lg:resize': !maximized && !small,
     }"
     @dragstart="startDrag"
     @drag="dragging"
@@ -20,7 +19,7 @@
         windowWidth <= 1024 || maximized
           ? 0
           : (left && `${left}px`) ||
-            (small ? 'calc(50% - 275px)' : 'calc(50% - 475px)'),
+            (small ? 'calc(50% - 190px)' : 'calc(50% - 475px)'),
     }"
     :id="`window-${index}`"
   >
@@ -55,9 +54,11 @@
           class="cursor-pointer hover:opacity-80"
         />
       </div>
-      <div class="flex flex-wrap lg:flex-nowrap w-full px-2 pt-2">
+      <div
+        v-if="!hideSidebar"
+        class="flex flex-wrap lg:flex-nowrap w-full px-2 pt-2"
+      >
         <button
-          v-if="!hideSidebar"
           class="bg-button-gray mr-1 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
           :class="{
             'opacity-50 pointer-events-none': !prevLinks.length,
@@ -70,10 +71,9 @@
           Back
         </button>
         <button
-          v-if="!hideSidebar"
           class="bg-button-gray mr-3 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
           :class="{
-            'opacity-50 pointer-events-none': !nextLinks.length,
+            'opacity-50 pointer-events-none': !nextLinks.xlength,
             'hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]':
               nextLinks.length,
           }"
@@ -98,7 +98,9 @@
       class="flex font-normal py-6 px-2 text-lg leading-snug mr-1 mb-1 ml-0.5 rounded-b-2xl text-[25px] bg-pink-light lg:px-3 lg:py-2"
       :class="{
         ' h-full-screen-container-mob lg:h-full-screen-container ': maximized,
-        'lg:overflow-scroll lg:h-window-restored mb-2': !maximized,
+        'mb-2': !maximized,
+        'lg:h-window-restored-sm bg-pink-light': hideSidebar,
+        'lg:h-window-restored': !hideSidebar,
       }"
     >
       <sidebar-component
@@ -107,10 +109,10 @@
         :class="{ 'w-1/3': maximized, 'w-1/4': !maximized }"
       />
       <div
-        class="lg:ml-5 overflow-hidden w-full"
+        class="overflow-hidden w-full"
         :class="{
-          'lg:w-2/3': maximized && !hideSidebar,
-          'lg:w-3/4': !maximized && !hideSidebar,
+          'lg:w-2/3 lg:ml-5': maximized && !hideSidebar,
+          'lg:w-3/4 lg:ml-5': !maximized && !hideSidebar,
         }"
       >
         <div class="py-2 bg-white h-full shadow-lg">
@@ -118,7 +120,7 @@
             :class="{
               'px-5 my-[4px] flex-grow': maximized,
             }"
-            class="h-full overflow-y-scroll"
+            class="h-full overflow-y-scroll mr-1"
           >
             <div class="h-full w-full">
               <slot></slot>

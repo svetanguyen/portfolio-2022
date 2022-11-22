@@ -40,18 +40,18 @@ export default {
   computed: {
     ...mapState(["skills"]),
   },
-    components: {
-      HtmlIcon,
-      CssIcon,
-      ScssIcon,
-      ReactIcon,
-      VueIcon,
-      JavascriptIcon,
-      GitIcon,
-      HydrogenIcon,
-      NpmIcon,
-      TailwindIcon,
-    },
+  components: {
+    HtmlIcon,
+    CssIcon,
+    ScssIcon,
+    ReactIcon,
+    VueIcon,
+    JavascriptIcon,
+    GitIcon,
+    HydrogenIcon,
+    NpmIcon,
+    TailwindIcon,
+  },
 };
 </script>
 

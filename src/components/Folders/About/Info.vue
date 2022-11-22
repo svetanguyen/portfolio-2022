@@ -12,16 +12,22 @@
         worked there as a Frontend developer for two years before moving to
         Toronto. Now I'm ready to continue my journey here!
       </p>
-      <p>
+      <p class="mb-5">
         I have experience in developing and maintaining web sites on Shopify, as
         well as developing SPAs on ReactJS and Vue.js. You can read more on my
-        skills <router-link
-                  class="underline"
-                  :to="{ name: 'Home', query: { max: $route.query.max ? 'skills' : '', open: 'skills' } }"
-                >here.</router-link>
+        skills
+        <router-link
+          class="underline"
+          :to="{
+            name: 'Home',
+            query: { max: $route.query.max ? 'skills' : '', open: 'skills' },
+          }"
+          >here.</router-link
+        >
       </p>
       <p>
-        Fun fact: I liked learning languages so much i started learning programming ones:D
+        Fun fact: I liked learning languages so much i started learning
+        programming ones:D
       </p>
       <quotes-icon
         class="absolute right-0 top-full translate-y-[20px]"

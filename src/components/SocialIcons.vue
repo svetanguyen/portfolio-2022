@@ -12,7 +12,11 @@
       </a>
     </li>
     <li class="shadowed">
-      <a class="text-center" target="_blank" href="https://github.com/svetanguyen">
+      <a
+        class="text-center"
+        target="_blank"
+        href="https://github.com/svetanguyen"
+      >
         <Github class="mx-auto" />
         <p
           class="text-[17px] leading-snug text-black text-center mt-3 lg:text-white"
@@ -24,7 +28,8 @@
     </li>
     <li class="shadowed">
       <a
-        class="text-center" target="_blank"
+        class="text-center"
+        target="_blank"
         href="https://www.linkedin.com/in/sveta-nguyen-493a42218/"
       >
         <Linkedin class="mx-auto" />
@@ -67,34 +72,33 @@ export default {
   }
   li {
     &:hover {
-        p {
-          background: #328adb;
-          color: #fff;
-        }
-        svg {
-          rect {
-            fill: #761B73;
-            & + g {
-              path {
-                fill: #ae9f5f;
-
-              }
+      p {
+        background: #328adb;
+        color: #fff;
+      }
+      svg {
+        rect {
+          fill: #761b73;
+          & + g {
+            path {
+              fill: #ae9f5f;
             }
           }
-          g > g {
-            &:first-child {
-              path {
-                fill: #ae9f5f;
-              }
+        }
+        g > g {
+          &:first-child {
+            path {
+              fill: #ae9f5f;
             }
-            & + g {
-              path {
-                fill: #761b73;
-              }
+          }
+          & + g {
+            path {
+              fill: #761b73;
             }
           }
         }
       }
+    }
   }
   svg {
     vertical-align: middle;

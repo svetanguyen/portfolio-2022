@@ -40,7 +40,7 @@
       </div>
 
       <button
-      class="w-full lg:w-[312px] mx-auto block text-center rounded-lg rounded-br-2xl bg-button-gray shadow-sm text-lg py-3 px-[30px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+        class="w-full lg:w-[312px] mx-auto block text-center rounded-lg rounded-br-2xl bg-button-gray shadow-sm text-lg py-3 px-[30px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
         type="submit"
       >
         Send

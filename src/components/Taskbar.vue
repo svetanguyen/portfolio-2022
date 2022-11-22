@@ -37,9 +37,9 @@
         </div>
       </div>
     </div>
-    <div class="hidden lg:flex gap-8 flex-grow lg:justify-end">
-      <social-icons class="lg:gap-6" />
-      <div class="text-[18px] leading-none flex flex-col gap-2">
+    <div class="flex gap-8 flex-grow justify-end items-center">
+      <social-icons class="gap-3 lg:gap-6" />
+      <div class="hidden text-[18px] leading-none lg:flex flex-col gap-2">
         <p class="font-sans">@ Hang_Nguyen 2022</p>
         <p class="font-sans">Design: Tin Bui</p>
       </div>
@@ -68,7 +68,7 @@ export default {
   },
   watch: {
     $route() {
-      this.showNav = false
+      this.showNav = false;
     },
   },
   methods: {

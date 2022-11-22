@@ -3,18 +3,18 @@
 </template>
 
 <script>
-
 export default {
   name: "App",
 };
 </script>
 
 <style lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Mulish&display=swap");
 
 :root {
   --pink: #db8ee7;
   --pink-light: #f9cbd5;
-  --pink-bright: #D24ECD;
+  --pink-bright: #d24ecd;
   --background: linear-gradient(
     180deg,
     #c273ed 0%,
@@ -26,7 +26,7 @@ export default {
   --body-font: "W95FA";
   --border-gray: #aaa;
   --button-gray: #ccc;
-  --yellow: #F9ECB7;
+  --yellow: #f9ecb7;
 }
 
 * {
@@ -54,5 +54,4 @@ body {
   overflow: hidden;
   padding-bottom: 84px;
 }
-
 </style>

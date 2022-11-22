@@ -110,7 +110,7 @@
 
 <script>
 export default {
-    name: 'link-icon'
+  name: "link-icon",
 };
 </script>
 

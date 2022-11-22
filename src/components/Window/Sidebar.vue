@@ -1,9 +1,7 @@
 <template>
   <div class="bg-pink-light">
     <div class="shadow-lg p-4 bg-white overflow-scroll h-full">
-      <ul
-        class="flex items-center text-xl relative text-ellipsis"
-      >
+      <ul class="flex items-center text-xl relative text-ellipsis">
         <li
           class="relative folder pl-4"
           :class="{
@@ -56,55 +54,98 @@
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center"
-                  :to="{ name: 'Home', query: { max: $route.query.max ? 'about' : '', open: 'about' } }"
+                  :to="{
+                    name: 'Home',
+                    query: {
+                      max: $route.query.max ? 'about' : '',
+                      open: 'about',
+                    },
+                  }"
                 >
                   <img
                     class="w-5 h-5"
-                    :src="require(`../../assets/images/document.png`)"
-                    alt="document"
+                    :src="require(`../../assets/images/heart.png`)"
+                    alt="heart"
                   />
-                  <span :class="{'bg-blue text-white': $route.query.open === 'about'}" class="opacity-80 inline-block px-2 whitespace-nowrap"> About me </span>
+                  <span
+                    :class="{
+                      'bg-blue text-white': $route.query.open === 'about',
+                    }"
+                    class="opacity-80 inline-block px-2 whitespace-nowrap"
+                  >
+                    About me
+                  </span>
                 </router-link>
               </div>
               <ul v-if="folder2Opened" class="pl-1">
                 <li class="file relative items-center">
                   <router-link
                     class="flex items-center"
-                    :to="{ name: 'Home', query: { max: $route.query.max ? 'info' : '', open: 'info' } }"
+                    :to="{
+                      name: 'Home',
+                      query: {
+                        max: $route.query.max ? 'info' : '',
+                        open: 'info',
+                      },
+                    }"
                   >
                     <img
                       class="w-5 h-5"
                       :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
                     />
-                    <span :class="{'bg-blue text-white': $route.query.open === 'info'}" class="opacity-80 px-2 whitespace-nowrap"> Info </span>
+                    <span
+                      :class="{
+                        'bg-blue text-white': $route.query.open === 'info',
+                      }"
+                      class="opacity-80 px-2 whitespace-nowrap"
+                    >
+                      Info
+                    </span>
                   </router-link>
                 </li>
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center"
-                    :to="{ name: 'Home', query: { max: $route.query.max ? 'skills' : '', open: 'skills' } }"
+                    :to="{
+                      name: 'Home',
+                      query: {
+                        max: $route.query.max ? 'skills' : '',
+                        open: 'skills',
+                      },
+                    }"
                   >
                     <img
                       class="w-5 h-5"
                       :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
                     />
-                    <span :class="{'bg-blue text-white': $route.query.open === 'skills'}" class="opacity-80 px-2 whitespace-nowrap"> Skills </span>
+                    <span
+                      :class="{
+                        'bg-blue text-white': $route.query.open === 'skills',
+                      }"
+                      class="opacity-80 px-2 whitespace-nowrap"
+                    >
+                      Skills
+                    </span>
                   </router-link>
                 </li>
                 <li class="flex file relative items-center gap-2">
-                  <router-link
+                  <a
                     class="flex items-center"
-                    :to="{ name: 'Home', query: { max: $route.query.max ? 'links' : '', open: 'links' } }"
+                    href="https://drive.google.com/file/d/1FTlAMC4kJaolMn6h2vkj6Kh0y1_lXHJk/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <img
                       class="w-5 h-5"
-                      :src="require(`../../assets/images/notepad.png`)"
+                      :src="require(`../../assets/images/document.png`)"
                       alt="notepad"
                     />
-                    <span :class="{'bg-blue text-white': $route.query.open === 'links'}" class="opacity-80 px-2 whitespace-nowrap"> Links </span>
-                  </router-link>
+                    <span class="opacity-80 px-2 whitespace-nowrap">
+                      Resume
+                    </span>
+                  </a>
                 </li>
               </ul>
             </li>
@@ -128,46 +169,102 @@
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center"
-                  :to="{ name: 'Home',  query: { max: $route.query.max ? 'works' : '', open: 'works' } }"
+                  :to="{
+                    name: 'Home',
+                    query: {
+                      max: $route.query.max ? 'works' : '',
+                      open: 'works',
+                    },
+                  }"
                 >
                   <img
                     class="w-5 h-5"
                     :src="require(`../../assets/images/folder.png`)"
                     alt="folder"
                   />
-                  <span :class="{'bg-blue text-white': $route.query.open === 'works'}" class="opacity-80 px-2 whitespace-nowrap"> Work </span>
+                  <span
+                    :class="{
+                      'bg-blue text-white': $route.query.open === 'works',
+                    }"
+                    class="opacity-80 px-2 whitespace-nowrap"
+                  >
+                    Work
+                  </span>
                 </router-link>
               </div>
               <ul v-if="folder3Opened" class="pl-1">
                 <li class="flex file relative items-center gap-2">
                   <router-link
                     class="flex items-center"
-                    :to="{ name: 'Home', query: { max: $route.query.max ? 'worksList' : '', open: 'worksList' } }"
+                    :to="{
+                      name: 'Home',
+                      query: {
+                        max: $route.query.max ? 'worksList' : '',
+                        open: 'worksList',
+                      },
+                    }"
                   >
                     <img
                       class="w-5 h-5"
                       :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
                     />
-                    <span :class="{'bg-blue text-white': $route.query.open === 'worksList'}" class="opacity-80 px-2 whitespace-nowrap">
-                      Works list
+                    <span
+                      :class="{
+                        'bg-blue text-white': $route.query.open === 'worksList',
+                      }"
+                      class="opacity-80 px-2 whitespace-nowrap"
+                    >
+                      Projects
                     </span>
                   </router-link>
                 </li>
+                <li class="flex file relative items-center gap-2">
+                  <a
+                    class="flex items-center"
+                    href="https://github.com/svetanguyen"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      class="w-5 h-5"
+                      :src="require(`../../assets/images/github.png`)"
+                      alt="notepad"
+                    />
+                    <span class="opacity-80 px-2 whitespace-nowrap">
+                      Github
+                    </span>
+                  </a>
+                </li>
               </ul>
             </li>
-            <li class="relative before:absolute before:-left-[47px] before:top-1/2 before:-translate-y-1/2 before:right-full before:border-dashed before:w-[70px] before:border-black before:border-b-[0.3px] pl-5">
+            <li
+              class="relative before:absolute before:-left-[47px] before:top-1/2 before:-translate-y-1/2 before:right-full before:border-dashed before:w-[70px] before:border-black before:border-b-[0.3px] pl-5"
+            >
               <div class="flex items-center gap-2">
                 <router-link
                   class="flex items-center"
-                  :to="{ name: 'Home',  query: { max: $route.query.max ? 'contact' : '', open: 'contact' } }"
+                  :to="{
+                    name: 'Home',
+                    query: {
+                      max: $route.query.max ? 'contact' : '',
+                      open: 'contact',
+                    },
+                  }"
                 >
                   <img
                     class="w-5 h-5"
                     :src="require(`../../assets/images/files.png`)"
                     alt="files"
                   />
-                  <span :class="{'bg-blue text-white': $route.query.open === 'contact'}" class="opacity-80 px-2 whitespace-nowrap"> Contact </span>
+                  <span
+                    :class="{
+                      'bg-blue text-white': $route.query.open === 'contact',
+                    }"
+                    class="opacity-80 px-2 whitespace-nowrap"
+                  >
+                    Contact
+                  </span>
                 </router-link>
               </div>
             </li>
