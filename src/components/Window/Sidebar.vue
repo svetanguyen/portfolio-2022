@@ -91,7 +91,7 @@
                   >
                     <img
                       class="w-5 h-5"
-                      :src="require(`../../assets/images/notepad.png`)"
+                      :src="require(`../../assets/images/document.png`)"
                       alt="notepad"
                     />
                     <span
@@ -117,7 +117,7 @@
                   >
                     <img
                       class="w-5 h-5"
-                      :src="require(`../../assets/images/notepad.png`)"
+                      :src="require(`../../assets/images/document.png`)"
                       alt="notepad"
                     />
                     <span
@@ -264,6 +264,36 @@
                     class="opacity-80 px-2 whitespace-nowrap"
                   >
                     Contact
+                  </span>
+                </router-link>
+              </div>
+            </li>
+             <li
+              class="relative before:absolute before:-left-[47px] before:top-1/2 before:-translate-y-1/2 before:right-full before:border-dashed before:w-[70px] before:border-black before:border-b-[0.3px] pl-5"
+            >
+              <div class="flex items-center gap-2">
+                <router-link
+                  class="flex items-center"
+                  :to="{
+                    name: 'Home',
+                    query: {
+                      max: '',
+                      open: 'calculator',
+                    },
+                  }"
+                >
+                  <img
+                    class="w-5 h-5"
+                    :src="require(`../../assets/images/calculator.png`)"
+                    alt="files"
+                  />
+                  <span
+                    :class="{
+                      'bg-blue text-white': $route.query.open === 'calculator',
+                    }"
+                    class="opacity-80 px-2 whitespace-nowrap"
+                  >
+                    Calculator
                   </span>
                 </router-link>
               </div>

@@ -14,8 +14,8 @@ export default {
   data() {
     return {
       files: [
-        { name: "Info", query: "info", icon: "files.png" },
-        { name: "Skills", query: "skills", icon: "files.png" },
+        { name: "Info", query: "info", icon: "document.png" },
+        { name: "Skills", query: "skills", icon: "document.png" },
         {
           name: "Resume",
           icon: "document.png",

@@ -159,7 +159,6 @@ export default {
       filesMobile: [
         {
           name: "My portfolio",
-          maximized: true,
           icon: "computer.png",
           query: "portfolio",
         },

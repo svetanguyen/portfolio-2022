@@ -42,7 +42,7 @@
 import LinkIcon from "../icons/Link.vue";
 export default {
   name: "files-component",
-  props: ["files", "text"],
+  props: ["files", "text", "hideSidebar"],
   components: {
     LinkIcon,
   },
@@ -52,7 +52,7 @@ export default {
         path: "/",
         query: {
           max:
-            this.files[index].maximized || this.$route.query.max
+            ((this.files[index].maximized || this.$route.query.max) && !this.files[index].hideSidebar)
               ? this.files[index].query
               : "",
           open: this.files[index].query,

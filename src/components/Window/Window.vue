@@ -97,10 +97,10 @@
     <div
       class="flex font-normal py-6 px-2 text-lg leading-snug mr-1 mb-1 ml-0.5 rounded-b-2xl text-[25px] bg-pink-light lg:px-3 lg:py-2"
       :class="{
-        ' h-full-screen-container-mob lg:h-full-screen-container ': maximized,
+        'lg:h-full-screen-container ': maximized,
         'mb-2': !maximized,
-        'lg:h-window-restored-sm bg-pink-light': hideSidebar,
-        'lg:h-window-restored': !hideSidebar,
+        'lg:h-window-restored-sm bg-pink-light h-full-screen-container-mob-sm': hideSidebar,
+        'lg:h-window-restored h-full-screen-container-mob ': !hideSidebar,
       }"
     >
       <sidebar-component

@@ -32,6 +32,7 @@ module.exports = {
         'full-screen-mob': 'calc(100vh - 84px)',
         'full-screen-container': 'calc(100vh - 117px)',
         'full-screen-container-mob': 'calc(100% - 95px)',
+        'full-screen-container-mob-sm': 'calc(100% - 40px)',
         'window-content': 'calc(100% - 40px)',
         'window-content-mob': 'calc(100% - 42px)',
         'window-restored': 'calc(100% - 81px)',
