@@ -73,7 +73,7 @@
         <button
           class="bg-button-gray mr-3 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
           :class="{
-            'opacity-50 pointer-events-none': !nextLinks.xlength,
+            'opacity-50 pointer-events-none': !nextLinks.length,
             'hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]':
               nextLinks.length,
           }"
