@@ -52,6 +52,7 @@ import InfoComponent from "../components/Folders/About/Info.vue";
 import SkillsComponent from "../components/Folders/About/Skills.vue";
 import LinksComponent from "../components/Folders/About/Links.vue";
 import WorksList from "../components/Folders/Works/WorksList.vue";
+import TictactoeComponent from '../components/TicTacToe.vue';
 
 export default {
   name: "home-page",
@@ -148,6 +149,17 @@ export default {
           title: "Calculator",
           closed: true,
           component: CalculatorComponent,
+          hideSidebar: true,
+          disableMaximize: true,
+          small: true,
+        },
+        {
+          query: "tictactoe",
+          icon: "notepad.png",
+          minimized: false,
+          title: "Tictactoe",
+          closed: true,
+          component: TictactoeComponent,
           hideSidebar: true,
           disableMaximize: true,
           small: true,

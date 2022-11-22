@@ -37,6 +37,15 @@
         <span class="ml-3 block">Calculator</span></router-link
       >
     </li>
+    <li>
+      <router-link
+        class="p-4 text-[23px] lg:text-xl leading-none flex items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
+        :to="{ name: 'Home', query: {max: '', open: 'tictactoe'} }"
+      >
+        <img class="w-7" :src="require(`../assets/images/files.png`)" alt="files" />
+        <span class="ml-3 block">Tictactoe</span></router-link
+      >
+    </li>
   </ul>
 </template>
 
