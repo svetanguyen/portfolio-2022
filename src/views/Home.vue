@@ -255,7 +255,7 @@ export default {
 
 <style lang="scss" scoped>
 .main {
-  background: url("../assets/images/bg-1.png") no-repeat 50% 50% / cover;
+  background: url("../assets/images/bg-1.jpg") no-repeat 50% 50% / cover;
   // cursor: url("../assets/imagπes/cursor.png"), auto;
 }
 

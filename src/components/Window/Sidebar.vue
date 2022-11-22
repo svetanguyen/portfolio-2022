@@ -66,6 +66,8 @@
                     class="w-5 h-5"
                     :src="require(`../../assets/images/heart.png`)"
                     alt="heart"
+                    width="20"
+                    height="20"
                   />
                   <span
                     :class="{
@@ -93,6 +95,8 @@
                       class="w-5 h-5"
                       :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
+                      width="20"
+                      height="20"
                     />
                     <span
                       :class="{
@@ -119,6 +123,8 @@
                       class="w-5 h-5"
                       :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
+                      width="20"
+                      height="20"
                     />
                     <span
                       :class="{
@@ -141,6 +147,8 @@
                       class="w-5 h-5"
                       :src="require(`../../assets/images/document.png`)"
                       alt="notepad"
+                      width="20"
+                      height="20"
                     />
                     <span class="opacity-80 px-2 whitespace-nowrap">
                       Resume
@@ -181,6 +189,8 @@
                     class="w-5 h-5"
                     :src="require(`../../assets/images/folder.png`)"
                     alt="folder"
+                    width="20"
+                    height="20"
                   />
                   <span
                     :class="{
@@ -208,6 +218,8 @@
                       class="w-5 h-5"
                       :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
+                      width="20"
+                      height="20"
                     />
                     <span
                       :class="{
@@ -230,6 +242,8 @@
                       class="w-5 h-5"
                       :src="require(`../../assets/images/github.png`)"
                       alt="notepad"
+                      width="20"
+                      height="20"
                     />
                     <span class="opacity-80 px-2 whitespace-nowrap">
                       Github
@@ -256,6 +270,8 @@
                     class="w-5 h-5"
                     :src="require(`../../assets/images/files.png`)"
                     alt="files"
+                    width="20"
+                    height="20"
                   />
                   <span
                     :class="{
@@ -268,7 +284,7 @@
                 </router-link>
               </div>
             </li>
-             <li
+            <li
               class="relative before:absolute before:-left-[47px] before:top-1/2 before:-translate-y-1/2 before:right-full before:border-dashed before:w-[70px] before:border-black before:border-b-[0.3px] pl-5"
             >
               <div class="flex items-center gap-2">
@@ -286,6 +302,8 @@
                     class="w-5 h-5"
                     :src="require(`../../assets/images/calculator.png`)"
                     alt="files"
+                    width="20"
+                    height="20"
                   />
                   <span
                     :class="{

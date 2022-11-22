@@ -31,6 +31,8 @@
           class="w-6"
           :src="require(`../../assets/images/${icon}`)"
           alt="heart"
+          width="24"
+          height="24"
         />
         <h4 class="text-[17px] lg:text-[25px] leading-none font-serif">
           {{ title }}
