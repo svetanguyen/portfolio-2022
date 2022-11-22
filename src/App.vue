@@ -52,6 +52,20 @@ body {
   background: var(--background);
   height: 100vh;
   overflow: hidden;
+  position: relative;
   padding-bottom: 84px;
+    &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("./assets/images/filter.png") no-repeat 50% 50% / cover;
+    z-index: 100;
+    cursor: none;
+    pointer-events: none;
+  }
 }
 </style>
