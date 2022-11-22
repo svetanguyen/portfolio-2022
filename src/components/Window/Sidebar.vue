@@ -91,7 +91,7 @@
                   >
                     <img
                       class="w-5 h-5"
-                      :src="require(`../../assets/images/document.png`)"
+                      :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
                     />
                     <span
@@ -117,7 +117,7 @@
                   >
                     <img
                       class="w-5 h-5"
-                      :src="require(`../../assets/images/document.png`)"
+                      :src="require(`../../assets/images/notepad.png`)"
                       alt="notepad"
                     />
                     <span
