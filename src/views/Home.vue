@@ -1,6 +1,6 @@
 <template>
   <div
-    class="main min-h-page overflow-hidden py-11 lg:py-24 max-w-container mx-auto px-6 lg:px-25 relative h-full-screen-mob lg:h-full-screen"
+    class="main min-h-page overflow-hidden py-11 lg:py-24 mx-auto px-6 lg:px-25 relative h-full-screen-mob lg:h-full-screen"
   >
     <files-component class="absolute left-8 top-8 lg:top-20" :files="files" />
     <window-component
@@ -255,15 +255,8 @@ export default {
 
 <style lang="scss" scoped>
 .main {
-  background: url("../assets/images/bg-1.png") no-repeat 0 0 / cover;
+  background: url("../assets/images/bg-1.png") no-repeat 50% 50% / cover;
   // cursor: url("../assets/imagπes/cursor.png"), auto;
 }
-body {
-  // cursor: url("../assets/images/cursor.png"), auto;
-}
-@media screen and (min-width: 1024px) {
-  .main {
-    background: url("../assets/images/bg-1.png") no-repeat 0 0 / cover;
-  }
-}
+
 </style>
