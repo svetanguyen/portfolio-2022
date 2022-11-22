@@ -11,7 +11,7 @@
           v-if="!file.externalLink"
         >
           <img
-            class="mx-auto mb-2 w-12"
+            class="mx-auto mb-2 h-[50px]"
             :src="require(`../assets/images/${file.icon}`)"
             :alt="file.name"
           />
@@ -20,13 +20,13 @@
           </p>
         </button>
         <a class="no-underline" :href="file.externalLink" target="_blank" rel="noopener noreferrer" v-else>
-          <div class="relative mb-2 mx-auto w-12">
+          <div class="relative mb-2 mx-auto h-[50px]">
             <img
-              class="w-full"
+              class="w-full h-full object-contain"
               :src="require(`../assets/images/${file.icon}`)"
               :alt="file.name"
             />
-            <link-icon class="absolute w-4 h-4 left-0 bottom-0"/>
+            <link-icon class="absolute w-4 h-4 left-3 -bottom-1"/>
           </div>
           <p :class="{'text-black': text === 'black'}">
             {{ file.name }}

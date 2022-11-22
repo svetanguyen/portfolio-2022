@@ -1,6 +1,6 @@
 <template>
   <div class="relative md:min-w-[600px] w-full md:w-auto">
-      <files-component class="flex gap-4 px-4" text="black" :files="files" />
+      <files-component class="flex gap-4 lg:gap-7 lg:pt-6 px-4 lg:px-6" text="black" :files="files" />
   </div>
 </template>
 
