@@ -132,7 +132,7 @@
                 </li>
                 <li class="flex file relative items-center gap-2">
                   <a
-                    class="flex items-center"
+                    class="flex items-center underline"
                     href="https://drive.google.com/file/d/1FTlAMC4kJaolMn6h2vkj6Kh0y1_lXHJk/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -221,7 +221,7 @@
                 </li>
                 <li class="flex file relative items-center gap-2">
                   <a
-                    class="flex items-center"
+                    class="flex items-center underline"
                     href="https://github.com/svetanguyen"
                     target="_blank"
                     rel="noopener noreferrer"
