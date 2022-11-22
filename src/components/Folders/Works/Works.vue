@@ -1,0 +1,29 @@
+<template>
+  <div class="p-4">
+    <files-component class="flex" :files="files" text="black" />
+  </div>
+</template>
+
+<script>
+import FilesComponent from "../../Files.vue";
+export default {
+  name: "WorkComponent",
+  components: {
+    FilesComponent,
+  },
+  data() {
+    return {
+      files: [
+        { name: "Projects", query: "worksList", icon: "notepad.png" },
+        {
+          name: "Github",
+          icon: "github.png",
+          externalLink: "https://github.com/svetanguyen",
+        },
+      ],
+    };
+  },
+};
+</script>
+
+<style></style>
