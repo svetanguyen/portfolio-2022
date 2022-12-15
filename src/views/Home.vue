@@ -101,6 +101,8 @@ export default {
       query: {
         max: this.$route.query?.max,
         open: this.$route.query?.open || "hello",
+        file: this.$route.query.file,
+        active: this.$route.query?.open || this.$route.query?.file
       },
     });
     this.openedWindows = this.$route?.query?.open || "hello";
@@ -129,7 +131,7 @@ export default {
       this.tabs[index].minimized = false;
       this.$router.push({
         path: this.$route.path,
-        query: { max: this.$route.query?.max, open: this.tabs[index].query },
+        query: { max: this.$route.query?.max, open: !this.tabs[index].isFile ? this.tabs[index].query : this.$route.query?.open, file: this.tabs[index].isFile ? this.tabs[index].query : this.$route?.query?.file, active: this.$route.query.active },
       });
     },
     onMinimize(index) {

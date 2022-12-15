@@ -12,8 +12,10 @@
         :to="{
           name: 'Home',
           query: {
-            max: 'about',
+            max: $route.query.max ? 'about' : '',
             open: 'about',
+            file: $route.query.file,
+            active: 'about'
           },
         }"
         >More about me</router-link
@@ -23,8 +25,10 @@
         :to="{
           name: 'Home',
           query: {
-            max: 'worksList',
+            max: $route.query.max ? 'worksList' : '',
             open: 'worksList',
+            file: $route.query.file,
+            active: 'worksList'
           },
         }"
         >My works</router-link

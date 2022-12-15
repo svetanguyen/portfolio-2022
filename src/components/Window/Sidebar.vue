@@ -59,6 +59,8 @@
                     query: {
                       max: $route.query.max ? 'about' : '',
                       open: 'about',
+                      file: $route.query.file ? $route.query.file : '',
+                      active: 'about'
                     },
                   }"
                 >
@@ -88,6 +90,8 @@
                       query: {
                         max: $route.query.max ? 'info' : '',
                         open: 'info',
+                        file: $route.query.file ? $route.query.file : '',
+                        active: 'info'
                       },
                     }"
                   >
@@ -116,6 +120,8 @@
                       query: {
                         max: $route.query.max ? 'skills' : '',
                         open: 'skills',
+                        file: $route.query.file ? $route.query.file : '',
+                        active: 'skills'
                       },
                     }"
                   >
@@ -182,6 +188,8 @@
                     query: {
                       max: $route.query.max ? 'works' : '',
                       open: 'works',
+                      file: $route.query.file ? $route.query.file : '',
+                      active: 'works'
                     },
                   }"
                 >
@@ -211,6 +219,8 @@
                       query: {
                         max: $route.query.max ? 'worksList' : '',
                         open: 'worksList',
+                        file: $route.query.file ? $route.query.file : '',
+                        active: 'worksList'
                       },
                     }"
                   >
@@ -262,7 +272,9 @@
                     name: 'Home',
                     query: {
                       max: $route.query.max ? 'contact' : '',
-                      open: 'contact',
+                      file: 'contact',
+                      open: $route.query.open ? $route.query.open : '',
+                      active: 'contact'
                     },
                   }"
                 >
@@ -294,7 +306,9 @@
                     name: 'Home',
                     query: {
                       max: '',
-                      open: 'calculator',
+                      file: 'calculator',
+                      open: $route.query.open ? $route.query.open : '',
+                      active: 'calculator'
                     },
                   }"
                 >

@@ -91,6 +91,8 @@ export const store = createStore({
           title: "Contact",
           closed: true,
           component: 'ContactComponent',
+          isFile: true,
+          hideSidebar: true
         },
         {
           query: "calculator",

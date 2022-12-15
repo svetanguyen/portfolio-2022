@@ -1,7 +1,7 @@
 <template>
   <div
     :style="{ position: position }"
-    class="left-0 w-full bg-pink-light p-4 bottom-0 relative shadow-sm flex z-10 justify-between taskbar"
+    class="left-0 w-full bg-pink-light p-4 bottom-0 relative shadow-sm flex z-20 justify-between taskbar"
   >
     <navigation-component :windowWidth="windowWidth" v-if="showNav" />
     <div class="flex h-full">

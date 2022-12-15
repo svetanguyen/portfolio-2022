@@ -5,7 +5,7 @@
         class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
         :to="{
           name: 'Home',
-          query: { max: $route.query.max && !link.disableMax ? link.query : '', open: !link.isFile ? link.query : $route.query.open, file: link.isFile ? link.query : $route.query.file },
+          query: { max: $route.query.max && !link.disableMax ? link.query : '', open: !link.isFile ? link.query : $route.query.open, file: link.isFile ? link.query : $route.query.file, active: link.query },
         }"
       >
         <img
@@ -48,7 +48,8 @@ export default {
           img: 'files.png',
           alt: 'files',
           title: 'Contacts',
-          isFile: false
+          isFile: true,
+          hideSideBar: true
         },
         {
           query: 'calculator',

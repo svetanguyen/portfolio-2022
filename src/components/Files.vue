@@ -59,8 +59,9 @@ export default {
             ((this.files[index].maximized || this.$route.query.max) && !this.files[index].hideSidebar)
               ? this.files[index].query
               : "",
-          open: !this.isFile ? this.files[index].query : this.$route.query.open,
-          file: this.isFile ? this.files[index].query : this.$route.query.file,
+          open: !this.files[index].isFile ? this.files[index].query : this.$route.query.open,
+          file: this.files[index].isFile ? this.files[index].query : this.$route.query.file,
+          active: this.files[index].query
         },
       });
     },

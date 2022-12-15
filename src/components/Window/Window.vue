@@ -4,13 +4,16 @@
     ref="window"
     class="shadow-sm rounded-2xl overflow-hidden transition-all lg:min-w-[600px]"
     :class="{
-      '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full z-10':
+      '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full':
         maximized || windowWidth <= 1024,
       'h-[70vh] absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
       'lg:w-[380px] lg:!min-w-0': !maximized && small,
       'lg:w-[950px] lg:resize': !maximized && !small,
+      'z-20': isActive,
+      'z-10': !isActive
     }"
     @dragstart="startDrag"
+    @mousedown="addIsDragged"
     @drag="dragging"
     :draggable="maximized || windowWidth <= 1024 ? false : true"
     :style="{
@@ -164,6 +167,8 @@ export default {
       startLeft: 0,
       endTop: 0,
       endLeft: 0,
+      isDragged: false,
+      isActive: false
     };
   },
   props: [
@@ -193,6 +198,7 @@ export default {
     ...mapState(["prevLinks", "nextLinks", "updatedLinks"]),
   },
   created() {
+    this.updateActive(this.$route.query.active === this.query)
     if (this.$route.query.max === this.query) {
       this.onMaximize();
     }
@@ -203,7 +209,7 @@ export default {
     if (this.$route.query.open === this.query) {
       this.$router.push({
         path: this.$route.path,
-        query: { max: this.$route.query.max, open: this.query },
+        query: { max: this.$route.query.max, open: this.query, file: this.$route.query.file, active: this.query },
       });
       this.$emit("open", this.index);
     } else if (this.$route.query.file === this.query && this.isFile) {
@@ -213,6 +219,7 @@ export default {
           max: this.$route.query.max,
           open: this.$route.query.open,
           file: this.query,
+          active: this.query
         },
       });
       this.$emit("open", this.index);
@@ -223,6 +230,7 @@ export default {
           max: this.$route.query.max,
           open: this.$route.query.open,
           file: this.$route.query.file,
+          active: this.$route.query.active
         },
       });
       this.$emit("close", this.index);
@@ -233,7 +241,8 @@ export default {
   },
   watch: {
     $route(to) {
-      this.reset();
+      this.isDragged = false
+      this.updateActive(to.query.active === this.query)
       if (to.query.max === this.query) {
         this.onMaximize();
       } else {
@@ -287,6 +296,7 @@ export default {
           max: "",
           open: !this.isFile && this.query,
           file: this.isFile && this.query,
+          active: this.query
         },
       });
     },
@@ -299,6 +309,7 @@ export default {
           max: "",
           open: !this.isFile ? "" : this.$route.path.open,
           file: this.isFile ? "" : this.$route.path.file,
+          active: this.isFile ? this.$route.path.open : this.$route.path.file
         },
       });
       this.onRestore();
@@ -321,35 +332,44 @@ export default {
             max: this.query,
             open: this.openedWindows,
             file: this.openedFile,
+            active: this.query
           },
         });
       } else {
         this.$router.push({
           path: this.$route.path,
-          query: { max: "", open: this.openedWindows, file: this.openedFile },
+          query: { max: "", open: this.openedWindows, file: this.openedFile, active: this.query },
         });
       }
     },
+    updateActive(active) {
+      this.isActive = active
+    },
+    addIsDragged() {
+      this.isDragged = true
+      this.$router.push({path: this.$route.path, query: {...this.$route.query, active: this.query}})
+    },
     startDrag(e) {
+      if (!this.isDragged) return
       if (this.maximized || this.window <= 1024) return;
       this.startTop = e.clientY;
       this.startLeft = e.clientX;
-      const windowEl = document.querySelector(`#window-${this.index}`);
-      windowEl.dataTransfer?.setData("text", `window-${this.index}`);
-      console.log("data transfer", windowEl.dataTransfer);
     },
     dragging() {
+      if (!this.isDragged) return
       if (this.maximized || this.window <= 1024) return;
       const windowEl = document.querySelector(`#window-${this.index}`);
       this.getPosition(windowEl);
     },
     drop(e) {
+      if (!this.isDragged) return
       if (this.maximized || this.window <= 1024) return;
       e.preventDefault();
       this.endTop = e.clientY;
       this.endLeft = e.clientX;
     },
     endDrag() {
+      if (!this.isDragged) return
       if (this.maximized || this.window <= 1024) return;
       const windowEl = document.querySelector(`#window-${this.index}`);
       if (windowEl) {
@@ -363,12 +383,15 @@ export default {
             : this.left - (this.startLeft - this.endLeft);
         windowEl.style.top = this.top;
         windowEl.style.left = this.left;
+        this.isDragged = false
       }
     },
     allowDrop(e) {
+      if (!this.isDragged) return
       e.preventDefault();
     },
     getPosition(windowEl) {
+      if (!this.isDragged) return
       if (windowEl) {
         var rect = windowEl?.getBoundingClientRect();
         this.top = rect?.top;
@@ -386,6 +409,8 @@ export default {
         query: {
           max: this.$route.query.max ? prevLinkMax || "" : "",
           open: prevLinkOpen || "",
+          file: this.$route.query.file,
+          active: prevLinkOpen || ""
         },
       });
     },
@@ -400,6 +425,8 @@ export default {
         query: {
           max: this.$route.query.max ? nextLinkMax || "" : "",
           open: nextLinkOpen || "",
+          file: this.$route.query.file,
+          active: nextLinkOpen || ""
         },
       });
     },

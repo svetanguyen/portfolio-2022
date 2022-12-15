@@ -18,7 +18,7 @@ export default {
       files: [
         { name: "About me", query: "about", icon: "heart.png" },
         { name: "Works", query: "works", icon: "folder.png" },
-        { name: "Contact", query: "contact", icon: "files.png" },
+        { name: "Contact", query: "contact", icon: "files.png", isFile: true, hideSidebar: true },
         { name: "Calculator", query: "calculator", icon: "calculator.png", hideSidebar: true, isFile: true },
       ],
     };

@@ -20,7 +20,7 @@
           class="underline"
           :to="{
             name: 'Home',
-            query: { max: $route.query.max ? 'skills' : '', open: 'skills' },
+            query: { max: $route.query.max ? 'skills' : '', open: 'skills', file: $route.query.file, active: 'skills' },
           }"
           >here.</router-link
         >
