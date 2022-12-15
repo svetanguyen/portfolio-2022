@@ -39,22 +39,31 @@
         </h4>
       </div>
       <div class="flex">
-        <minimize-icon
+        <button
           @click="minimize(index)"
           class="cursor-pointer hover:opacity-80"
-        />
-        <maximize-icon
+          aria-label="minimize"
+        >
+          <minimize-icon />
+        </button>
+        <button
           @click="updateMaximize"
           class="cursor-pointer hover:opacity-80"
           :class="{
             'pointer-events-none opacity-40':
               windowWidth <= 1024 || disableMaximize,
           }"
-        />
-        <close-window
+          aria-label="maximize"
+        >
+          <maximize-icon />
+        </button>
+        <button
           @click="onClose(index)"
           class="cursor-pointer hover:opacity-80"
-        />
+          aria-label="close"
+        >
+          <close-window />
+        </button>
       </div>
       <div
         v-if="!hideSidebar"
@@ -67,6 +76,7 @@
             'hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]':
               prevLinks.length,
           }"
+          aria-label="previous window"
           @click.prevent="onBack"
         >
           <arrow-icon />
@@ -79,6 +89,7 @@
             'hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]':
               nextLinks.length,
           }"
+          aria-label="next window"
           @click.prevent="onNext"
         >
           <arrow-icon class="rotate-180" />
@@ -101,7 +112,8 @@
       :class="{
         'lg:h-full-screen-container ': maximized,
         'mb-2': !maximized,
-        'lg:h-window-restored-sm bg-pink-light h-full-screen-container-mob-sm': hideSidebar,
+        'lg:h-window-restored-sm bg-pink-light h-full-screen-container-mob-sm':
+          hideSidebar,
         'lg:h-window-restored h-full-screen-container-mob ': !hideSidebar,
       }"
     >
@@ -164,9 +176,11 @@ export default {
     "hideSidebar",
     "windowWidth",
     "openedWindows",
+    "openedFile",
     "disableMaximize",
     "small",
     "folder",
+    "isFile",
   ],
   components: {
     MinimizeIcon,
@@ -192,10 +206,24 @@ export default {
         query: { max: this.$route.query.max, open: this.query },
       });
       this.$emit("open", this.index);
+    } else if (this.$route.query.file === this.query && this.isFile) {
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          max: this.$route.query.max,
+          open: this.$route.query.open,
+          file: this.query,
+        },
+      });
+      this.$emit("open", this.index);
     } else {
       this.$router.push({
         path: this.$route.path,
-        query: { max: this.$route.query.max, open: this.$route.query.open },
+        query: {
+          max: this.$route.query.max,
+          open: this.$route.query.open,
+          file: this.$route.query.file,
+        },
       });
       this.$emit("close", this.index);
     }
@@ -215,10 +243,17 @@ export default {
         this.onRestore();
       }
       if (this.windowWidth <= 1024) this.maximized = true;
-      if (to.query.open === this.query) {
+      if (
+        (to.query.open === this.query && !this.isFile) ||
+        (to.query.file === this.query && this.isFile)
+      ) {
         this.$emit("open", this.index);
         this.$emit("unminimize", this.index);
-      } else if (to.query.open !== this.query && !this.closed) {
+      } else if (
+        ((to.query.open !== this.query && !this.isFile) ||
+          (to.query.file !== this.query && this.isFile)) &&
+        !this.closed
+      ) {
         this.$emit("close", this.index);
       }
     },
@@ -248,7 +283,11 @@ export default {
       this.onRestore();
       this.$router.push({
         path: this.$route.path,
-        query: { max: "", open: this.query },
+        query: {
+          max: "",
+          open: !this.isFile && this.query,
+          file: this.isFile && this.query,
+        },
       });
     },
     onClose() {
@@ -256,7 +295,11 @@ export default {
       this.updateUpdatedLinks();
       this.$router.push({
         path: this.$route.path,
-        query: { max: "", open: "" },
+        query: {
+          max: "",
+          open: !this.isFile ? "" : this.$route.path.open,
+          file: this.isFile ? "" : this.$route.path.file,
+        },
       });
       this.onRestore();
     },
@@ -274,12 +317,16 @@ export default {
       if (this.maximized) {
         this.$router.push({
           path: this.$route.path,
-          query: { max: this.query, open: this.openedWindows },
+          query: {
+            max: this.query,
+            open: this.openedWindows,
+            file: this.openedFile,
+          },
         });
       } else {
         this.$router.push({
           path: this.$route.path,
-          query: { max: "", open: this.openedWindows },
+          query: { max: "", open: this.openedWindows, file: this.openedFile },
         });
       }
     },
@@ -287,13 +334,14 @@ export default {
       if (this.maximized || this.window <= 1024) return;
       this.startTop = e.clientY;
       this.startLeft = e.clientX;
-      const window = document.querySelector(`#window-${this.index}`);
-      window.dataTransfer?.setData("text", `window-${this.index}`);
+      const windowEl = document.querySelector(`#window-${this.index}`);
+      windowEl.dataTransfer?.setData("text", `window-${this.index}`);
+      console.log("data transfer", windowEl.dataTransfer);
     },
     dragging() {
       if (this.maximized || this.window <= 1024) return;
-      const window = document.querySelector(`#window-${this.index}`);
-      this.getPosition(window);
+      const windowEl = document.querySelector(`#window-${this.index}`);
+      this.getPosition(windowEl);
     },
     drop(e) {
       if (this.maximized || this.window <= 1024) return;

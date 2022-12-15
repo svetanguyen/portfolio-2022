@@ -19,7 +19,7 @@ export default {
         { name: "About me", query: "about", icon: "heart.png" },
         { name: "Works", query: "works", icon: "folder.png" },
         { name: "Contact", query: "contact", icon: "files.png" },
-        { name: "Calculator", query: "calculator", icon: "calculator.png", hideSidebar: true },
+        { name: "Calculator", query: "calculator", icon: "calculator.png", hideSidebar: true, isFile: true },
       ],
     };
   },

@@ -24,6 +24,7 @@
           <button
             class="flex shadow-sm rounded-lg hover:shadow-lg gap-2 justify-center lg:justify-start items-center text-sm lg:text-[25px] leading-none h-full px-3 max-w-[60px] lg:max-w-[213px] text-left"
             @click="unMinimize(index)"
+            aria-label="unminimize"
           >
             <img
               class="w-6"

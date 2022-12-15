@@ -5,7 +5,7 @@
         class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
         :to="{
           name: 'Home',
-          query: { max: $route.query.max ? link.query : '', open: link.query },
+          query: { max: $route.query.max && !link.disableMax ? link.query : '', open: !link.isFile ? link.query : $route.query.open, file: link.isFile ? link.query : $route.query.file },
         }"
       >
         <img
@@ -33,25 +33,30 @@ export default {
           query: 'about',
           img: 'heart.png',
           alt: 'heart',
-          title: 'About'
+          title: 'About',
+          isFile: false
         },
         {
           query: 'works',
           img: 'folder.png',
           alt: 'folder',
-          title: 'Works'
+          title: 'Works',
+          isFile: false
         },
         {
           query: 'contact',
           img: 'files.png',
           alt: 'files',
-          title: 'Contacts'
+          title: 'Contacts',
+          isFile: false
         },
         {
           query: 'calculator',
           img: 'calculator.png',
           alt: 'calculator',
-          title: 'Calculator'
+          title: 'Calculator',
+          isFile: true,
+          disableMax: true
         },
       ]
     };

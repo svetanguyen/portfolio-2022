@@ -16,8 +16,10 @@
       :window-width="windowWidth"
       :disable-maximize="tab.disableMaximize"
       :small="tab.small"
-      :openedWindows="openedWindows"
+      :opened-windows="openedWindows"
+      :opened-file="openedFile"
       :folder="tab.folder"
+      :is-file="tab.isFile"
       class="bg-white"
       @minimize="onMinimize"
       @unminimize="onUnMinimize"
@@ -55,91 +57,21 @@ export default {
     WindowComponent,
     TaskbarComponent,
     FilesComponent,
+    CalculatorComponent,
+    HelloComponent,
+    PortfolioComponent,
+    AboutComponent,
+    WorksComponent,
+    ContactComponent,
+    InfoComponent,
+    SkillsComponent,
+    WorksList
   },
   data() {
     return {
       openedWindows: this.$route?.query?.open || "",
+      openedFile: this.$route?.query?.file || "",
       windowWidth: 0,
-      tabs: [
-        {
-          query: "hello",
-          icon: "notepad.png",
-          minimized: false,
-          title: "Hello",
-          closed: false,
-          component: HelloComponent,
-        },
-        {
-          query: "portfolio",
-          icon: "computer.png",
-          minimized: false,
-          title: "My portfolio",
-          closed: true,
-          component: PortfolioComponent,
-        },
-        {
-          query: "about",
-          icon: "computer.png",
-          minimized: false,
-          title: "About me",
-          closed: true,
-          component: AboutComponent,
-        },
-        {
-          query: "info",
-          icon: "notepad.png",
-          minimized: false,
-          title: "Info",
-          closed: true,
-          component: InfoComponent,
-          folder: "About me",
-        },
-        {
-          query: "skills",
-          icon: "notepad.png",
-          minimized: false,
-          title: "Skills",
-          closed: true,
-          component: SkillsComponent,
-          folder: "About me",
-        },
-        {
-          query: "works",
-          icon: "folder.png",
-          minimized: false,
-          title: "Works",
-          closed: true,
-          component: WorksComponent,
-        },
-        {
-          query: "worksList",
-          icon: "notepad.png",
-          minimized: false,
-          title: "Projects",
-          closed: true,
-          component: WorksList,
-          folder: "Works",
-        },
-        {
-          query: "contact",
-          icon: "files.png",
-          minimized: false,
-          title: "Contact",
-          closed: true,
-          component: ContactComponent,
-        },
-        {
-          query: "calculator",
-          icon: "calculator.png",
-          minimized: false,
-          title: "Calculator",
-          closed: true,
-          component: CalculatorComponent,
-          hideSidebar: true,
-          disableMaximize: true,
-          small: true,
-        },
-      ],
       files: [
         {
           name: "My portfolio",
@@ -156,40 +88,10 @@ export default {
             "https://drive.google.com/file/d/1FTlAMC4kJaolMn6h2vkj6Kh0y1_lXHJk/view?usp=sharing",
         },
       ],
-      filesMobile: [
-        {
-          name: "My portfolio",
-          icon: "computer.png",
-          query: "portfolio",
-        },
-        { name: "Hello", icon: "notepad.png", query: "hello" },
-        {
-          query: "about",
-          icon: "computer.png",
-          name: "About me",
-        },
-        {
-          query: "works",
-          icon: "computer.png",
-          name: "About me",
-        },
-        {
-          query: "contact",
-          icon: "computer.png",
-          name: "About me",
-        },
-        {
-          name: "Resume",
-          icon: "document.png",
-          query: "hello",
-          externalLink:
-            "https://drive.google.com/file/d/1FTlAMC4kJaolMn6h2vkj6Kh0y1_lXHJk/view?usp=sharing",
-        },
-      ],
     };
   },
   computed: {
-    ...mapState(["updatedLinks"]),
+    ...mapState(["updatedLinks", "tabs"]),
   },
   created() {
     this.checkScreen();

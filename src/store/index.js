@@ -24,6 +24,87 @@ export const store = createStore({
         { query: 'home', icon: 'computer.png', component: 'HomeComponent' },
         { query: 'about', icon: 'computer.png', component: 'AboutComponent' },
       ],
+      tabs: [
+        {
+          query: "hello",
+          icon: "notepad.png",
+          minimized: false,
+          title: "Hello",
+          closed: false,
+          component: 'HelloComponent',
+        },
+        {
+          query: "portfolio",
+          icon: "computer.png",
+          minimized: false,
+          title: "My portfolio",
+          closed: true,
+          component: 'PortfolioComponent',
+        },
+        {
+          query: "about",
+          icon: "computer.png",
+          minimized: false,
+          title: "About me",
+          closed: true,
+          component: 'AboutComponent',
+        },
+        {
+          query: "info",
+          icon: "notepad.png",
+          minimized: false,
+          title: "Info",
+          closed: true,
+          component: 'InfoComponent',
+          folder: "About me",
+        },
+        {
+          query: "skills",
+          icon: "notepad.png",
+          minimized: false,
+          title: "Skills",
+          closed: true,
+          component: 'SkillsComponent',
+          folder: "About me",
+        },
+        {
+          query: "works",
+          icon: "folder.png",
+          minimized: false,
+          title: "Works",
+          closed: true,
+          component: 'WorksComponent',
+        },
+        {
+          query: "worksList",
+          icon: "notepad.png",
+          minimized: false,
+          title: "Projects",
+          closed: true,
+          component: 'WorksList',
+          folder: "Works",
+        },
+        {
+          query: "contact",
+          icon: "files.png",
+          minimized: false,
+          title: "Contact",
+          closed: true,
+          component: 'ContactComponent',
+        },
+        {
+          query: "calculator",
+          icon: "calculator.png",
+          minimized: false,
+          title: "Calculator",
+          closed: true,
+          component: 'CalculatorComponent',
+          hideSidebar: true,
+          disableMaximize: true,
+          small: true,
+          isFile: true
+        },
+      ],
       prevLinks: [],
       nextLinks: [],
       updatedLinks: false
@@ -49,7 +130,6 @@ export const store = createStore({
         state.updatedLinks = !state.updatedLinks
       },
       resetLinks(state) {
-        console.log('blya')
         state.prevLinks = []
         state.nextLinks = []
       }
