@@ -78,10 +78,6 @@ export default {
     unMinimize(index) {
       this.$emit("unMinimize", index);
     },
-    toggleShowNav(event) {
-      console.log("event.target", event.target.tabIndex);
-      // this.showNav = event.target.focus
-    },
   },
 };
 </script>

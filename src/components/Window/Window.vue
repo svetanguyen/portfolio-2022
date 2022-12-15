@@ -61,7 +61,7 @@
           <maximize-icon />
         </button>
         <button
-          @click="onClose(index)"
+          @click="handleClose"
           class="cursor-pointer hover:opacity-80"
           aria-label="close"
         >
@@ -303,7 +303,7 @@ export default {
         },
       });
     },
-    onClose() {
+    handleClose() {
       if (!this.isFile) {
         this.resetLinks();
         this.updateUpdatedLinks();
@@ -312,16 +312,15 @@ export default {
         path: this.$route.path,
         query: {
           max: "",
-          open: !this.isFile ? "" : this.$route.path.open,
-          file: this.isFile ? "" : this.$route.path.file,
-          active: this.isFile ? this.$route.path.open : this.$route.path.file
+          open: !this.isFile ? "" : this.$route.query.open,
+          file: this.isFile ? "" : this.$route.query.file,
+          active: this.isFile ? this.$route.query.open : this.$route.query.file
         },
       });
       this.onRestore();
     },
     onMaximize() {
       this.maximized = true;
-      this.onOpen({index: this.index})
       this.$emit("unminimize", this.index);
     },
     onRestore() {
@@ -336,20 +335,18 @@ export default {
           query: {
             max: this.query,
             open: this.openedWindows,
-            file: this.openedFile,
+            file: this.$route.query.file,
             active: this.query
           },
         });
       } else {
         this.$router.push({
           path: this.$route.path,
-          query: { max: "", open: this.openedWindows, file: this.openedFile, active: this.query },
+          query: { max: "", open: this.openedWindows, file: this.$route.query.file, active: this.query },
         });
       }
     },
     updateActive(active) {
-      console.log('active', active)
-      console.log('index', this.index)
       this.isActive = active
     },
     addIsDragged() {

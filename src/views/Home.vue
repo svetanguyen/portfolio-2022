@@ -127,9 +127,10 @@ export default {
     ]),
     onUnMinimize(index) {
       this.unminimize({index: index})
+      console.log('this.$route.query.file', this.$route.query.file)
       this.$router.push({
         path: this.$route.path,
-        query: { max: this.$route.query?.max, open: !this.tabs[index].isFile ? this.tabs[index].query : this.$route.query?.open, file: this.tabs[index].isFile ? this.tabs[index].query : this.$route?.query?.file, active: this.tabs[index].query },
+        query: { max: this.$route.query?.max, open: !this.tabs[index].isFile ? this.tabs[index].query : this.$route.query?.open, file: this.tabs[index].isFile ? this.tabs[index].query : this.$route.query.file, active: this.tabs[index].query },
       });
     },
     checkScreen() {
