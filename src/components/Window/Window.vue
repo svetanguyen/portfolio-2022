@@ -211,7 +211,7 @@ export default {
         path: this.$route.path,
         query: { max: this.$route.query.max, open: this.query, file: this.$route.query.file, active: this.query },
       });
-      this.$emit("open", this.index);
+      this.onOpen({index: this.index})
     } else if (this.$route.query.file === this.query && this.isFile) {
       this.$router.push({
         path: this.$route.path,
@@ -222,7 +222,7 @@ export default {
           active: this.query
         },
       });
-      this.$emit("open", this.index);
+      this.onOpen({index: this.index})
     } else {
       this.$router.push({
         path: this.$route.path,
@@ -233,7 +233,7 @@ export default {
           active: this.$route.query.active
         },
       });
-      this.$emit("close", this.index);
+      this.onClose({index: this.index})
     }
     document.body.addEventListener("drop", this.drop);
     document.body.addEventListener("dragover", this.allowDrop);
@@ -253,17 +253,17 @@ export default {
       }
       if (this.windowWidth <= 1024) this.maximized = true;
       if (
-        (to.query.open === this.query && !this.isFile) ||
-        (to.query.file === this.query && this.isFile)
+        ((to.query.open === this.query && !this.isFile) ||
+        (to.query.file === this.query && this.isFile)) && this.closed
       ) {
-        this.$emit("open", this.index);
+        this.onOpen({index: this.index})
         this.$emit("unminimize", this.index);
       } else if (
         ((to.query.open !== this.query && !this.isFile) ||
           (to.query.file !== this.query && this.isFile)) &&
         !this.closed
       ) {
-        this.$emit("close", this.index);
+        this.onClose({index: this.index})
       }
     },
     windowWidth: function (newVal) {
@@ -278,6 +278,9 @@ export default {
       "removeNext",
       "updateUpdatedLinks",
       "resetLinks",
+      "onMinimize",
+      "onOpen",
+      "onClose"
     ]),
     reset() {
       this.top = null;
@@ -288,21 +291,23 @@ export default {
       this.endLeft = 0;
     },
     minimize(index) {
-      this.$emit("minimize", index);
       this.onRestore();
+      this.onMinimize({index: index})
       this.$router.push({
         path: this.$route.path,
         query: {
           max: "",
-          open: !this.isFile && this.query,
-          file: this.isFile && this.query,
-          active: this.query
+          open: !this.isFile ? "" : this.$route.query.open,
+          file: this.isFile ? "" : this.$route.query.file,
+          active: this.isFile ? this.$route.query.open : this.$route.query.file
         },
       });
     },
     onClose() {
-      this.resetLinks();
-      this.updateUpdatedLinks();
+      if (!this.isFile) {
+        this.resetLinks();
+        this.updateUpdatedLinks();
+      }
       this.$router.push({
         path: this.$route.path,
         query: {
@@ -316,7 +321,7 @@ export default {
     },
     onMaximize() {
       this.maximized = true;
-      this.$emit("open", this.index);
+      this.onOpen({index: this.index})
       this.$emit("unminimize", this.index);
     },
     onRestore() {
@@ -343,6 +348,8 @@ export default {
       }
     },
     updateActive(active) {
+      console.log('active', active)
+      console.log('index', this.index)
       this.isActive = active
     },
     addIsDragged() {

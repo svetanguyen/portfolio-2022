@@ -134,6 +134,18 @@ export const store = createStore({
       resetLinks(state) {
         state.prevLinks = []
         state.nextLinks = []
+      },
+      onMinimize(state, payload) {
+        state.tabs[payload.index].minimized = true
+      },
+      onClose(state, payload) {
+        state.tabs[payload.index].closed = true
+      },
+      onOpen(state, payload) {
+        state.tabs[payload.index].closed = false
+      },
+      unminimize(state, payload) {
+        state.tabs[payload.index].minimized = false;
       }
     }
 })

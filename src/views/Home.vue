@@ -21,10 +21,7 @@
       :folder="tab.folder"
       :is-file="tab.isFile"
       class="bg-white"
-      @minimize="onMinimize"
       @unminimize="onUnMinimize"
-      @close="onClose"
-      @open="onOpen"
     >
       <component v-if="tab.component" :is="tab.component" />
     </window-component>
@@ -126,22 +123,14 @@ export default {
       "removePrev",
       "removeNext",
       "updateUpdatedLinks",
+      "unminimize"
     ]),
     onUnMinimize(index) {
-      this.tabs[index].minimized = false;
+      this.unminimize({index: index})
       this.$router.push({
         path: this.$route.path,
-        query: { max: this.$route.query?.max, open: !this.tabs[index].isFile ? this.tabs[index].query : this.$route.query?.open, file: this.tabs[index].isFile ? this.tabs[index].query : this.$route?.query?.file, active: this.$route.query.active },
+        query: { max: this.$route.query?.max, open: !this.tabs[index].isFile ? this.tabs[index].query : this.$route.query?.open, file: this.tabs[index].isFile ? this.tabs[index].query : this.$route?.query?.file, active: this.tabs[index].query },
       });
-    },
-    onMinimize(index) {
-      this.tabs[index].minimized = true;
-    },
-    onClose(index) {
-      this.tabs[index].closed = true;
-    },
-    onOpen(index) {
-      this.tabs[index].closed = false;
     },
     checkScreen() {
       this.windowWidth = window.innerWidth;
