@@ -259,10 +259,9 @@ export default {
       });
     },
     initDragAndDrop() {
-      const container = document.querySelector('#app')
-      container.addEventListener("drop", this.drop);
-      container.addEventListener("dragover", this.allowDrop);
-      container.addEventListener("dragend", this.endDrag);
+      document.body.addEventListener("drop", this.drop);
+      document.body.addEventListener("dragover", this.allowDrop);
+      document.body.addEventListener("dragend", this.endDrag);
     },
     checkMaximize(maximized) {
       if (maximized) {
