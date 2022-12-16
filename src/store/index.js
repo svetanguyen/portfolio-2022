@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 export const store = createStore({
     state: {
       projectCards: [
-        { title: "Portfolio", image: "portfolio.png", description: "React, HTML/CSS, Tailwindcss", link: "https://tin-bui.netlify.app/", github: "https://github.com/svetanguyen/bui_dys_tin" },
+        { title: "Portfolio", image: "portfolio.jpg", description: "React, HTML/CSS, Tailwindcss", link: "https://tin-bui.netlify.app/", github: "https://github.com/svetanguyen/bui_dys_tin" },
         { title: "Instagram clone", image: "ig-clone.jpg", description: "React, Tailwindcss, HTML/CSS, Firebase", link: "https://insta-clone-5b854c.netlify.app/", github: "https://github.com/svetanguyen/instagram-clone-freecodecamp" },
         { title: "Weather app", image: "weather-app.jpg", description: "Vue.js, HTML/CSS, REST API", link: "https://weather-app-vue-1.netlify.app/", github: "https://github.com/svetanguyen/vue-weather" },
         { title: "Pokemon desktop game", image: "pokemon.jpg", description: "Vanilla JS, HTML/CSS, REST API", link: "https://pokemon-fight-game.netlify.app/", github: "https://github.com/svetanguyen/PokemonDesk" },
