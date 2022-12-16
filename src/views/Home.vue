@@ -40,7 +40,7 @@ import { mapState, mapMutations } from "vuex";
 import FilesComponent from "../components/Files.vue";
 import CalculatorComponent from "../components/Calculator.vue";
 import HelloComponent from "../components/Folders/Hello.vue";
-import PortfolioComponent from "../components/Window/MyPortfolio.vue";
+import PortfolioComponent from "../components/Folders/MyPortfolio.vue";
 import AboutComponent from "../components/Folders/About/About.vue";
 import WorksComponent from "../components/Folders/Works/Works.vue";
 import ContactComponent from "../components/Folders/Contact.vue";

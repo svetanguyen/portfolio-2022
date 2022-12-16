@@ -29,6 +29,7 @@ export const store = createStore({
           query: "hello",
           icon: "notepad.png",
           minimized: false,
+          maximized: false,
           title: "Hello",
           closed: false,
           component: 'HelloComponent',
@@ -37,6 +38,7 @@ export const store = createStore({
           query: "portfolio",
           icon: "computer.png",
           minimized: false,
+          maximized: false,
           title: "My portfolio",
           closed: true,
           component: 'PortfolioComponent',
@@ -45,6 +47,7 @@ export const store = createStore({
           query: "about",
           icon: "computer.png",
           minimized: false,
+          maximized: false,
           title: "About me",
           closed: true,
           component: 'AboutComponent',
@@ -53,6 +56,7 @@ export const store = createStore({
           query: "info",
           icon: "notepad.png",
           minimized: false,
+          maximized: false,
           title: "Info",
           closed: true,
           component: 'InfoComponent',
@@ -62,6 +66,7 @@ export const store = createStore({
           query: "skills",
           icon: "notepad.png",
           minimized: false,
+          maximized: false,
           title: "Skills",
           closed: true,
           component: 'SkillsComponent',
@@ -71,6 +76,7 @@ export const store = createStore({
           query: "works",
           icon: "folder.png",
           minimized: false,
+          maximized: false,
           title: "Works",
           closed: true,
           component: 'WorksComponent',
@@ -79,6 +85,7 @@ export const store = createStore({
           query: "worksList",
           icon: "notepad.png",
           minimized: false,
+          maximized: false,
           title: "Projects",
           closed: true,
           component: 'WorksList',
@@ -88,6 +95,7 @@ export const store = createStore({
           query: "contact",
           icon: "files.png",
           minimized: false,
+          maximized: false,
           title: "Contact",
           closed: true,
           component: 'ContactComponent',
@@ -98,6 +106,7 @@ export const store = createStore({
           query: "calculator",
           icon: "calculator.png",
           minimized: false,
+          maximized: false,
           title: "Calculator",
           closed: true,
           component: 'CalculatorComponent',
@@ -146,6 +155,12 @@ export const store = createStore({
       },
       unminimize(state, payload) {
         state.tabs[payload.index].minimized = false;
+      },
+      onMaximize(state, payload) {
+        state.tabs[payload.index].maximized = true
+      },
+      onRestore(state, payload) {
+        state.tabs[payload.index].isMaximized = false
       }
     }
 })
