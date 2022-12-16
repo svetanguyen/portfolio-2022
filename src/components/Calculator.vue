@@ -183,7 +183,9 @@ export default {
     },
     updateSign() {
       if (this.currentNum !== 0) {
-        if (!this.firstNum) this.equation = this.prevEquation;
+        const prevEquation = this.prevEquation
+        this.prevEquation = this.equation
+        if (!this.firstNum) this.equation = prevEquation;
         this.currentNum = -this.currentNum;
         if (this.firstNum) this.equation = this.currentNum;
         this.result = this.currentNum;
@@ -192,6 +194,7 @@ export default {
     },
     updateDecimal() {
       this.decimalPoint = !this.decimalPoint;
+      if (this.decimalPoint) this.currentOperation = "none"
     },
     updateNum(e, num) {
       const currentNum = e?.target ? e.target.dataset.num : num;
@@ -216,7 +219,7 @@ export default {
       }
 
       if (
-        (this.currentOperation === "none" && this.equation === 0) ||
+        (this.currentOperation === "none") ||
         this.firstNum
       ) {
         this.prevEquation = this.equation;
