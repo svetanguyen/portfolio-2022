@@ -9,10 +9,10 @@
       'h-[70vh] absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
       'lg:w-[380px] lg:!min-w-0': !maximized && small,
       'lg:w-[950px] lg:resize': !maximized && !small,
-      'z-20': isActive,
-      'z-10': !isActive,
-      'z-30': maximized && !active,
-      'z-40': maximized && active
+      'z-20': !maximized && isActive,
+      'z-10': !maximized && !isActive,
+      'z-30': maximized && !isActive,
+      'z-40': maximized && isActive
     }"
     @dragstart="startDrag"
     @mousedown="addIsDragged"
