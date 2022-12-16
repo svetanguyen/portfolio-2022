@@ -1,12 +1,12 @@
 <template>
   <div
+    ref="windowWrapper"
     v-if="currentTabData && !minimized && !closed"
-    ref="window"
     class="shadow-sm rounded-2xl overflow-hidden transition-all"
     :class="{
       '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full':
         maximized || windowWidth <= 1024,
-      'h-[70vh] absolute top-10 mx-auto pb-1  -translate-x-1/2 -translate-y-1/2':
+      'h-[70vh] absolute top-10 mx-auto pb-1':
         !maximized && windowWidth > 1024,
       'lg:w-[380px] lg:!min-w-0 lg:max-h-[540px]': !maximized && isFile,
       'lg:resize': !maximized && !isFile,
@@ -129,6 +129,8 @@ export default {
       isDragged: false,
       isActive: false,
       currentTabData: {},
+      changeX: 0,
+      changeY: 0
     };
   },
   props: [
@@ -192,7 +194,23 @@ export default {
       );
       this.onClose({ index: this.index });
     }
+    const windowEl = document.querySelector(`#window-${this.index}`);
+    this.getInitialPosition(windowEl)
     this.initDragAndDrop();
+  },
+  mounted() {
+    this.initDragAndDrop();
+    setTimeout(() => {
+      const windowEl = document.querySelector(`#window-${this.index}`);
+      this.getInitialPosition(windowEl)
+    }, 0)
+  },
+  updated() {
+    if (!this.top || !this.left) {
+const windowEl = document.querySelector(`#window-${this.index}`);
+    this.getInitialPosition(windowEl)
+    }
+    
   },
   watch: {
     $route(to, from) {
@@ -204,7 +222,6 @@ export default {
           ? this.files.find((file) => file?.query === to?.query?.file)
           : this.folders.find((folder) => folder?.query === to?.query?.folder);
       }
-      this.isDragged = false;
       this.updateActive(
         (this.isFile && to?.query.active === "file") ||
           (!this.isFile && to?.query.active === "folder")
@@ -234,12 +251,12 @@ export default {
       "onRestore",
     ]),
     reset() {
-      this.top = null;
-      this.left = null;
       this.startTop = 0;
       this.startLeft = 0;
       this.endTop = 0;
       this.endLeft = 0;
+      this.changeX = 0
+      this.changeY = 0
     },
     updateOpen(query) {
       const isOpen =
@@ -277,8 +294,12 @@ export default {
     updateActive(active) {
       this.isActive = active;
     },
-    addIsDragged() {
+    addIsDragged(e) {
       this.isDragged = true;
+      const windowEl = document.querySelector(`#window-${this.index}`);
+      this.getPosition(windowEl);
+      this.startTop = e.clientY;
+      this.startLeft = e.clientX;
       this.$router.push({
         path: this.$route.path,
         query: {
@@ -286,36 +307,42 @@ export default {
           active: this.isFile ? "file" : "folder",
         },
       });
-      this.getPosition();
+      
     },
-    startDrag(e) {
+    startDrag() {
       if (!this.isDragged) return;
       if (this.maximized || this.window <= 1024) return;
-      this.startTop = e.clientY;
-      this.startLeft = e.clientX;
     },
     dragging() {
       if (!this.isDragged) return;
       if (this.maximized || this.window <= 1024) return;
-      const windowEl = document.querySelector(`#window-${this.index}`);
-      this.getPosition(windowEl);
+      
     },
     drop(e) {
       if (!this.isDragged) return;
       if (this.maximized || this.window <= 1024) return;
       e.preventDefault();
-      this.endTop = e.clientY;
-      this.endLeft = e.clientX;
+      
     },
-    endDrag() {
+    endDrag(e) {
       if (!this.isDragged) return;
       if (this.maximized || this.window <= 1024) return;
+      // const windowEl = document.querySelector(`#window-${this.index}`);
+      // if (windowEl) {
+      //   this.top = this.endTop - this.startTop + this.top;
+      //   this.left = this.endLeft - this.startLeft + this.left;
+      //   this.isDragged = false;
+      // }
+      console.log('startTop', this.startTop)
+      console.log('startLeft', this.startLeft)
+      this.endTop = e.clientY;
+      this.endLeft = e.clientX;
+      console.log('endTop', this.endTop)
+      console.log('endLeft', this.endLeft)
       const windowEl = document.querySelector(`#window-${this.index}`);
-      if (windowEl) {
-        this.top = this.endTop - this.startTop + this.top;
-        this.left = this.endLeft - this.startLeft + this.left;
-        this.isDragged = false;
-      }
+      this.getPosition(windowEl);
+      this.reset()
+      this.isDragged = false;
     },
     allowDrop(e) {
       if (!this.isDragged) return;
@@ -325,10 +352,20 @@ export default {
       if (!this.isDragged) return;
       if (windowEl) {
         var rect = windowEl?.getBoundingClientRect();
-        this.top = rect?.top + windowEl.clientHeight / 2;
-        this.left = rect?.left + windowEl.clientWidth / 2;
+        this.changeX = this.endLeft - this.startLeft
+        this.changeY = this.endTop - this.startTop
+        this.top = rect?.top + this.changeY;
+        this.left = rect?.left + this.changeX;
       }
     },
+    getInitialPosition(windowEl) {
+      console.log('running', windowEl)
+      if (windowEl) {
+        var rect = windowEl?.getBoundingClientRect();
+        this.top = rect?.top - windowEl.clientHeight / 2;
+        this.left = rect?.left - windowEl.clientWidth / 2;
+      }
+    }
   },
 };
 </script>
