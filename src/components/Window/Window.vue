@@ -63,7 +63,7 @@
         v-if="currentTabData.component"
         :maximized="maximized"
         :is="currentTabData.component"
-        :class="{ 'lg:w-[650px]': !maximized }"
+        :class="{ 'w-full lg:w-[650px]': !maximized, 'w-full': maximized }"
       />
     </folder-component>
     <div

@@ -51,7 +51,7 @@
         }"
       />
       <div
-        class="overflow-hidden h-full"
+        class="overflow-hidden h-full w-full"
         :class="{
           'lg:w-2/3 lg:ml-5': maximized,
           'lg:w-auto lg:ml-5': !maximized,
