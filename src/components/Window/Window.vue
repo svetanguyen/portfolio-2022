@@ -259,9 +259,10 @@ export default {
       });
     },
     initDragAndDrop() {
-      document.body.addEventListener("drop", this.drop);
-      document.body.addEventListener("dragover", this.allowDrop);
-      document.body.addEventListener("dragend", this.endDrag);
+      const container = document.querySelector('#app')
+      container.addEventListener("drop", this.drop);
+      container.addEventListener("dragover", this.allowDrop);
+      container.addEventListener("dragend", this.endDrag);
     },
     checkMaximize(maximized) {
       if (maximized) {
