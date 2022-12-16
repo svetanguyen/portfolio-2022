@@ -15,20 +15,14 @@
       'z-30': maximized && !isActive,
       'z-40': maximized && isActive,
     }"
-   
-    @mousedown="addIsDragged" 
+    @mousedown="addIsDragged"
     @dragstart="startDrag"
     @drag="dragging"
     :draggable="maximized || windowWidth <= 1024 ? false : true"
     :style="{
-      top:
-        windowWidth <= 1024 || maximized
-          ? 0
-          : (top && `${top}px`) || '50%',
+      top: windowWidth <= 1024 || maximized ? 0 : (top && `${top}px`) || '50%',
       left:
-        windowWidth <= 1024 || maximized
-          ? 0
-          : (left && `${left}px`) || '50%',
+        windowWidth <= 1024 || maximized ? 0 : (left && `${left}px`) || '50%',
     }"
     :id="`window-${index}`"
   >
@@ -58,8 +52,19 @@
         @restore="onRestore({ index: index })"
       />
     </div>
-    <folder-component :maximized="maximized" :folder="currentTabData.folder" :title="currentTabData.title" v-if="!isFile" class="ml-0.5 mr-1 flex-grow">
-      <component v-if="currentTabData.component" :maximized="maximized" :is="currentTabData.component" :class="{'lg:w-[650px]': !maximized}" />
+    <folder-component
+      :maximized="maximized"
+      :folder="currentTabData.folder"
+      :title="currentTabData.title"
+      v-if="!isFile"
+      class="ml-0.5 mr-1 flex-grow"
+    >
+      <component
+        v-if="currentTabData.component"
+        :maximized="maximized"
+        :is="currentTabData.component"
+        :class="{ 'lg:w-[650px]': !maximized }"
+      />
     </folder-component>
     <div
       v-if="isFile"
@@ -83,7 +88,10 @@
             class="h-full overflow-y-scroll mr-1"
           >
             <div class="h-full w-full">
-              <component v-if="currentTabData.component" :is="currentTabData.component" />
+              <component
+                v-if="currentTabData.component"
+                :is="currentTabData.component"
+              />
             </div>
           </div>
         </div>
@@ -93,7 +101,7 @@
 </template>
 
 <script>
-import FolderComponent from "./Folder.vue"
+import FolderComponent from "./Folder.vue";
 import ControlsComponent from "./Controls.vue";
 import { mapState, mapMutations } from "vuex";
 
@@ -146,7 +154,7 @@ export default {
     ContactComponent,
     InfoComponent,
     SkillsComponent,
-    WorksList
+    WorksList,
   },
   computed: {
     ...mapState(["prevLinks", "nextLinks", "updatedLinks", "folders", "files"]),
@@ -168,7 +176,11 @@ export default {
     );
     const isFolderOpen = !this.isFile && !!this.$route.query.folder;
     const isFileOpen = !!this.$route.query.file && this.isFile;
-    const maxQuery = this.$route.query.max ? (this.isFile ? "file" : "folder") : ''
+    const maxQuery = this.$route.query.max
+      ? this.isFile
+        ? "file"
+        : "folder"
+      : "";
     if (isFolderOpen || isFileOpen) {
       this.onOpen({ index: this.index });
     } else {
@@ -201,7 +213,7 @@ export default {
         (this.isFile && to.query.max === "file") ||
           (!this.isFile && to.query.max === "folder")
       );
-      this.updateOpen(to.query.folder)
+      this.updateOpen(to.query);
     },
     windowWidth: function (newVal) {
       if (newVal <= 1024) this.onMaximize({ index: this.index });
@@ -231,12 +243,10 @@ export default {
     },
     updateOpen(query) {
       const isOpen =
-        ((!!query.folder && !this.isFile) ||
-          (!!query.file && this.isFile))
+        (!!query.folder && !this.isFile) || (!!query.file && this.isFile);
       const isClosed =
-        ((!!query.folder && !this.isFile) ||
-          (!!query.file && this.isFile))
-          if (isOpen) {
+        (!!query.folder && !this.isFile) || (!!query.file && this.isFile);
+      if (isOpen) {
         this.onOpen({ index: this.index });
       } else if (isClosed) {
         this.onClose({ index: this.index });
@@ -276,7 +286,7 @@ export default {
           active: this.isFile ? "file" : "folder",
         },
       });
-      this.getPosition()
+      this.getPosition();
     },
     startDrag(e) {
       if (!this.isDragged) return;
@@ -302,8 +312,8 @@ export default {
       if (this.maximized || this.window <= 1024) return;
       const windowEl = document.querySelector(`#window-${this.index}`);
       if (windowEl) {
-        this.top = this.endTop - this.startTop + this.top
-        this.left = this.endLeft - this.startLeft + this.left
+        this.top = this.endTop - this.startTop + this.top;
+        this.left = this.endLeft - this.startLeft + this.left;
         this.isDragged = false;
       }
     },
@@ -315,8 +325,8 @@ export default {
       if (!this.isDragged) return;
       if (windowEl) {
         var rect = windowEl?.getBoundingClientRect();
-        this.top = rect?.top + (windowEl.clientHeight / 2);
-        this.left = rect?.left + (windowEl.clientWidth / 2);
+        this.top = rect?.top + windowEl.clientHeight / 2;
+        this.left = rect?.left + windowEl.clientWidth / 2;
       }
     },
   },
