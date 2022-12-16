@@ -1,7 +1,7 @@
 <template>
   <div
     :style="{ position: position }"
-    class="left-0 w-full bg-pink-light p-4 bottom-0 relative shadow-sm flex z-20 justify-between taskbar"
+    class="left-0 w-full bg-pink-light p-4 bottom-0 relative shadow-sm flex z-50 justify-between taskbar"
   >
     <navigation-component :windowWidth="windowWidth" v-if="showNav" />
     <div class="flex h-full">
@@ -28,13 +28,13 @@
           >
             <img
               class="w-6"
-              :src="require(`../assets/images/${tab.icon}`)"
-              :alt="tab.alt"
+              :src="require(`../assets/images/${tab.isFile ? currentFile?.icon : currentFolder?.icon}`)"
+              :alt="tab.isFile ? currentFile?.alt : currentFolder?.alt"
               width="30"
               height="30"
             />
             <p class="hidden lg:block">
-              {{ tab.title }}
+              {{ tab.isFile ? currentFile?.title : currentFolder?.title }}
             </p>
           </button>
         </div>
@@ -54,7 +54,7 @@
 import ComputerIcon from "../icons/Computer.vue";
 import SocialIcons from "./SocialIcons.vue";
 import NavigationComponent from "./Navigation.vue";
-import {mapMutations} from 'vuex'
+import {mapMutations,mapState} from 'vuex'
 
 export default {
   name: "taskbar-component",
@@ -69,17 +69,37 @@ export default {
       bottom: 0,
       position: "fixed",
       showNav: false,
+      currentFile: {},
+      currentFolder: {}
     };
   },
+  computed: {
+    ...mapState(["prevLinks", "nextLinks", "updatedLinks", "folders", "files"]),
+  },
+  created() {
+    this.currentFile = this.files.find(file => file.query === this.$route.query.file)
+    this.currentFolder = this.folders.find(folder => folder.query === this.$route.query.folder)
+  },
   watch: {
-    $route() {
+    $route(to) {
+      this.currentFile = this.files.find(file => file.query === to.query.file)
+      this.currentFolder = this.folders.find(folder => folder.query === to.query.folder)
       this.showNav = false;
     },
   },
   methods: {
     ...mapMutations(["toggleMinimize"]),
     unMinimize(index) {
+      const openedWindowType = index === 0 ? 'file' : 'folder'
       this.$emit("unMinimize", index);
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          max: this.$route.query.max && !this.currentFile.disableMaximize ? openedWindowType : '',
+          active: openedWindowType
+        }
+      })
     },
   },
 };

@@ -21,99 +21,86 @@ export const store = createStore({
         { text: 'Tailwind', type: 'TailwindIcon' },
       ],
       folders: [
-        { query: 'home', icon: 'computer.png', component: 'HomeComponent' },
-        { query: 'about', icon: 'computer.png', component: 'AboutComponent' },
-      ],
-      tabs: [
         {
           query: "hello",
           icon: "notepad.png",
-          minimized: false,
-          maximized: false,
           title: "Hello",
-          closed: false,
           component: 'HelloComponent',
         },
         {
           query: "portfolio",
           icon: "computer.png",
-          minimized: false,
-          maximized: false,
           title: "My portfolio",
-          closed: true,
           component: 'PortfolioComponent',
         },
         {
           query: "about",
           icon: "computer.png",
-          minimized: false,
-          maximized: false,
           title: "About me",
-          closed: true,
           component: 'AboutComponent',
         },
         {
           query: "info",
           icon: "notepad.png",
-          minimized: false,
-          maximized: false,
           title: "Info",
-          closed: true,
           component: 'InfoComponent',
           folder: "About me",
         },
         {
           query: "skills",
           icon: "notepad.png",
-          minimized: false,
-          maximized: false,
           title: "Skills",
-          closed: true,
           component: 'SkillsComponent',
           folder: "About me",
         },
         {
           query: "works",
           icon: "folder.png",
-          minimized: false,
-          maximized: false,
           title: "Works",
-          closed: true,
           component: 'WorksComponent',
         },
         {
           query: "worksList",
           icon: "notepad.png",
-          minimized: false,
-          maximized: false,
           title: "Projects",
-          closed: true,
           component: 'WorksList',
           folder: "Works",
         },
+      ],
+      files: [
         {
           query: "contact",
           icon: "files.png",
-          minimized: false,
-          maximized: false,
           title: "Contact",
-          closed: true,
           component: 'ContactComponent',
           isFile: true,
-          hideSidebar: true
         },
         {
           query: "calculator",
           icon: "calculator.png",
-          minimized: false,
-          maximized: false,
           title: "Calculator",
-          closed: true,
           component: 'CalculatorComponent',
-          hideSidebar: true,
           disableMaximize: true,
           small: true,
           isFile: true
+        },
+      ],
+      tabs: [
+        {
+          minimized: false,
+          maximized: false,
+          closed: true,
+          disableMaximize: true,
+          small: true,
+          isFile: true
+        },
+        {
+          minimized: false,
+          maximized: false,
+          closed: true,
+          disableMaximize: false,
+          small: true,
+          isFile: false
         },
       ],
       prevLinks: [],
@@ -166,10 +153,7 @@ export const store = createStore({
         state.tabs[payload.index].minimized = !state.tabs[payload.index].minimized
       },
       toggleMaximize(state, payload) {
-        console.log('maximized before', state.tabs[payload.index].maximized)
         state.tabs[payload.index].maximized = !state.tabs[payload.index].maximized
-        console.log('maximized after', state.tabs[payload.index].maximized)
-
       }
     }
 })

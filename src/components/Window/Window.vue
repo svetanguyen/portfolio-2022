@@ -1,30 +1,34 @@
 <template>
   <div
-    v-if="!minimized && !closed"
+    v-if="currentTabData && !minimized && !closed"
     ref="window"
-    class="shadow-sm rounded-2xl overflow-hidden transition-all lg:min-w-[600px]"
+    class="shadow-sm rounded-2xl overflow-hidden transition-all"
     :class="{
       '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full':
         maximized || windowWidth <= 1024,
-      'h-[70vh] absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
-      'lg:w-[380px] lg:!min-w-0': !maximized && small,
-      'lg:w-[950px] lg:resize': !maximized && !small,
+      'h-[70vh] absolute top-10 mx-auto pb-1  -translate-x-1/2 -translate-y-1/2':
+        !maximized && windowWidth > 1024,
+      'lg:w-[380px] lg:!min-w-0 lg:max-h-[540px]': !maximized && isFile,
+      'lg:resize': !maximized && !isFile,
       'z-20': !maximized && isActive,
       'z-10': !maximized && !isActive,
       'z-30': maximized && !isActive,
-      'z-40': maximized && isActive
+      'z-40': maximized && isActive,
     }"
+   
+    @mousedown="addIsDragged" 
     @dragstart="startDrag"
-    @mousedown="addIsDragged"
     @drag="dragging"
     :draggable="maximized || windowWidth <= 1024 ? false : true"
     :style="{
-      top: windowWidth <= 1024 || maximized ? 0 : (top && `${top}px`) || '40px',
+      top:
+        windowWidth <= 1024 || maximized
+          ? 0
+          : (top && `${top}px`) || '50%',
       left:
         windowWidth <= 1024 || maximized
           ? 0
-          : (left && `${left}px`) ||
-            (small ? 'calc(50% - 190px)' : 'calc(50% - 475px)'),
+          : (left && `${left}px`) || '50%',
     }"
     :id="`window-${index}`"
   >
@@ -34,78 +38,41 @@
       <div class="flex items-center gap-x-2.5 mt-1 mx-0.5">
         <img
           class="w-6"
-          :src="require(`../../assets/images/${icon}`)"
+          :src="require(`../../assets/images/${currentTabData.icon}`)"
           alt="heart"
           width="24"
           height="24"
         />
         <h4 class="text-[17px] lg:text-[25px] leading-none font-serif">
-          {{ title }}
+          {{ currentTabData.title }}
         </h4>
       </div>
-      <controls-component :opened-windows="openedWindows" :query="query" :maximized="maximized" :is-file="isFile" :title="title" :index="index" :window-width="windowWidth" :disable-maximize="disableMaximize" @restore="onRestore({index: index})" />
-      <div
-        v-if="!isFile"
-        class="flex flex-wrap lg:flex-nowrap w-full px-2 pt-2"
-      >
-        <button
-          class="bg-button-gray mr-1 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
-          :class="{
-            'opacity-50 pointer-events-none': !prevLinks.length,
-            'hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]':
-              prevLinks.length,
-          }"
-          aria-label="previous window"
-          @click.prevent="onBack"
-        >
-          <arrow-icon />
-          Back
-        </button>
-        <button
-          class="bg-button-gray mr-3 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
-          :class="{
-            'opacity-50 pointer-events-none': !nextLinks.length,
-            'hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]':
-              nextLinks.length,
-          }"
-          aria-label="next window"
-          @click.prevent="onNext"
-        >
-          <arrow-icon class="rotate-180" />
-        </button>
-        <div class="bg-pink-light mt-2 lg:mt-0 flex-grow mb-1">
-          <p
-            class="rounded-lg shadow-xl-hovered py-1 px-3 text-xl leading-snug opacity-80"
-          >
-            Sveta's portfolio
-            <span v-if="folder"> / {{ folder }} / {{ title }}</span>
-            <span v-if="!folder && !title.includes('portfolio')">
-              / {{ title }}</span
-            >
-          </p>
-        </div>
-      </div>
+      <controls-component
+        :opened-windows="openedWindows"
+        :query="currentTabData?.query"
+        :maximized="maximized"
+        :is-file="isFile"
+        :index="index"
+        :window-width="windowWidth"
+        :disable-maximize="disableMaximize"
+        @restore="onRestore({ index: index })"
+      />
     </div>
+    <folder-component :maximized="maximized" :folder="currentTabData.folder" :title="currentTabData.title" v-if="!isFile" class="ml-0.5 mr-1 flex-grow">
+      <component v-if="currentTabData.component" :maximized="maximized" :is="currentTabData.component" :class="{'lg:w-[650px]': !maximized}" />
+    </folder-component>
     <div
-      class="flex font-normal py-6 px-2 text-lg leading-snug mr-1 mb-1 ml-0.5 rounded-b-2xl text-[25px] bg-pink-light lg:px-3 lg:py-2"
+      v-if="isFile"
+      class="h-file-content flex font-normal py-6 px-2 text-lg leading-snug mr-1 ml-0.5 rounded-b-2xl text-[25px] bg-pink-light lg:px-3 lg:py-2"
       :class="{
         'lg:h-full-screen-container ': maximized,
-        'mb-2': !maximized,
-        'lg:h-window-restored-sm bg-pink-light h-full-screen-container-mob-sm':
-          hideSidebar,
-        'lg:h-window-restored h-full-screen-container-mob ': !hideSidebar,
       }"
     >
-      <sidebar-component
-        v-if="!hideSidebar"
-        class="overflow-hidden lg:block hidden"
-        :class="{ 'w-1/3': maximized, 'w-1/4': !maximized }"
-      />
       <div
         class="overflow-hidden w-full"
         :class="{
-          'lg:w-2/3 lg:ml-5': maximized && !hideSidebar,
-          'lg:w-3/4 lg:ml-5': !maximized && !hideSidebar,
+          'lg:w-2/3 lg:ml-5': maximized && !isFile,
+          'lg:w-3/4 lg:ml-5': !maximized && !isFile,
         }"
       >
         <div class="py-2 bg-white h-full shadow-lg">
@@ -116,7 +83,7 @@
             class="h-full overflow-y-scroll mr-1"
           >
             <div class="h-full w-full">
-              <slot></slot>
+              <component v-if="currentTabData.component" :is="currentTabData.component" />
             </div>
           </div>
         </div>
@@ -126,10 +93,21 @@
 </template>
 
 <script>
-import ArrowIcon from "../../icons/Arrow.vue";
-import SidebarComponent from "./Sidebar.vue";
-import ControlsComponent from "./Controls.vue"
+import FolderComponent from "./Folder.vue"
+import ControlsComponent from "./Controls.vue";
 import { mapState, mapMutations } from "vuex";
+
+// Content components
+import CalculatorComponent from "../Files/Calculator.vue";
+import HelloComponent from "../Folders/Hello.vue";
+import PortfolioComponent from "../Folders/MyPortfolio.vue";
+import AboutComponent from "../Folders/About/About.vue";
+import WorksComponent from "../Folders/Works/Works.vue";
+import ContactComponent from "../Files/Contact.vue";
+import InfoComponent from "../Folders/About/Info.vue";
+import SkillsComponent from "../Folders/About/Skills.vue";
+import WorksList from "../Folders/Works/WorksList.vue";
+
 export default {
   name: "window-component",
   data() {
@@ -142,6 +120,7 @@ export default {
       endLeft: 0,
       isDragged: false,
       isActive: false,
+      currentTabData: {},
     };
   },
   props: [
@@ -150,79 +129,82 @@ export default {
     "maximized",
     "closed",
     "index",
-    "query",
-    "icon",
-    "hideSidebar",
     "windowWidth",
     "openedWindows",
     "openedFile",
     "disableMaximize",
-    "small",
-    "folder",
     "isFile",
   ],
   components: {
-    SidebarComponent,
-    ArrowIcon,
-    ControlsComponent
+    ControlsComponent,
+    FolderComponent,
+    CalculatorComponent,
+    HelloComponent,
+    PortfolioComponent,
+    AboutComponent,
+    WorksComponent,
+    ContactComponent,
+    InfoComponent,
+    SkillsComponent,
+    WorksList
   },
   computed: {
-    ...mapState(["prevLinks", "nextLinks", "updatedLinks"]),
+    ...mapState(["prevLinks", "nextLinks", "updatedLinks", "folders", "files"]),
   },
   created() {
-    this.updateActive(this.$route.query.active === this.query);
-    this.checkMaximize(this.$route.query.max);
-    const isFolderOpen = this.$route.query.folder === this.query;
-    const isFileOpen = this.$route.query.file === this.query && this.isFile;
-    if (isFolderOpen) {
-      this.updateQuery(
-        this.$route.query.max,
-        this.query,
-        this.$route.query.file,
-        this.query
-      );
-      this.onOpen({ index: this.index });
-    } else if (isFileOpen) {
-      this.updateQuery(
-        this.$route.query.max,
-        this.$route.query.folder,
-        this.query,
-        this.query
-      );
+    this.currentTabData = this.isFile
+      ? this.files.find((file) => file.query === this.$route?.query.file)
+      : this.folders.find(
+          (folder) => folder.query === this.$route?.query.folder
+        );
+    if (!this.currentTabData) return;
+    this.updateActive(
+      (this.isFile && this.$route?.query.active === "file") ||
+        (!this.isFile && this.$route?.query.active === "folder")
+    );
+    this.checkMaximize(
+      (this.isFile && this.$route?.query.max === "file") ||
+        (!this.isFile && this.$route?.query.max === "folder")
+    );
+    const isFolderOpen = !this.isFile && !!this.$route.query.folder;
+    const isFileOpen = !!this.$route.query.file && this.isFile;
+    const maxQuery = this.$route.query.max ? (this.isFile ? "file" : "folder") : ''
+    if (isFolderOpen || isFileOpen) {
       this.onOpen({ index: this.index });
     } else {
       this.updateQuery(
-        this.$route.query.max,
-        this.$route.query.folder,
-        this.$route.query.file,
-        this.$route.query.active
+        maxQuery,
+        this.$route?.query.folder,
+        this.$route?.query.file,
+        this.$route?.query.active
       );
       this.onClose({ index: this.index });
     }
     this.initDragAndDrop();
   },
   watch: {
-    $route(to) {
-      this.isDragged = false;
-      this.updateActive(to.query.active === this.query);
-      this.checkMaximize(to.query.max);
-      const isOpen =
-        ((to.query.folder === this.query && !this.isFile) ||
-          (to.query.file === this.query && this.isFile)) &&
-        this.closed;
-      const isClosed =
-        ((to.query.folder !== this.query && !this.isFile) ||
-          (to.query.file !== this.query && this.isFile)) &&
-        !this.closed;
-      if (isOpen) {
-        this.onOpen({ index: this.index });
-        this.$emit("unminimize", this.index);
-      } else if (isClosed) {
-        this.onClose({ index: this.index });
+    $route(to, from) {
+      if (
+        (this.isFile && to.query.file !== from.query.file) ||
+        (!this.isFile && to.query.folder !== from.query.folder)
+      ) {
+        this.currentTabData = this.isFile
+          ? this.files.find((file) => file?.query === to?.query?.file)
+          : this.folders.find((folder) => folder?.query === to?.query?.folder);
       }
+      this.isDragged = false;
+      this.updateActive(
+        (this.isFile && to?.query.active === "file") ||
+          (!this.isFile && to?.query.active === "folder")
+      );
+      this.checkMaximize(
+        (this.isFile && to.query.max === "file") ||
+          (!this.isFile && to.query.max === "folder")
+      );
+      this.updateOpen(to.query.folder)
     },
     windowWidth: function (newVal) {
-      if (newVal <= 1024) this.onMaximize({index: this.index})
+      if (newVal <= 1024) this.onMaximize({ index: this.index });
     },
   },
   methods: {
@@ -237,7 +219,7 @@ export default {
       "onOpen",
       "onClose",
       "onMaximize",
-      "onRestore"
+      "onRestore",
     ]),
     reset() {
       this.top = null;
@@ -246,6 +228,19 @@ export default {
       this.startLeft = 0;
       this.endTop = 0;
       this.endLeft = 0;
+    },
+    updateOpen(query) {
+      const isOpen =
+        ((!!query.folder && !this.isFile) ||
+          (!!query.file && this.isFile))
+      const isClosed =
+        ((!!query.folder && !this.isFile) ||
+          (!!query.file && this.isFile))
+          if (isOpen) {
+        this.onOpen({ index: this.index });
+      } else if (isClosed) {
+        this.onClose({ index: this.index });
+      }
     },
     updateQuery(max, folder, file, active) {
       this.$router.push({
@@ -258,16 +253,15 @@ export default {
       document.body.addEventListener("dragover", this.allowDrop);
       document.body.addEventListener("dragend", this.endDrag);
     },
-    checkMaximize(query) {
-      if (query === this.query) {
-        this.onMaximize({index: this.index});
+    checkMaximize(maximized) {
+      if (maximized) {
+        this.onMaximize({ index: this.index });
       } else {
-        console.log('restore')
-        this.onRestore({index: this.index});
+        this.onRestore({ index: this.index });
       }
-      if (this.windowWidth <= 1024) this.onMaximize({index: this.index});
-      if (!this.$route.query.max && this.windowWidth > 1024) {
-        this.onRestore({index: this.index});
+      if (this.windowWidth <= 1024) this.onMaximize({ index: this.index });
+      if (!this.$route?.query.max && this.windowWidth > 1024) {
+        this.onRestore({ index: this.index });
       }
     },
     updateActive(active) {
@@ -277,8 +271,12 @@ export default {
       this.isDragged = true;
       this.$router.push({
         path: this.$route.path,
-        query: { ...this.$route.query, active: this.query },
+        query: {
+          ...this.$route?.query,
+          active: this.isFile ? "file" : "folder",
+        },
       });
+      this.getPosition()
     },
     startDrag(e) {
       if (!this.isDragged) return;
@@ -304,16 +302,8 @@ export default {
       if (this.maximized || this.window <= 1024) return;
       const windowEl = document.querySelector(`#window-${this.index}`);
       if (windowEl) {
-        this.top =
-          this.endTop > this.startTop
-            ? this.top + (this.endTop - this.startTop)
-            : this.top - (this.startTop - this.endTop);
-        this.left =
-          this.endLeft > this.startLeft
-            ? this.left + (this.endLeft - this.startLeft)
-            : this.left - (this.startLeft - this.endLeft);
-        windowEl.style.top = this.top;
-        windowEl.style.left = this.left;
+        this.top = this.endTop - this.startTop + this.top
+        this.left = this.endLeft - this.startLeft + this.left
         this.isDragged = false;
       }
     },
@@ -325,25 +315,9 @@ export default {
       if (!this.isDragged) return;
       if (windowEl) {
         var rect = windowEl?.getBoundingClientRect();
-        this.top = rect?.top;
-        this.left = rect?.left;
+        this.top = rect?.top + (windowEl.clientHeight / 2);
+        this.left = rect?.left + (windowEl.clientWidth / 2);
       }
-    },
-    onBack() {
-      const prevLinkMax = this.prevLinks[this.prevLinks.length - 1]?.max;
-      const prevLinkOpen = this.prevLinks[this.prevLinks.length - 1]?.folder;
-      this.removePrev();
-      this.addNext({ query: this.$route.query });
-      this.updateUpdatedLinks();
-      this.updateQuery(this.$route.query.max ? prevLinkMax || "" : "", prevLinkOpen || "", this.$route.query.file, prevLinkOpen || "")
-    },
-    onNext() {
-      const nextLinkMax = this.nextLinks[this.nextLinks.length - 1]?.max;
-      const nextLinkOpen = this.nextLinks[this.nextLinks.length - 1]?.folder;
-      this.removeNext();
-      this.addPrev({ query: this.$route.query });
-      this.updateUpdatedLinks();
-      this.updateQuery(this.$route.query.max ? nextLinkMax || "" : "", nextLinkOpen || "", this.$route.query.file, nextLinkOpen || "")
     },
   },
 };

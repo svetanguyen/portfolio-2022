@@ -5,7 +5,7 @@
         class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
         :to="{
           name: 'Home',
-          query: { max: $route.query.max && !link.disableMax ? link.query : '', folder: !link.isFile ? link.query : $route.query.folder, file: link.isFile ? link.query : $route.query.file, active: link.query },
+          query: { max: $route.query.max && !link.disableMax ? (link.isFile && 'file' || !link.isFile && 'folder') : '', folder: !link.isFile ? link.query : $route.query.folder, file: link.isFile ? link.query : $route.query.file, active: link.isFile ? 'file' : 'folder' },
         }"
       >
         <img

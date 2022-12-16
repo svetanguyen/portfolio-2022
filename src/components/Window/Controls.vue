@@ -54,7 +54,7 @@ export default {
     updateMaximize() {
       if (this.windowWidth <= 1024) return;
       if (!this.maximized) {
-        this.updateQuery(this.query, this.openedWindows, this.$route.query.file, this.query)
+        this.updateQuery(this.isFile ? 'file' : 'folder', this.openedWindows, this.$route.query.file, this.query)
       } else {
         this.updateQuery("", this.openedWindows, this.$route.query.file, this.query)
       }
@@ -65,9 +65,8 @@ export default {
         query: { max: max, folder: folder, file: file, active: active },
       });
     },
-        minimize(index) {
-      this.onRestore({index: this.index});
-      this.onMinimize({ index: index });
+    minimize() {
+      this.onMinimize({ index: this.index });
     },
 
     }

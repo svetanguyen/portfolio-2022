@@ -57,10 +57,10 @@
                   :to="{
                     name: 'Home',
                     query: {
-                      max: $route.query.max ? 'about' : '',
+                      max: $route.query.max ? 'folder' : '',
                       folder: 'about',
                       file: $route.query.file ? $route.query.file : '',
-                      active: 'about'
+                      active: 'folder'
                     },
                   }"
                 >
@@ -88,10 +88,10 @@
                     :to="{
                       name: 'Home',
                       query: {
-                        max: $route.query.max ? 'info' : '',
+                        max: $route.query.max ? 'folder' : '',
                         folder: 'info',
                         file: $route.query.file ? $route.query.file : '',
-                        active: 'info'
+                        active: 'folder'
                       },
                     }"
                   >
@@ -118,10 +118,10 @@
                     :to="{
                       name: 'Home',
                       query: {
-                        max: $route.query.max ? 'skills' : '',
+                        max: $route.query.max ? 'folder' : '',
                         folder: 'skills',
                         file: $route.query.file ? $route.query.file : '',
-                        active: 'skills'
+                        active: 'folder'
                       },
                     }"
                   >
@@ -186,10 +186,10 @@
                   :to="{
                     name: 'Home',
                     query: {
-                      max: $route.query.max ? 'works' : '',
+                      max: $route.query.max ? 'folder' : '',
                       folder: 'works',
                       file: $route.query.file ? $route.query.file : '',
-                      active: 'works'
+                      active: 'folder'
                     },
                   }"
                 >
@@ -217,10 +217,10 @@
                     :to="{
                       name: 'Home',
                       query: {
-                        max: $route.query.max ? 'worksList' : '',
+                        max: $route.query.max ? 'folder' : '',
                         folder: 'worksList',
                         file: $route.query.file ? $route.query.file : '',
-                        active: 'worksList'
+                        active: 'folder'
                       },
                     }"
                   >
@@ -274,7 +274,7 @@
                       max: $route.query.max ? 'contact' : '',
                       file: 'contact',
                       folder: $route.query.folder ? $route.query.folder : '',
-                      active: 'contact'
+                      active: 'file'
                     },
                   }"
                 >
@@ -308,7 +308,7 @@
                       max: '',
                       file: 'calculator',
                       folder: $route.query.folder ? $route.query.folder : '',
-                      active: 'calculator'
+                      active: 'file'
                     },
                   }"
                 >
