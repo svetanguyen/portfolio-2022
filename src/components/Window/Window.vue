@@ -41,33 +41,7 @@
           {{ title }}
         </h4>
       </div>
-      <div class="flex">
-        <button
-          @click="minimize(index)"
-          class="cursor-pointer hover:opacity-80"
-          aria-label="minimize"
-        >
-          <minimize-icon />
-        </button>
-        <button
-          @click="updateMaximize"
-          class="cursor-pointer hover:opacity-80"
-          :class="{
-            'pointer-events-none opacity-40':
-              windowWidth <= 1024 || disableMaximize,
-          }"
-          aria-label="maximize"
-        >
-          <maximize-icon />
-        </button>
-        <button
-          @click="handleClose"
-          class="cursor-pointer hover:opacity-80"
-          aria-label="close"
-        >
-          <close-window />
-        </button>
-      </div>
+      <controls-component :title="title" :index="index" :window-width="windowWidth" :disable-maximize="disableMaximize" @restore="onRestore" />
       <div
         v-if="!hideSidebar"
         class="flex flex-wrap lg:flex-nowrap w-full px-2 pt-2"
@@ -150,11 +124,9 @@
 </template>
 
 <script>
-import MinimizeIcon from "../../icons/Minimize.vue";
 import ArrowIcon from "../../icons/Arrow.vue";
-import MaximizeIcon from "../../icons/Maximize.vue";
-import CloseWindow from "../../icons/CloseWindow.vue";
 import SidebarComponent from "./Sidebar.vue";
+import ControlsComponent from "./Controls.vue"
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "window-component",
@@ -188,11 +160,9 @@ export default {
     "isFile",
   ],
   components: {
-    MinimizeIcon,
-    MaximizeIcon,
-    CloseWindow,
     SidebarComponent,
     ArrowIcon,
+    ControlsComponent
   },
   computed: {
     ...mapState(["prevLinks", "nextLinks", "updatedLinks"]),
@@ -284,18 +254,7 @@ export default {
       document.body.addEventListener("dragover", this.allowDrop);
       document.body.addEventListener("dragend", this.endDrag);
     },
-    minimize(index) {
-      this.onRestore();
-      this.onMinimize({ index: index });
-    },
-    handleClose() {
-      if (!this.isFile) {
-        this.resetLinks();
-        this.updateUpdatedLinks();
-      }
-      this.updateQuery("", !this.isFile ? "" : this.$route.query.open, this.isFile ? "" : this.$route.query.file, this.isFile ? this.$route.query.open : this.$route.query.file)
-      this.onRestore();
-    },
+
     onMaximize() {
       this.maximized = true;
       if (this.closed) this.onOpen({ index: this.index });
@@ -317,15 +276,7 @@ export default {
     onRestore() {
       this.maximized = false;
     },
-    updateMaximize() {
-      if (this.windowWidth <= 1024) return;
-      this.maximized = !this.maximized;
-      if (this.maximized) {
-        this.updateQuery(this.query, this.openedWindows, this.$route.query.file, this.query)
-      } else {
-        this.updateQuery("", this.openedWindows, this.$route.query.file, this.query)
-      }
-    },
+    
     updateActive(active) {
       this.isActive = active;
     },
