@@ -59,7 +59,7 @@ export default {
             ((this.files[index].maximized || this.$route.query.max) && !this.files[index].hideSidebar)
               ? this.files[index].query
               : "",
-          open: !this.files[index].isFile ? this.files[index].query : this.$route.query.open,
+          folder: !this.files[index].isFile ? this.files[index].query : this.$route.query.folder,
           file: this.files[index].isFile ? this.files[index].query : this.$route.query.file,
           active: this.files[index].query
         },

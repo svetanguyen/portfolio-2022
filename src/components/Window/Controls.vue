@@ -32,43 +32,41 @@
 import MinimizeIcon from '../../icons/Minimize.vue'
 import MaximizeIcon from '../../icons/Maximize.vue'
 import CloseWindow from '../../icons/CloseWindow.vue'
+import { mapMutations } from 'vuex'
 export default {
     name: "controls-component",
-    props: ["title", "disableMaximize", "windowWidth", "index"],
+    props: ["title", "disableMaximize", "windowWidth", "index", "isFile", "maximized", "query", "openedWindows"],
     components: {
       MinimizeIcon,
       MaximizeIcon,
       CloseWindow
     },
     methods: {
+      ...mapMutations(["resetLinks", "updateUpdatedLinks", "onMinimize", "toggleMaximize", "onRestore"]),
       handleClose() {
       if (!this.isFile) {
         this.resetLinks();
         this.updateUpdatedLinks();
       }
-      this.updateQuery("", !this.isFile ? "" : this.$route.query.open, this.isFile ? "" : this.$route.query.file, this.isFile ? this.$route.query.open : this.$route.query.file)
-      this.onRestore();
+      this.updateQuery("", !this.isFile ? "" : this.$route.query.folder, this.isFile ? "" : this.$route.query.file, this.isFile ? this.$route.query.folder : this.$route.query.file)
+      this.onRestore({index: this.index});
     },
     updateMaximize() {
       if (this.windowWidth <= 1024) return;
-      this.maximized = !this.maximized;
-      if (this.maximized) {
+      if (!this.maximized) {
         this.updateQuery(this.query, this.openedWindows, this.$route.query.file, this.query)
       } else {
         this.updateQuery("", this.openedWindows, this.$route.query.file, this.query)
       }
     },
-    updateQuery(max, open, file, active) {
+    updateQuery(max, folder, file, active) {
       this.$router.push({
         path: this.$route.path,
-        query: { max: max, open: open, file: file, active: active },
+        query: { max: max, folder: folder, file: file, active: active },
       });
     },
-    onRestore() {
-      this.$emit('restore')
-    },
         minimize(index) {
-      this.onRestore();
+      this.onRestore({index: this.index});
       this.onMinimize({ index: index });
     },
 

@@ -160,10 +160,16 @@ export const store = createStore({
         state.tabs[payload.index].maximized = true
       },
       onRestore(state, payload) {
-        state.tabs[payload.index].isMaximized = false
+        state.tabs[payload.index].maximized = false
       },
       toggleMinimize(state, payload) {
         state.tabs[payload.index].minimized = !state.tabs[payload.index].minimized
+      },
+      toggleMaximize(state, payload) {
+        console.log('maximized before', state.tabs[payload.index].maximized)
+        state.tabs[payload.index].maximized = !state.tabs[payload.index].maximized
+        console.log('maximized after', state.tabs[payload.index].maximized)
+
       }
     }
 })

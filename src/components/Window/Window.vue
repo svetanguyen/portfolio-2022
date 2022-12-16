@@ -11,6 +11,7 @@
       'lg:w-[950px] lg:resize': !maximized && !small,
       'z-20': isActive,
       'z-10': !isActive,
+      'z-30': maximized
     }"
     @dragstart="startDrag"
     @mousedown="addIsDragged"
@@ -41,7 +42,7 @@
           {{ title }}
         </h4>
       </div>
-      <controls-component :title="title" :index="index" :window-width="windowWidth" :disable-maximize="disableMaximize" @restore="onRestore" />
+      <controls-component :opened-windows="openedWindows" :query="query" :maximized="maximized" :is-file="isFile" :title="title" :index="index" :window-width="windowWidth" :disable-maximize="disableMaximize" @restore="onRestore({index: index})" />
       <div
         v-if="!isFile"
         class="flex flex-wrap lg:flex-nowrap w-full px-2 pt-2"
@@ -132,7 +133,6 @@ export default {
   name: "window-component",
   data() {
     return {
-      maximized: this.windowWidth > 1024 ? false : true,
       top: null,
       left: null,
       startTop: 0,
@@ -146,6 +146,7 @@ export default {
   props: [
     "title",
     "minimized",
+    "maximized",
     "closed",
     "index",
     "query",
@@ -170,7 +171,7 @@ export default {
   created() {
     this.updateActive(this.$route.query.active === this.query);
     this.checkMaximize(this.$route.query.max);
-    const isFolderOpen = this.$route.query.open === this.query;
+    const isFolderOpen = this.$route.query.folder === this.query;
     const isFileOpen = this.$route.query.file === this.query && this.isFile;
     if (isFolderOpen) {
       this.updateQuery(
@@ -183,7 +184,7 @@ export default {
     } else if (isFileOpen) {
       this.updateQuery(
         this.$route.query.max,
-        this.$route.query.open,
+        this.$route.query.folder,
         this.query,
         this.query
       );
@@ -191,7 +192,7 @@ export default {
     } else {
       this.updateQuery(
         this.$route.query.max,
-        this.$route.query.open,
+        this.$route.query.folder,
         this.$route.query.file,
         this.$route.query.active
       );
@@ -205,11 +206,11 @@ export default {
       this.updateActive(to.query.active === this.query);
       this.checkMaximize(to.query.max);
       const isOpen =
-        ((to.query.open === this.query && !this.isFile) ||
+        ((to.query.folder === this.query && !this.isFile) ||
           (to.query.file === this.query && this.isFile)) &&
         this.closed;
       const isClosed =
-        ((to.query.open !== this.query && !this.isFile) ||
+        ((to.query.folder !== this.query && !this.isFile) ||
           (to.query.file !== this.query && this.isFile)) &&
         !this.closed;
       if (isOpen) {
@@ -220,7 +221,7 @@ export default {
       }
     },
     windowWidth: function (newVal) {
-      if (newVal <= 1024) this.maximized = true;
+      if (newVal <= 1024) this.onMaximize({index: this.index})
     },
   },
   methods: {
@@ -234,6 +235,8 @@ export default {
       "onMinimize",
       "onOpen",
       "onClose",
+      "onMaximize",
+      "onRestore"
     ]),
     reset() {
       this.top = null;
@@ -243,10 +246,10 @@ export default {
       this.endTop = 0;
       this.endLeft = 0;
     },
-    updateQuery(max, open, file, active) {
+    updateQuery(max, folder, file, active) {
       this.$router.push({
         path: this.$route.path,
-        query: { max: max, open: open, file: file, active: active },
+        query: { max: max, folder: folder, file: file, active: active },
       });
     },
     initDragAndDrop() {
@@ -254,29 +257,18 @@ export default {
       document.body.addEventListener("dragover", this.allowDrop);
       document.body.addEventListener("dragend", this.endDrag);
     },
-
-    onMaximize() {
-      this.maximized = true;
-      if (this.closed) this.onOpen({ index: this.index });
-      if (this.minimized) {
-        this.$emit("unminimize", this.index);
-      }
-    },
     checkMaximize(query) {
       if (query === this.query) {
-        this.onMaximize();
+        this.onMaximize({index: this.index});
       } else {
-        this.onRestore();
+        console.log('restore')
+        this.onRestore({index: this.index});
       }
-      if (this.windowWidth <= 1024) this.maximized = true;
+      if (this.windowWidth <= 1024) this.onMaximize({index: this.index});
       if (!this.$route.query.max && this.windowWidth > 1024) {
-        this.onRestore();
+        this.onRestore({index: this.index});
       }
     },
-    onRestore() {
-      this.maximized = false;
-    },
-    
     updateActive(active) {
       this.isActive = active;
     },
@@ -338,7 +330,7 @@ export default {
     },
     onBack() {
       const prevLinkMax = this.prevLinks[this.prevLinks.length - 1]?.max;
-      const prevLinkOpen = this.prevLinks[this.prevLinks.length - 1]?.open;
+      const prevLinkOpen = this.prevLinks[this.prevLinks.length - 1]?.folder;
       this.removePrev();
       this.addNext({ query: this.$route.query });
       this.updateUpdatedLinks();
@@ -346,7 +338,7 @@ export default {
     },
     onNext() {
       const nextLinkMax = this.nextLinks[this.nextLinks.length - 1]?.max;
-      const nextLinkOpen = this.nextLinks[this.nextLinks.length - 1]?.open;
+      const nextLinkOpen = this.nextLinks[this.nextLinks.length - 1]?.folder;
       this.removeNext();
       this.addPrev({ query: this.$route.query });
       this.updateUpdatedLinks();

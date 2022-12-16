@@ -13,7 +13,7 @@
           name: 'Home',
           query: {
             max: $route.query.max ? 'about' : '',
-            open: 'about',
+            folder: 'about',
             file: $route.query.file,
             active: 'about'
           },
@@ -26,7 +26,7 @@
           name: 'Home',
           query: {
             max: $route.query.max ? 'worksList' : '',
-            open: 'worksList',
+            folder: 'worksList',
             file: $route.query.file,
             active: 'worksList'
           },
