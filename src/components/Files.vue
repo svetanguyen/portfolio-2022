@@ -63,7 +63,7 @@ export default {
           active: this.files[index].isFile ? 'file' : 'folder'
         },
       });
-      this.unminimize({index: this.files[index] ? 0 : 1})
+      this.unminimize({index: this.files[index].isFile ? 0 : 1})
     },
   },
 };

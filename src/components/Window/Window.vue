@@ -6,8 +6,7 @@
     :class="{
       '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full':
         maximized || windowWidth <= 1024,
-      'h-[70vh] absolute top-10 mx-auto pb-1':
-        !maximized && windowWidth > 1024,
+      'h-[70vh] absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
       'lg:w-[380px] lg:!min-w-0 lg:max-h-[540px]': !maximized && isFile,
       'lg:resize': !maximized && !isFile,
       'z-20': !maximized && isActive,
@@ -15,6 +14,7 @@
       'z-30': maximized && !isActive,
       'z-40': maximized && isActive,
     }"
+    @click="reset"
     @mousedown="addIsDragged"
     @dragstart="startDrag"
     @drag="dragging"
@@ -130,7 +130,9 @@ export default {
       isActive: false,
       currentTabData: {},
       changeX: 0,
-      changeY: 0
+      changeY: 0,
+      prevTop: 0,
+      prevLeft: 0
     };
   },
   props: [
@@ -195,22 +197,17 @@ export default {
       this.onClose({ index: this.index });
     }
     const windowEl = document.querySelector(`#window-${this.index}`);
-    this.getInitialPosition(windowEl)
+    this.getInitialPosition(windowEl);
     this.initDragAndDrop();
   },
   mounted() {
     this.initDragAndDrop();
     setTimeout(() => {
-      const windowEl = document.querySelector(`#window-${this.index}`);
-      this.getInitialPosition(windowEl)
-    }, 0)
-  },
-  updated() {
-    if (!this.top || !this.left) {
-const windowEl = document.querySelector(`#window-${this.index}`);
-    this.getInitialPosition(windowEl)
-    }
-    
+      if (!this.top || !this.left) {
+        const windowEl = document.querySelector(`#window-${this.index}`);
+        this.getInitialPosition(windowEl);
+      }
+    }, 0);
   },
   watch: {
     $route(to, from) {
@@ -235,6 +232,37 @@ const windowEl = document.querySelector(`#window-${this.index}`);
     windowWidth: function (newVal) {
       if (newVal <= 1024) this.onMaximize({ index: this.index });
     },
+    maximized: function(newVal) {
+      if (!newVal) {
+        this.top = this.prevTop
+        this.left = this.prevLeft
+        this.prevTop = 0
+        this.prevLeft = 0
+      } else {
+        this.prevTop = this.top
+        this.prevLeft = this.left
+      }
+    },
+    closed: function(newVal) {
+      if (!newVal) {
+          setTimeout(() => {
+            if (!this.top || !this.left) {
+              const windowEl = document.querySelector(`#window-${this.index}`);
+              this.getInitialPosition(windowEl);
+            }
+          }, 0)
+          this.getInitialPosition(this.$refs.windowWrapper);
+      }
+    },
+    minimized: function(newVal) {
+      if (!newVal) {
+        const windowEl = document.querySelector(`#window-${this.index}`);
+        if (!this.top || !this.left && windowEl) {
+          this.getInitialPosition(windowEl);
+        }
+      }
+    }
+
   },
   methods: {
     ...mapMutations([
@@ -255,8 +283,9 @@ const windowEl = document.querySelector(`#window-${this.index}`);
       this.startLeft = 0;
       this.endTop = 0;
       this.endLeft = 0;
-      this.changeX = 0
-      this.changeY = 0
+      this.changeX = 0;
+      this.changeY = 0;
+      this.isDragged = false
     },
     updateOpen(query) {
       const isOpen =
@@ -307,7 +336,6 @@ const windowEl = document.querySelector(`#window-${this.index}`);
           active: this.isFile ? "file" : "folder",
         },
       });
-      
     },
     startDrag() {
       if (!this.isDragged) return;
@@ -316,32 +344,20 @@ const windowEl = document.querySelector(`#window-${this.index}`);
     dragging() {
       if (!this.isDragged) return;
       if (this.maximized || this.window <= 1024) return;
-      
     },
     drop(e) {
       if (!this.isDragged) return;
       if (this.maximized || this.window <= 1024) return;
       e.preventDefault();
-      
     },
     endDrag(e) {
       if (!this.isDragged) return;
       if (this.maximized || this.window <= 1024) return;
-      // const windowEl = document.querySelector(`#window-${this.index}`);
-      // if (windowEl) {
-      //   this.top = this.endTop - this.startTop + this.top;
-      //   this.left = this.endLeft - this.startLeft + this.left;
-      //   this.isDragged = false;
-      // }
-      console.log('startTop', this.startTop)
-      console.log('startLeft', this.startLeft)
       this.endTop = e.clientY;
       this.endLeft = e.clientX;
-      console.log('endTop', this.endTop)
-      console.log('endLeft', this.endLeft)
       const windowEl = document.querySelector(`#window-${this.index}`);
       this.getPosition(windowEl);
-      this.reset()
+      this.reset();
       this.isDragged = false;
     },
     allowDrop(e) {
@@ -352,20 +368,19 @@ const windowEl = document.querySelector(`#window-${this.index}`);
       if (!this.isDragged) return;
       if (windowEl) {
         var rect = windowEl?.getBoundingClientRect();
-        this.changeX = this.endLeft - this.startLeft
-        this.changeY = this.endTop - this.startTop
+        this.changeX = this.endLeft - this.startLeft;
+        this.changeY = this.endTop - this.startTop;
         this.top = rect?.top + this.changeY;
         this.left = rect?.left + this.changeX;
       }
     },
     getInitialPosition(windowEl) {
-      console.log('running', windowEl)
       if (windowEl) {
         var rect = windowEl?.getBoundingClientRect();
         this.top = rect?.top - windowEl.clientHeight / 2;
         this.left = rect?.left - windowEl.clientWidth / 2;
       }
-    }
+    },
   },
 };
 </script>
