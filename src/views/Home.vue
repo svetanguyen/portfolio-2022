@@ -72,7 +72,6 @@ export default {
       files: [
         {
           name: "My portfolio",
-          maximized: true,
           icon: "computer.png",
           query: "portfolio",
         },
@@ -83,6 +82,13 @@ export default {
           query: "hello",
           externalLink:
             "https://drive.google.com/file/d/1NkAXJfQ39CbtDIjX_oEJrZXyJl8EyAil/view?usp=sharing",
+        },
+        {
+          name: "Calculator",
+          icon: "calculator.png",
+          query: "calculator",
+          isFile: true,
+          hideSidebar: true
         },
       ],
     };
@@ -127,7 +133,6 @@ export default {
     ]),
     onUnMinimize(index) {
       this.unminimize({index: index})
-      console.log('this.$route.query.file', this.$route.query.file)
       this.$router.push({
         path: this.$route.path,
         query: { max: this.$route.query?.max, open: !this.tabs[index].isFile ? this.tabs[index].query : this.$route.query?.open, file: this.tabs[index].isFile ? this.tabs[index].query : this.$route.query.file, active: this.tabs[index].query },
