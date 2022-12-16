@@ -20,7 +20,7 @@
         <computer-icon /> Start
       </label>
       <div :key="index" v-for="(tab, index) in tabs">
-        <div v-if="tab.minimized" class="mx-1 h-full">
+        <div v-if="!tab.closed" class="mx-1 h-full">
           <button
             class="flex shadow-sm rounded-lg hover:shadow-lg gap-2 justify-center lg:justify-start items-center text-sm lg:text-[25px] leading-none h-full px-3 max-w-[60px] lg:max-w-[213px] text-left"
             @click="unMinimize(index)"
@@ -29,7 +29,7 @@
             <img
               class="w-6"
               :src="require(`../assets/images/${tab.icon}`)"
-              :alt="alt"
+              :alt="tab.alt"
               width="30"
               height="30"
             />
@@ -54,6 +54,8 @@
 import ComputerIcon from "../icons/Computer.vue";
 import SocialIcons from "./SocialIcons.vue";
 import NavigationComponent from "./Navigation.vue";
+import {mapMutations} from 'vuex'
+
 export default {
   name: "taskbar-component",
   props: ["tabs", "windowWidth"],
@@ -75,6 +77,7 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(["toggleMinimize"]),
     unMinimize(index) {
       this.$emit("unMinimize", index);
     },

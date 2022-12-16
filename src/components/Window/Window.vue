@@ -287,7 +287,6 @@ export default {
     minimize(index) {
       this.onRestore();
       this.onMinimize({ index: index });
-      this.updateQuery("", !this.isFile ? "" : this.$route.query.open, this.isFile ? "" : this.$route.query.file, this.isFile ? this.$route.query.open : this.$route.query.file)
     },
     handleClose() {
       if (!this.isFile) {

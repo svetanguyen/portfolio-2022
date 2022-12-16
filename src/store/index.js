@@ -161,6 +161,9 @@ export const store = createStore({
       },
       onRestore(state, payload) {
         state.tabs[payload.index].isMaximized = false
+      },
+      toggleMinimize(state, payload) {
+        state.tabs[payload.index].minimized = !state.tabs[payload.index].minimized
       }
     }
 })
