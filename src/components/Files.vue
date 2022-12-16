@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import LinkIcon from "../icons/Link.vue";
 export default {
   name: "files-component",
@@ -51,19 +52,18 @@ export default {
     LinkIcon,
   },
   methods: {
+    ...mapMutations(["unminimize"]),
     onOpen(index) {
       this.$router.push({
         path: "/",
         query: {
-          max:
-            ((this.files[index].maximized || this.$route.query.max) && !this.files[index].hideSidebar)
-              ? this.files[index].query
-              : "",
+          max: (this.$route.query.max && !this.files[index].disableSidebar) ? (this.files[index].isFile ? 'file' : 'folder') : '',
           folder: !this.files[index].isFile ? this.files[index].query : this.$route.query.folder,
           file: this.files[index].isFile ? this.files[index].query : this.$route.query.file,
-          active: this.files[index].query
+          active: this.files[index].isFile ? 'file' : 'folder'
         },
       });
+      this.unminimize({index: this.files[index] ? 0 : 1})
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="lg:max-w-[60%] mx-auto h-full flex flex-col items-center justify-center"
+    class="mx-auto h-full flex flex-col items-center justify-center px-12"
   >
     <p class="px-4 lg:px-0 mb-6 lg:mb-10 text-lg leading-[1.4] lg:text-2xl">
       My name is Sveta. I am a Front-End Web Developer passionate about creating
@@ -15,7 +15,7 @@
             max: $route.query.max ? 'about' : '',
             folder: 'about',
             file: $route.query.file,
-            active: 'about'
+            active: 'folder'
           },
         }"
         >More about me</router-link
@@ -28,7 +28,7 @@
             max: $route.query.max ? 'worksList' : '',
             folder: 'worksList',
             file: $route.query.file,
-            active: 'worksList'
+            active: 'folder'
           },
         }"
         >My works</router-link

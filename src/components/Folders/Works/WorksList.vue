@@ -30,25 +30,6 @@ export default {
       maximized: true,
     };
   },
-  created() {
-    if (this.$route.query.max === "worksList") {
-      this.maximized = true;
-    } else {
-      this.maximized = false;
-    }
-  },
-  watch: {
-    $route(to) {
-      if (to.query.max === "worksList") {
-        this.maximized = true;
-      } else {
-        this.maximized = false;
-      }
-      if (!to.query.max) {
-        this.maximized = false;
-      }
-    },
-  },
   computed: {
     ...mapState(["projectCards"]),
   },

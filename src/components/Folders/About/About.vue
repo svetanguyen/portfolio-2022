@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:px-4 pt-3">
+  <div class="lg:px-4 pt-3" :class="{'lg:w-[600px]': !maximized}">
     <files-component class="flex" :files="files" text="black" />
   </div>
 </template>
@@ -11,6 +11,7 @@ export default {
   components: {
     FilesComponent,
   },
+  props: ["maximized"],
   data() {
     return {
       files: [

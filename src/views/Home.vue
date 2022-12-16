@@ -6,26 +6,19 @@
     <window-component
       v-for="(tab, index) in tabs"
       :key="index"
-      :query="tab.query"
       :minimized="tab.minimized"
       :index="index"
-      :title="tab.title"
-      :icon="tab.icon"
       :closed="tab.closed"
-      :hide-sidebar="tab.hideSidebar"
       :window-width="windowWidth"
       :disable-maximize="tab.disableMaximize"
       :small="tab.small"
       :opened-windows="openedWindows"
       :opened-file="openedFile"
-      :folder="tab.folder"
       :is-file="tab.isFile"
       :maximized="tab.maximized"
       class="bg-white"
       @unminimize="onUnMinimize"
-    >
-      <component v-if="tab.component" :is="tab.component" />
-    </window-component>
+    />
   </div>
   <taskbar-component
     :window-width="windowWidth"
@@ -39,15 +32,7 @@ import TaskbarComponent from "../components/Taskbar.vue";
 import WindowComponent from "../components/Window/Window.vue";
 import { mapState, mapMutations } from "vuex";
 import FilesComponent from "../components/Files.vue";
-import CalculatorComponent from "../components/Calculator.vue";
-import HelloComponent from "../components/Folders/Hello.vue";
-import PortfolioComponent from "../components/Folders/MyPortfolio.vue";
-import AboutComponent from "../components/Folders/About/About.vue";
-import WorksComponent from "../components/Folders/Works/Works.vue";
-import ContactComponent from "../components/Folders/Contact.vue";
-import InfoComponent from "../components/Folders/About/Info.vue";
-import SkillsComponent from "../components/Folders/About/Skills.vue";
-import WorksList from "../components/Folders/Works/WorksList.vue";
+
 
 export default {
   name: "home-page",
@@ -55,15 +40,6 @@ export default {
     WindowComponent,
     TaskbarComponent,
     FilesComponent,
-    CalculatorComponent,
-    HelloComponent,
-    PortfolioComponent,
-    AboutComponent,
-    WorksComponent,
-    ContactComponent,
-    InfoComponent,
-    SkillsComponent,
-    WorksList
   },
   data() {
     return {
@@ -106,7 +82,7 @@ export default {
         max: this.$route.query?.max,
         folder: this.$route.query?.folder || "hello",
         file: this.$route.query.file,
-        active: this.$route.query?.folder || this.$route.query?.file
+        active: this.$route.query.active ? this.$route.query.active : (this.$route.query?.folder && 'folder' )|| (this.$route.query?.file && 'file')
       },
     });
     this.openedWindows = this.$route?.query?.folder || "hello";
@@ -134,10 +110,6 @@ export default {
     ]),
     onUnMinimize(index) {
       this.unminimize({index: index})
-      this.$router.push({
-        path: this.$route.path,
-        query: { max: this.$route.query?.max, folder: !this.tabs[index].isFile ? this.tabs[index].query : this.$route.query?.folder, file: this.tabs[index].isFile ? this.tabs[index].query : this.$route.query.file, active: this.tabs[index].query },
-      });
     },
     checkScreen() {
       this.windowWidth = window.innerWidth;
