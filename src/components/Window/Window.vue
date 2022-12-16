@@ -43,7 +43,7 @@
       </div>
       <controls-component :title="title" :index="index" :window-width="windowWidth" :disable-maximize="disableMaximize" @restore="onRestore" />
       <div
-        v-if="!hideSidebar"
+        v-if="!isFile"
         class="flex flex-wrap lg:flex-nowrap w-full px-2 pt-2"
       >
         <button
