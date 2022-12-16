@@ -11,7 +11,8 @@
       'lg:w-[950px] lg:resize': !maximized && !small,
       'z-20': isActive,
       'z-10': !isActive,
-      'z-30': maximized
+      'z-30': maximized,
+      'z-40': maximized && active
     }"
     @dragstart="startDrag"
     @mousedown="addIsDragged"
