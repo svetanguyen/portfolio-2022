@@ -1,12 +1,11 @@
 <template>
   <ul class="min-w-[150px]">
     <li v-for="(link, index) in menuLinks" :key="index">
-      <router-link
+      <button
         class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
-        :to="{
-          name: 'Home',
-          query: { max: $route.query.max && !link.disableMax ? (link.isFile && 'file' || !link.isFile && 'folder') : '', folder: !link.isFile ? link.query : $route.query.folder, file: link.isFile ? link.query : $route.query.file, active: link.isFile ? 'file' : 'folder' },
-        }"
+        @click="unMinimize(index)"
+        :aria-label="`open ${link.title}`"
+        type="button"
       >
         <img
           class="w-7"
@@ -16,12 +15,13 @@
           height="30"
         />
         <span>{{link.title}}</span>
-      </router-link>
+      </button>
     </li>
   </ul>
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
   name: "menu-links",
   props: ["windowWidth"],
@@ -49,7 +49,7 @@ export default {
           alt: 'files',
           title: 'Contacts',
           isFile: true,
-          hideSideBar: true
+          disableMaximize: true
         },
         {
           query: 'calculator',
@@ -62,6 +62,22 @@ export default {
       ]
     };
   },
+  methods: {
+    ...mapMutations(["unminimize"]),
+    unMinimize(index) {
+      const openedWindowType = this.menuLinks[index].isFile ? 'file' : 'folder'
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          max: this.$route.query.max && !this.currentFile.disableMaximize ? openedWindowType : '',
+          folder: !this.menuLinks[index].isFile ? this.menuLinks[index].query : this.$route.query.folder,
+          file: this.menuLinks[index].isFile ? this.menuLinks[index].query : this.$route.query.file,
+          active: openedWindowType
+        }
+      })
+      this.unminimize({index: this.menuLinks[index].isFile ? 0 : 1})
+    },
+  }
 };
 </script>
 
