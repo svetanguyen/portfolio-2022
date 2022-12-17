@@ -17,13 +17,11 @@
       :is-file="tab.isFile"
       :maximized="tab.maximized"
       class="bg-white"
-      @unminimize="onUnMinimize"
     />
   </div>
   <taskbar-component
     :window-width="windowWidth"
     :tabs="tabs"
-    @unMinimize="onUnMinimize"
   />
 </template>
 
@@ -102,15 +100,8 @@ export default {
   methods: {
     ...mapMutations([
       "addPrev",
-      "addNext",
-      "removePrev",
-      "removeNext",
       "updateUpdatedLinks",
-      "unminimize"
     ]),
-    onUnMinimize(index) {
-      this.unminimize({index: index})
-    },
     checkScreen() {
       this.windowWidth = window.innerWidth;
       if (this.windowWidth < 1024) {
@@ -128,7 +119,6 @@ export default {
 <style lang="scss" scoped>
 .main {
   background: url("../assets/images/bg-1.jpg") no-repeat 50% 50% / cover;
-  // cursor: url("../assets/imagπes/cursor.png"), auto;
 }
 
 </style>

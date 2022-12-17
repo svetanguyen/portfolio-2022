@@ -54,7 +54,7 @@
 import ComputerIcon from "../icons/Computer.vue";
 import SocialIcons from "./SocialIcons.vue";
 import NavigationComponent from "./Navigation.vue";
-import {mapMutations,mapState} from 'vuex'
+import {mapMutations, mapState} from 'vuex'
 
 export default {
   name: "taskbar-component",
@@ -88,10 +88,10 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["toggleMinimize"]),
+    ...mapMutations(["unminimize"]),
     unMinimize(index) {
       const openedWindowType = index === 0 ? 'file' : 'folder'
-      this.$emit("unMinimize", index);
+      this.unminimize({index: index})
       this.$router.push({
         path: this.$route.path,
         query: {
@@ -105,8 +105,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.taskbar {
-  // cursor: url("../assets/images/cursor.png"), auto;
-}
+<style>
 </style>

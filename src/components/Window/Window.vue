@@ -160,7 +160,7 @@ export default {
     WorksList,
   },
   computed: {
-    ...mapState(["prevLinks", "nextLinks", "updatedLinks", "folders", "files"]),
+    ...mapState(["folders", "files"]),
   },
   created() {
     this.currentTabData = this.isFile
@@ -265,13 +265,6 @@ export default {
   },
   methods: {
     ...mapMutations([
-      "addNext",
-      "addPrev",
-      "removePrev",
-      "removeNext",
-      "updateUpdatedLinks",
-      "resetLinks",
-      "onMinimize",
       "onOpen",
       "onClose",
       "onMaximize",
