@@ -57,8 +57,10 @@
                   :to="{
                     name: 'Home',
                     query: {
-                      max: $route.query.max ? 'about' : '',
-                      open: 'about',
+                      max: $route.query.max ? 'folder' : '',
+                      folder: 'about',
+                      file: $route.query.file ? $route.query.file : '',
+                      active: 'folder'
                     },
                   }"
                 >
@@ -71,7 +73,7 @@
                   />
                   <span
                     :class="{
-                      'bg-blue text-white': $route.query.open === 'about',
+                      'bg-blue text-white': $route.query.folder === 'about',
                     }"
                     class="opacity-80 inline-block px-2 whitespace-nowrap"
                   >
@@ -86,8 +88,10 @@
                     :to="{
                       name: 'Home',
                       query: {
-                        max: $route.query.max ? 'info' : '',
-                        open: 'info',
+                        max: $route.query.max ? 'folder' : '',
+                        folder: 'info',
+                        file: $route.query.file ? $route.query.file : '',
+                        active: 'folder'
                       },
                     }"
                   >
@@ -100,7 +104,7 @@
                     />
                     <span
                       :class="{
-                        'bg-blue text-white': $route.query.open === 'info',
+                        'bg-blue text-white': $route.query.folder === 'info',
                       }"
                       class="opacity-80 px-2 whitespace-nowrap"
                     >
@@ -114,8 +118,10 @@
                     :to="{
                       name: 'Home',
                       query: {
-                        max: $route.query.max ? 'skills' : '',
-                        open: 'skills',
+                        max: $route.query.max ? 'folder' : '',
+                        folder: 'skills',
+                        file: $route.query.file ? $route.query.file : '',
+                        active: 'folder'
                       },
                     }"
                   >
@@ -128,7 +134,7 @@
                     />
                     <span
                       :class="{
-                        'bg-blue text-white': $route.query.open === 'skills',
+                        'bg-blue text-white': $route.query.folder === 'skills',
                       }"
                       class="opacity-80 px-2 whitespace-nowrap"
                     >
@@ -139,7 +145,7 @@
                 <li class="flex file relative items-center gap-2">
                   <a
                     class="flex items-center underline"
-                    href="https://drive.google.com/file/d/1NkAXJfQ39CbtDIjX_oEJrZXyJl8EyAil/view?usp=sharing"
+                    href="https://drive.google.com/file/d/1ESfcj7M-kAtCWYJWQaJKbncB-KKvbukP/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -180,8 +186,10 @@
                   :to="{
                     name: 'Home',
                     query: {
-                      max: $route.query.max ? 'works' : '',
-                      open: 'works',
+                      max: $route.query.max ? 'folder' : '',
+                      folder: 'works',
+                      file: $route.query.file ? $route.query.file : '',
+                      active: 'folder'
                     },
                   }"
                 >
@@ -194,7 +202,7 @@
                   />
                   <span
                     :class="{
-                      'bg-blue text-white': $route.query.open === 'works',
+                      'bg-blue text-white': $route.query.folder === 'works',
                     }"
                     class="opacity-80 px-2 whitespace-nowrap"
                   >
@@ -209,8 +217,10 @@
                     :to="{
                       name: 'Home',
                       query: {
-                        max: $route.query.max ? 'worksList' : '',
-                        open: 'worksList',
+                        max: $route.query.max ? 'folder' : '',
+                        folder: 'worksList',
+                        file: $route.query.file ? $route.query.file : '',
+                        active: 'folder'
                       },
                     }"
                   >
@@ -223,7 +233,7 @@
                     />
                     <span
                       :class="{
-                        'bg-blue text-white': $route.query.open === 'worksList',
+                        'bg-blue text-white': $route.query.folder === 'worksList',
                       }"
                       class="opacity-80 px-2 whitespace-nowrap"
                     >
@@ -262,7 +272,9 @@
                     name: 'Home',
                     query: {
                       max: $route.query.max ? 'contact' : '',
-                      open: 'contact',
+                      file: 'contact',
+                      folder: $route.query.folder ? $route.query.folder : '',
+                      active: 'file'
                     },
                   }"
                 >
@@ -275,7 +287,7 @@
                   />
                   <span
                     :class="{
-                      'bg-blue text-white': $route.query.open === 'contact',
+                      'bg-blue text-white': $route.query.folder === 'contact',
                     }"
                     class="opacity-80 px-2 whitespace-nowrap"
                   >
@@ -294,7 +306,9 @@
                     name: 'Home',
                     query: {
                       max: '',
-                      open: 'calculator',
+                      file: 'calculator',
+                      folder: $route.query.folder ? $route.query.folder : '',
+                      active: 'file'
                     },
                   }"
                 >
@@ -307,7 +321,7 @@
                   />
                   <span
                     :class="{
-                      'bg-blue text-white': $route.query.open === 'calculator',
+                      'bg-blue text-white': $route.query.folder === 'calculator',
                     }"
                     class="opacity-80 px-2 whitespace-nowrap"
                   >

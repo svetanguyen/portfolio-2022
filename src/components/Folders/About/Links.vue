@@ -8,12 +8,12 @@
     >
       <router-link
         class="text-center w-1/2 rounded-lg bg-button-gray shadow-sm text-lg py-3 px-[30px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
-        :to="{ name: 'Home', query: { max: 'works' } }"
+        :to="{ name: 'Home', query: { max: 'works', folder: 'works', file: $route.query.file, active: 'folder' } }"
         >My works</router-link
       >
       <router-link
         class="text-center w-1/2 rounded-lg bg-button-gray shadow-sm text-lg py-3 px-[30px] hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
-        :to="{ name: 'Home', query: { max: 'contact' } }"
+        :to="{ name: 'Home', query: { max: 'contact', folder: $route.query.folder, file: 'contact', active: 'file' } }"
         >Contact me</router-link
       >
     </div>

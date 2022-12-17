@@ -5,7 +5,7 @@
       v-for="(file, index) in files"
       :key="index"
     >
-      <button tabindex="0" @click="onOpen(index)" v-if="!file.externalLink">
+      <button aria-label="open file" tabindex="0" @click="onOpen(index)" v-if="!file.externalLink">
         <img
           class="mx-auto mb-2 h-[50px] object-contain"
           :src="require(`../assets/images/${file.icon}`)"
@@ -43,25 +43,27 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import LinkIcon from "../icons/Link.vue";
 export default {
   name: "files-component",
-  props: ["files", "text", "hideSidebar"],
+  props: ["files", "text", "hideSidebar", "isFile"],
   components: {
     LinkIcon,
   },
   methods: {
+    ...mapMutations(["unminimize"]),
     onOpen(index) {
       this.$router.push({
         path: "/",
         query: {
-          max:
-            ((this.files[index].maximized || this.$route.query.max) && !this.files[index].hideSidebar)
-              ? this.files[index].query
-              : "",
-          open: this.files[index].query,
+          max: (this.$route.query.max && !this.files[index].disableSidebar) ? (this.files[index].isFile ? 'file' : 'folder') : '',
+          folder: !this.files[index].isFile ? this.files[index].query : this.$route.query.folder,
+          file: this.files[index].isFile ? this.files[index].query : this.$route.query.file,
+          active: this.files[index].isFile ? 'file' : 'folder'
         },
       });
+      this.unminimize({index: this.files[index].isFile ? 0 : 1})
     },
   },
 };

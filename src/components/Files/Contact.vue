@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      files: [{ name: "Contact", query: "contact", icon: "files.png" }],
+      files: [{ name: "Contact", query: "contact", icon: "files.png", isFile: true, hideSidebar: true }],
     };
   },
 };

@@ -3,6 +3,7 @@
     class="relative w-full"
     :class="{ 'lg:flex flex-wrap justify-center': maximized }"
   >
+    <h2 class="w-full mb-3 text-center text-3xl lg:text-6xl">Personal projects</h2>
     <card-component
       class="w-full mb-6"
       :class="{ 'lg:w-1/2': maximized }"
@@ -29,25 +30,6 @@ export default {
     return {
       maximized: true,
     };
-  },
-  created() {
-    if (this.$route.query.max === "worksList") {
-      this.maximized = true;
-    } else {
-      this.maximized = false;
-    }
-  },
-  watch: {
-    $route(to) {
-      if (to.query.max === "worksList") {
-        this.maximized = true;
-      } else {
-        this.maximized = false;
-      }
-      if (!to.query.max) {
-        this.maximized = false;
-      }
-    },
   },
   computed: {
     ...mapState(["projectCards"]),

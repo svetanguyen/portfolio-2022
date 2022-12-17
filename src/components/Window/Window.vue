@@ -1,25 +1,27 @@
 <template>
   <div
-    v-if="!minimized && !closed"
-    ref="window"
-    class="shadow-sm rounded-2xl overflow-hidden transition-all lg:min-w-[600px]"
+    ref="windowWrapper"
+    v-if="currentTabData && !minimized && !closed"
+    class="shadow-sm rounded-2xl overflow-hidden transition-all"
     :class="{
-      '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full z-10':
+      '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full':
         maximized || windowWidth <= 1024,
       'h-[70vh] absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
-      'lg:w-[380px] lg:!min-w-0': !maximized && small,
-      'lg:w-[950px] lg:resize': !maximized && !small,
+      'lg:w-[380px] lg:!min-w-0 lg:max-h-[540px]': !maximized && isFile,
+      'z-20': !maximized && isActive,
+      'z-10': !maximized && !isActive,
+      'z-30': maximized && !isActive,
+      'z-40': maximized && isActive,
     }"
+    @click="reset"
+    @mousedown="addIsDragged"
     @dragstart="startDrag"
     @drag="dragging"
     :draggable="maximized || windowWidth <= 1024 ? false : true"
     :style="{
-      top: windowWidth <= 1024 || maximized ? 0 : (top && `${top}px`) || '40px',
+      top: windowWidth <= 1024 || maximized ? 0 : (top && `${top}px`) || '50%',
       left:
-        windowWidth <= 1024 || maximized
-          ? 0
-          : (left && `${left}px`) ||
-            (small ? 'calc(50% - 190px)' : 'calc(50% - 475px)'),
+        windowWidth <= 1024 || maximized ? 0 : (left && `${left}px`) || '50%',
     }"
     :id="`window-${index}`"
   >
@@ -29,92 +31,52 @@
       <div class="flex items-center gap-x-2.5 mt-1 mx-0.5">
         <img
           class="w-6"
-          :src="require(`../../assets/images/${icon}`)"
+          :src="require(`../../assets/images/${currentTabData.icon}`)"
           alt="heart"
           width="24"
           height="24"
         />
         <h4 class="text-[17px] lg:text-[25px] leading-none font-serif">
-          {{ title }}
+          {{ currentTabData.title }}
         </h4>
       </div>
-      <div class="flex">
-        <minimize-icon
-          @click="minimize(index)"
-          class="cursor-pointer hover:opacity-80"
-        />
-        <maximize-icon
-          @click="updateMaximize"
-          class="cursor-pointer hover:opacity-80"
-          :class="{
-            'pointer-events-none opacity-40':
-              windowWidth <= 1024 || disableMaximize,
-          }"
-        />
-        <close-window
-          @click="onClose(index)"
-          class="cursor-pointer hover:opacity-80"
-        />
-      </div>
-      <div
-        v-if="!hideSidebar"
-        class="flex flex-wrap lg:flex-nowrap w-full px-2 pt-2"
-      >
-        <button
-          class="bg-button-gray mr-1 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
-          :class="{
-            'opacity-50 pointer-events-none': !prevLinks.length,
-            'hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]':
-              prevLinks.length,
-          }"
-          @click.prevent="onBack"
-        >
-          <arrow-icon />
-          Back
-        </button>
-        <button
-          class="bg-button-gray mr-3 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
-          :class="{
-            'opacity-50 pointer-events-none': !nextLinks.length,
-            'hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]':
-              nextLinks.length,
-          }"
-          @click.prevent="onNext"
-        >
-          <arrow-icon class="rotate-180" />
-        </button>
-        <div class="bg-pink-light mt-2 lg:mt-0 flex-grow mb-1">
-          <p
-            class="rounded-lg shadow-xl-hovered py-1 px-3 text-xl leading-snug opacity-80"
-          >
-            Sveta's portfolio
-            <span v-if="folder"> / {{ folder }} / {{ title }}</span>
-            <span v-if="!folder && !title.includes('portfolio')">
-              / {{ title }}</span
-            >
-          </p>
-        </div>
-      </div>
+      <controls-component
+        :opened-windows="openedWindows"
+        :query="currentTabData?.query"
+        :maximized="maximized"
+        :is-file="isFile"
+        :index="index"
+        :window-width="windowWidth"
+        :disable-maximize="disableMaximize"
+        @restore="onRestore({ index: index })"
+      />
     </div>
+    <folder-component
+      :maximized="maximized"
+      :folder="currentTabData.folder"
+      :title="currentTabData.title"
+      v-if="!isFile"
+      class="ml-0.5 mr-1 flex-grow"
+    >
+      <component
+        v-if="currentTabData.component"
+        :maximized="maximized"
+        :is="currentTabData.component"
+        :class="{ 'w-full lg:w-[650px]': !maximized, 'w-full': maximized }"
+      />
+    </folder-component>
     <div
-      class="flex font-normal py-6 px-2 text-lg leading-snug mr-1 mb-1 ml-0.5 rounded-b-2xl text-[25px] bg-pink-light lg:px-3 lg:py-2"
+      v-if="isFile"
+      class="h-file-content flex font-normal py-6 px-2 text-lg leading-snug mr-1 ml-0.5 rounded-b-2xl text-[25px] bg-pink-light lg:px-3 lg:py-2"
       :class="{
         'lg:h-full-screen-container ': maximized,
-        'mb-2': !maximized,
-        'lg:h-window-restored-sm bg-pink-light h-full-screen-container-mob-sm': hideSidebar,
-        'lg:h-window-restored h-full-screen-container-mob ': !hideSidebar,
       }"
     >
-      <sidebar-component
-        v-if="!hideSidebar"
-        class="overflow-hidden lg:block hidden"
-        :class="{ 'w-1/3': maximized, 'w-1/4': !maximized }"
-      />
       <div
         class="overflow-hidden w-full"
         :class="{
-          'lg:w-2/3 lg:ml-5': maximized && !hideSidebar,
-          'lg:w-3/4 lg:ml-5': !maximized && !hideSidebar,
+          'lg:w-2/3 lg:ml-5': maximized && !isFile,
+          'lg:w-3/4 lg:ml-5': !maximized && !isFile,
         }"
       >
         <div class="py-2 bg-white h-full shadow-lg">
@@ -125,7 +87,10 @@
             class="h-full overflow-y-scroll mr-1"
           >
             <div class="h-full w-full">
-              <slot></slot>
+              <component
+                v-if="currentTabData.component"
+                :is="currentTabData.component"
+              />
             </div>
           </div>
         </div>
@@ -135,96 +100,168 @@
 </template>
 
 <script>
-import MinimizeIcon from "../../icons/Minimize.vue";
-import ArrowIcon from "../../icons/Arrow.vue";
-import MaximizeIcon from "../../icons/Maximize.vue";
-import CloseWindow from "../../icons/CloseWindow.vue";
-import SidebarComponent from "./Sidebar.vue";
+import FolderComponent from "./Folder.vue";
+import ControlsComponent from "./Controls.vue";
 import { mapState, mapMutations } from "vuex";
+
+// Content components
+import CalculatorComponent from "../Files/Calculator.vue";
+import HelloComponent from "../Folders/Hello.vue";
+import PortfolioComponent from "../Folders/MyPortfolio.vue";
+import AboutComponent from "../Folders/About/About.vue";
+import WorksComponent from "../Folders/Works/Works.vue";
+import ContactComponent from "../Files/Contact.vue";
+import InfoComponent from "../Folders/About/Info.vue";
+import SkillsComponent from "../Folders/About/Skills.vue";
+import WorksList from "../Folders/Works/WorksList.vue";
+
 export default {
   name: "window-component",
   data() {
     return {
-      maximized: this.windowWidth > 1024 ? false : true,
       top: null,
       left: null,
       startTop: 0,
       startLeft: 0,
       endTop: 0,
       endLeft: 0,
+      isDragged: false,
+      isActive: false,
+      currentTabData: {},
+      changeX: 0,
+      changeY: 0,
+      prevTop: 0,
+      prevLeft: 0
     };
   },
   props: [
     "title",
     "minimized",
+    "maximized",
     "closed",
     "index",
-    "query",
-    "icon",
-    "hideSidebar",
     "windowWidth",
     "openedWindows",
+    "openedFile",
     "disableMaximize",
-    "small",
-    "folder",
+    "isFile",
   ],
   components: {
-    MinimizeIcon,
-    MaximizeIcon,
-    CloseWindow,
-    SidebarComponent,
-    ArrowIcon,
+    ControlsComponent,
+    FolderComponent,
+    CalculatorComponent,
+    HelloComponent,
+    PortfolioComponent,
+    AboutComponent,
+    WorksComponent,
+    ContactComponent,
+    InfoComponent,
+    SkillsComponent,
+    WorksList,
   },
   computed: {
-    ...mapState(["prevLinks", "nextLinks", "updatedLinks"]),
+    ...mapState(["prevLinks", "nextLinks", "updatedLinks", "folders", "files"]),
   },
   created() {
-    if (this.$route.query.max === this.query) {
-      this.onMaximize();
-    }
-    if (!this.$route.query.max && this.windowWidth > 1024) {
-      this.onRestore();
-    }
-    if (this.windowWidth <= 1024) this.maximized = true;
-    if (this.$route.query.open === this.query) {
-      this.$router.push({
-        path: this.$route.path,
-        query: { max: this.$route.query.max, open: this.query },
-      });
-      this.$emit("open", this.index);
+    this.currentTabData = this.isFile
+      ? this.files.find((file) => file.query === this.$route?.query.file)
+      : this.folders.find(
+          (folder) => folder.query === this.$route?.query.folder
+        );
+    if (!this.currentTabData) return;
+    this.updateActive(
+      (this.isFile && this.$route?.query.active === "file") ||
+        (!this.isFile && this.$route?.query.active === "folder")
+    );
+    this.checkMaximize(
+      (this.isFile && this.$route?.query.max === "file") ||
+        (!this.isFile && this.$route?.query.max === "folder")
+    );
+    const isFolderOpen = !this.isFile && !!this.$route.query.folder;
+    const isFileOpen = !!this.$route.query.file && this.isFile;
+    const maxQuery = this.$route.query.max
+      ? this.isFile
+        ? "file"
+        : "folder"
+      : "";
+    if (isFolderOpen || isFileOpen) {
+      this.onOpen({ index: this.index });
     } else {
-      this.$router.push({
-        path: this.$route.path,
-        query: { max: this.$route.query.max, open: this.$route.query.open },
-      });
-      this.$emit("close", this.index);
+      this.updateQuery(
+        maxQuery,
+        this.$route?.query.folder,
+        this.$route?.query.file,
+        this.$route?.query.active
+      );
+      this.onClose({ index: this.index });
     }
-    document.body.addEventListener("drop", this.drop);
-    document.body.addEventListener("dragover", this.allowDrop);
-    document.body.addEventListener("dragend", this.endDrag);
+    const windowEl = document.querySelector(`#window-${this.index}`);
+    this.getInitialPosition(windowEl);
+    this.initDragAndDrop();
+  },
+  mounted() {
+    this.initDragAndDrop();
+    setTimeout(() => {
+      if (!this.top || !this.left) {
+        const windowEl = document.querySelector(`#window-${this.index}`);
+        this.getInitialPosition(windowEl);
+      }
+    }, 0);
   },
   watch: {
-    $route(to) {
-      this.reset();
-      if (to.query.max === this.query) {
-        this.onMaximize();
-      } else {
-        this.onRestore();
+    $route(to, from) {
+      if (
+        (this.isFile && to.query.file !== from.query.file) ||
+        (!this.isFile && to.query.folder !== from.query.folder)
+      ) {
+        this.currentTabData = this.isFile
+          ? this.files.find((file) => file?.query === to?.query?.file)
+          : this.folders.find((folder) => folder?.query === to?.query?.folder);
       }
-      if (!to.query.max) {
-        this.onRestore();
-      }
-      if (this.windowWidth <= 1024) this.maximized = true;
-      if (to.query.open === this.query) {
-        this.$emit("open", this.index);
-        this.$emit("unminimize", this.index);
-      } else if (to.query.open !== this.query && !this.closed) {
-        this.$emit("close", this.index);
-      }
+      this.updateActive(
+        (this.isFile && to?.query.active === "file") ||
+          (!this.isFile && to?.query.active === "folder")
+      );
+      this.checkMaximize(
+        (this.isFile && to.query.max === "file") ||
+          (!this.isFile && to.query.max === "folder")
+      );
+      this.updateOpen(to.query);
     },
     windowWidth: function (newVal) {
-      if (newVal <= 1024) this.maximized = true;
+      if (newVal <= 1024) this.onMaximize({ index: this.index });
     },
+    maximized: function(newVal) {
+      if (!newVal) {
+        this.top = this.prevTop
+        this.left = this.prevLeft
+        this.prevTop = 0
+        this.prevLeft = 0
+      } else {
+        this.prevTop = this.top
+        this.prevLeft = this.left
+      }
+    },
+    closed: function(newVal) {
+      if (!newVal) {
+          setTimeout(() => {
+            if (!this.top || !this.left) {
+              const windowEl = document.querySelector(`#window-${this.index}`);
+              this.getInitialPosition(windowEl);
+            }
+          }, 0)
+          this.getInitialPosition(this.$refs.windowWrapper);
+      }
+    },
+    minimized: function(newVal) {
+      if (!newVal) {
+        const windowEl = document.querySelector(`#window-${this.index}`);
+        if (!this.top || !this.left && windowEl) {
+          this.getInitialPosition(windowEl);
+        }
+      }
+    }
+
   },
   methods: {
     ...mapMutations([
@@ -234,126 +271,114 @@ export default {
       "removeNext",
       "updateUpdatedLinks",
       "resetLinks",
+      "onMinimize",
+      "onOpen",
+      "onClose",
+      "onMaximize",
+      "onRestore",
     ]),
     reset() {
-      this.top = null;
-      this.left = null;
       this.startTop = 0;
       this.startLeft = 0;
       this.endTop = 0;
       this.endLeft = 0;
+      this.changeX = 0;
+      this.changeY = 0;
+      this.isDragged = false
     },
-    minimize(index) {
-      this.$emit("minimize", index);
-      this.onRestore();
-      this.$router.push({
-        path: this.$route.path,
-        query: { max: "", open: this.query },
-      });
-    },
-    onClose() {
-      this.resetLinks();
-      this.updateUpdatedLinks();
-      this.$router.push({
-        path: this.$route.path,
-        query: { max: "", open: "" },
-      });
-      this.onRestore();
-    },
-    onMaximize() {
-      this.maximized = true;
-      this.$emit("open", this.index);
-      this.$emit("unminimize", this.index);
-    },
-    onRestore() {
-      this.maximized = false;
-    },
-    updateMaximize() {
-      if (this.windowWidth <= 1024) return;
-      this.maximized = !this.maximized;
-      if (this.maximized) {
-        this.$router.push({
-          path: this.$route.path,
-          query: { max: this.query, open: this.openedWindows },
-        });
-      } else {
-        this.$router.push({
-          path: this.$route.path,
-          query: { max: "", open: this.openedWindows },
-        });
+    updateOpen(query) {
+      const isOpen =
+        (!!query.folder && !this.isFile) || (!!query.file && this.isFile);
+      const isClosed =
+        (!!query.folder && !this.isFile) || (!!query.file && this.isFile);
+      if (isOpen) {
+        this.onOpen({ index: this.index });
+      } else if (isClosed) {
+        this.onClose({ index: this.index });
       }
     },
-    startDrag(e) {
-      if (this.maximized || this.window <= 1024) return;
+    updateQuery(max, folder, file, active) {
+      this.$router.push({
+        path: this.$route.path,
+        query: { max: max, folder: folder, file: file, active: active },
+      });
+    },
+    initDragAndDrop() {
+      document.body.addEventListener("drop", this.drop);
+      document.body.addEventListener("dragover", this.allowDrop);
+      document.body.addEventListener("dragend", this.endDrag);
+    },
+    checkMaximize(maximized) {
+      if (maximized) {
+        this.onMaximize({ index: this.index });
+      } else {
+        this.onRestore({ index: this.index });
+      }
+      if (this.windowWidth <= 1024) this.onMaximize({ index: this.index });
+      if (!this.$route?.query.max && this.windowWidth > 1024) {
+        this.onRestore({ index: this.index });
+      }
+    },
+    updateActive(active) {
+      this.isActive = active;
+    },
+    addIsDragged(e) {
+      this.isDragged = true;
+      const windowEl = document.querySelector(`#window-${this.index}`);
+      this.getPosition(windowEl);
       this.startTop = e.clientY;
       this.startLeft = e.clientX;
-      const window = document.querySelector(`#window-${this.index}`);
-      window.dataTransfer?.setData("text", `window-${this.index}`);
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route?.query,
+          active: this.isFile ? "file" : "folder",
+        },
+      });
+    },
+    startDrag() {
+      if (!this.isDragged) return;
+      if (this.maximized || this.window <= 1024) return;
     },
     dragging() {
+      if (!this.isDragged) return;
       if (this.maximized || this.window <= 1024) return;
-      const window = document.querySelector(`#window-${this.index}`);
-      this.getPosition(window);
     },
     drop(e) {
+      if (!this.isDragged) return;
       if (this.maximized || this.window <= 1024) return;
       e.preventDefault();
+    },
+    endDrag(e) {
+      if (!this.isDragged) return;
+      if (this.maximized || this.window <= 1024) return;
       this.endTop = e.clientY;
       this.endLeft = e.clientX;
-    },
-    endDrag() {
-      if (this.maximized || this.window <= 1024) return;
       const windowEl = document.querySelector(`#window-${this.index}`);
-      if (windowEl) {
-        this.top =
-          this.endTop > this.startTop
-            ? this.top + (this.endTop - this.startTop)
-            : this.top - (this.startTop - this.endTop);
-        this.left =
-          this.endLeft > this.startLeft
-            ? this.left + (this.endLeft - this.startLeft)
-            : this.left - (this.startLeft - this.endLeft);
-        windowEl.style.top = this.top;
-        windowEl.style.left = this.left;
-      }
+      this.getPosition(windowEl);
+      this.reset();
+      this.isDragged = false;
     },
     allowDrop(e) {
+      if (!this.isDragged) return;
       e.preventDefault();
     },
     getPosition(windowEl) {
+      if (!this.isDragged) return;
       if (windowEl) {
         var rect = windowEl?.getBoundingClientRect();
-        this.top = rect?.top;
-        this.left = rect?.left;
+        this.changeX = this.endLeft - this.startLeft;
+        this.changeY = this.endTop - this.startTop;
+        this.top = rect?.top + this.changeY;
+        this.left = rect?.left + this.changeX;
       }
     },
-    onBack() {
-      const prevLinkMax = this.prevLinks[this.prevLinks.length - 1]?.max;
-      const prevLinkOpen = this.prevLinks[this.prevLinks.length - 1]?.open;
-      this.removePrev();
-      this.addNext({ query: this.$route.query });
-      this.updateUpdatedLinks();
-      this.$router.push({
-        name: "Home",
-        query: {
-          max: this.$route.query.max ? prevLinkMax || "" : "",
-          open: prevLinkOpen || "",
-        },
-      });
-    },
-    onNext() {
-      const nextLinkMax = this.nextLinks[this.nextLinks.length - 1]?.max;
-      const nextLinkOpen = this.nextLinks[this.nextLinks.length - 1]?.open;
-      this.removeNext();
-      this.addPrev({ query: this.$route.query });
-      this.updateUpdatedLinks();
-      this.$router.push({
-        name: "Home",
-        query: {
-          max: this.$route.query.max ? nextLinkMax || "" : "",
-          open: nextLinkOpen || "",
-        },
-      });
+    getInitialPosition(windowEl) {
+      if (windowEl) {
+        var rect = windowEl?.getBoundingClientRect();
+        this.top = rect?.top - windowEl.clientHeight / 2;
+        this.left = rect?.left - windowEl.clientWidth / 2;
+      }
     },
   },
 };

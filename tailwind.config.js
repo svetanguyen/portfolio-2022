@@ -33,10 +33,11 @@ module.exports = {
         'full-screen-container': 'calc(100vh - 117px)',
         'full-screen-container-mob': 'calc(100% - 95px)',
         'full-screen-container-mob-sm': 'calc(100% - 40px)',
-        'window-content': 'calc(100% - 40px)',
-        'window-content-mob': 'calc(100% - 42px)',
-        'window-restored': 'calc(100% - 81px)',
-        'window-restored-sm': 'calc(100% - 33px)'
+        'window-content': 'calc(100% - 25px)',
+        'window-content-mob': 'calc(100% - 60px)',
+        'window-restored': 'calc(100% - 31px)',
+        'window-restored-sm': 'calc(100% - 33px)',
+        'file-content': 'calc(100% - 33px)'
       },
       fontFamily: {
         'sans': ['VT323', 'ui-sans-serif', 'system-ui', 'sans-serif'],

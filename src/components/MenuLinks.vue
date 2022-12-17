@@ -1,86 +1,83 @@
 <template>
   <ul class="min-w-[150px]">
-    <li>
-      <router-link
+    <li v-for="(link, index) in menuLinks" :key="index">
+      <button
         class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
-        :to="{
-          name: 'Home',
-          query: { max: $route.query.max ? 'about' : '', open: 'about' },
-        }"
+        @click="unMinimize(index)"
+        :aria-label="`open ${link.title}`"
+        type="button"
       >
         <img
           class="w-7"
-          :src="require(`../assets/images/heart.png`)"
-          alt="document"
+          :src="require(`../assets/images/${link.img}`)"
+          :alt="link.alt"
           width="30"
           height="30"
         />
-        <span>About</span>
-      </router-link>
-    </li>
-    <li>
-      <router-link
-        class="py-4 px-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
-        :to="{
-          name: 'Home',
-          query: { max: $route.query.max ? 'works' : '', open: 'works' },
-        }"
-      >
-        <img
-          class="w-7"
-          :src="require(`../assets/images/folder.png`)"
-          alt="folder"
-          width="30"
-          height="30"
-        />
-        Works</router-link
-      >
-    </li>
-    <li>
-      <router-link
-        class="p-4 text-[23px] lg:text-xl leading-none flex gap-3 items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
-        :to="{
-          name: 'Home',
-          query: { max: $route.query.max ? 'contact' : '', open: 'contact' },
-        }"
-      >
-        <img
-          class="w-7"
-          :src="require(`../assets/images/files.png`)"
-          alt="files"
-          width="30"
-          height="30"
-        />
-        Contacts</router-link
-      >
-    </li>
-    <li>
-      <router-link
-        class="p-4 text-[23px] lg:text-xl leading-none flex items-center text-black lg:text-[23px] hover:bg-dark-pink w-full"
-        :to="{ name: 'Home', query: { max: '', open: 'calculator' } }"
-      >
-        <img
-          class="w-7"
-          :src="require(`../assets/images/calculator.png`)"
-          alt="calculator"
-          width="30"
-          height="30"
-        />
-        <span class="ml-3 block">Calculator</span></router-link
-      >
+        <span>{{link.title}}</span>
+      </button>
     </li>
   </ul>
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
   name: "menu-links",
   props: ["windowWidth"],
   data() {
     return {
       route: this.$route,
+      menuLinks: [
+        {
+          query: 'about',
+          img: 'heart.png',
+          alt: 'heart',
+          title: 'About',
+          isFile: false
+        },
+        {
+          query: 'works',
+          img: 'folder.png',
+          alt: 'folder',
+          title: 'Works',
+          isFile: false
+        },
+        {
+          query: 'contact',
+          img: 'files.png',
+          alt: 'files',
+          title: 'Contacts',
+          isFile: true,
+          disableMaximize: true
+        },
+        {
+          query: 'calculator',
+          img: 'calculator.png',
+          alt: 'calculator',
+          title: 'Calculator',
+          isFile: true,
+          disableMax: true
+        },
+      ]
     };
   },
+  methods: {
+    ...mapMutations(["unminimize"]),
+    unMinimize(index) {
+      const openedWindowType = this.menuLinks[index].isFile ? 'file' : 'folder'
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          max: this.$route.query.max && !this.currentFile.disableMaximize ? openedWindowType : '',
+          folder: !this.menuLinks[index].isFile ? this.menuLinks[index].query : this.$route.query.folder,
+          file: this.menuLinks[index].isFile ? this.menuLinks[index].query : this.$route.query.file,
+          active: openedWindowType
+        }
+      })
+      this.unminimize({index: this.menuLinks[index].isFile ? 0 : 1})
+    },
+  }
 };
 </script>
 

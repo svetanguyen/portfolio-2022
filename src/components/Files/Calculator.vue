@@ -8,24 +8,28 @@
         <button
           class="col-span-2 h-[66px] bg-pink-light rounded-lg shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
           @click="onReset"
+          aria-label="reset"
         >
           C
         </button>
         <button
           class="col-span-1 h-[66px] bg-pink-light rounded-lg shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
           @click="updateSign"
+          aria-label="update number sign"
         >
           +/-
         </button>
         <button
           class="col-span-1 h-[66px] bg-pink-light rounded-lg shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
           data-operation="divide"
+          aria-label="divide"
           @click="updateOperation"
         >
           ÷
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="7"
           data-num="7"
           @click="updateNum"
         >
@@ -33,6 +37,7 @@
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="8"
           data-num="8"
           @click="updateNum"
         >
@@ -40,6 +45,7 @@
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="9"
           data-num="9"
           @click="updateNum"
         >
@@ -48,12 +54,14 @@
         <button
           class="col-span-1 h-[66px] rounded-lg bg-pink-light shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
           data-operation="multiply"
+          aria-label="multiply"
           @click="updateOperation"
         >
           x
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="4"
           data-num="4"
           @click="updateNum"
         >
@@ -61,6 +69,7 @@
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="5"
           data-num="5"
           @click="updateNum"
         >
@@ -68,6 +77,7 @@
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="6"
           data-num="6"
           @click="updateNum"
         >
@@ -75,6 +85,7 @@
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-pink-light shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="substract"
           data-operation="substract"
           @click="updateOperation"
         >
@@ -82,6 +93,7 @@
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="1"
           data-num="1"
           @click="updateNum"
         >
@@ -89,6 +101,7 @@
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="2"
           data-num="2"
           @click="updateNum"
         >
@@ -96,6 +109,7 @@
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="3"
           data-num="3"
           @click="updateNum"
         >
@@ -103,6 +117,7 @@
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-pink-light shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="add"
           data-operation="addition"
           @click="updateOperation"
         >
@@ -110,6 +125,7 @@
         </button>
         <button
           class="col-span-2 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="0"
           data-num="0"
           @click="updateNum"
         >
@@ -117,12 +133,14 @@
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-button-gray shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="decimal point"
           @click="updateDecimal"
         >
           .
         </button>
         <button
           class="col-span-1 h-[66px] rounded-lg bg-[#FEB0FE] shadow-sm hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
+          aria-label="show result"
           @click="onShowResult"
         >
           =
@@ -165,7 +183,9 @@ export default {
     },
     updateSign() {
       if (this.currentNum !== 0) {
-        if (!this.firstNum) this.equation = this.prevEquation;
+        const prevEquation = this.prevEquation
+        this.prevEquation = this.equation
+        if (!this.firstNum) this.equation = prevEquation;
         this.currentNum = -this.currentNum;
         if (this.firstNum) this.equation = this.currentNum;
         this.result = this.currentNum;
@@ -174,6 +194,7 @@ export default {
     },
     updateDecimal() {
       this.decimalPoint = !this.decimalPoint;
+      if (this.decimalPoint) this.currentOperation = "none"
     },
     updateNum(e, num) {
       const currentNum = e?.target ? e.target.dataset.num : num;
@@ -198,7 +219,7 @@ export default {
       }
 
       if (
-        (this.currentOperation === "none" && this.equation === 0) ||
+        (this.currentOperation === "none") ||
         this.firstNum
       ) {
         this.prevEquation = this.equation;

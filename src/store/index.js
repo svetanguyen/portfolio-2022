@@ -3,10 +3,10 @@ import { createStore } from 'vuex'
 export const store = createStore({
     state: {
       projectCards: [
-        { title: "Pokemon desktop game", image: "pokemon.jpg", description: "Vanilla JS, HTML/CSS, REST API", link: "https://pokemon-fight-game.netlify.app/", github: "https://github.com/svetanguyen/PokemonDesk" },
+        { title: "Portfolio", image: "portfolio.jpg", description: "React, HTML/CSS, Tailwindcss", link: "https://tin-bui.netlify.app/", github: "https://github.com/svetanguyen/bui_dys_tin" },
         { title: "Instagram clone", image: "ig-clone.jpg", description: "React, Tailwindcss, HTML/CSS, Firebase", link: "https://insta-clone-5b854c.netlify.app/", github: "https://github.com/svetanguyen/instagram-clone-freecodecamp" },
         { title: "Weather app", image: "weather-app.jpg", description: "Vue.js, HTML/CSS, REST API", link: "https://weather-app-vue-1.netlify.app/", github: "https://github.com/svetanguyen/vue-weather" },
-        { title: "Portfolio", image: "portfolio.jpg", description: "React, HTML/CSS, Tailwindcss", link: "https://t1n.netlify.app/", github: "https://github.com/svetanguyen/t1n" },
+        { title: "Pokemon desktop game", image: "pokemon.jpg", description: "Vanilla JS, HTML/CSS, REST API", link: "https://pokemon-fight-game.netlify.app/", github: "https://github.com/svetanguyen/PokemonDesk" },
       ],
       skills: [
         { text: 'React', type: 'ReactIcon' },
@@ -21,8 +21,87 @@ export const store = createStore({
         { text: 'Tailwind', type: 'TailwindIcon' },
       ],
       folders: [
-        { query: 'home', icon: 'computer.png', component: 'HomeComponent' },
-        { query: 'about', icon: 'computer.png', component: 'AboutComponent' },
+        {
+          query: "hello",
+          icon: "notepad.png",
+          title: "Hello",
+          component: 'HelloComponent',
+        },
+        {
+          query: "portfolio",
+          icon: "computer.png",
+          title: "My portfolio",
+          component: 'PortfolioComponent',
+        },
+        {
+          query: "about",
+          icon: "computer.png",
+          title: "About me",
+          component: 'AboutComponent',
+        },
+        {
+          query: "info",
+          icon: "notepad.png",
+          title: "Info",
+          component: 'InfoComponent',
+          folder: "About me",
+        },
+        {
+          query: "skills",
+          icon: "notepad.png",
+          title: "Skills",
+          component: 'SkillsComponent',
+          folder: "About me",
+        },
+        {
+          query: "works",
+          icon: "folder.png",
+          title: "Works",
+          component: 'WorksComponent',
+        },
+        {
+          query: "worksList",
+          icon: "notepad.png",
+          title: "Projects",
+          component: 'WorksList',
+          folder: "Works",
+        },
+      ],
+      files: [
+        {
+          query: "contact",
+          icon: "files.png",
+          title: "Contact",
+          component: 'ContactComponent',
+          isFile: true,
+        },
+        {
+          query: "calculator",
+          icon: "calculator.png",
+          title: "Calculator",
+          component: 'CalculatorComponent',
+          disableMaximize: true,
+          small: true,
+          isFile: true
+        },
+      ],
+      tabs: [
+        {
+          minimized: false,
+          maximized: false,
+          closed: true,
+          disableMaximize: true,
+          small: true,
+          isFile: true
+        },
+        {
+          minimized: false,
+          maximized: false,
+          closed: true,
+          disableMaximize: false,
+          small: true,
+          isFile: false
+        },
       ],
       prevLinks: [],
       nextLinks: [],
@@ -49,9 +128,32 @@ export const store = createStore({
         state.updatedLinks = !state.updatedLinks
       },
       resetLinks(state) {
-        console.log('blya')
         state.prevLinks = []
         state.nextLinks = []
+      },
+      onMinimize(state, payload) {
+        state.tabs[payload.index].minimized = true
+      },
+      onClose(state, payload) {
+        state.tabs[payload.index].closed = true
+      },
+      onOpen(state, payload) {
+        state.tabs[payload.index].closed = false
+      },
+      unminimize(state, payload) {
+        state.tabs[payload.index].minimized = false;
+      },
+      onMaximize(state, payload) {
+        state.tabs[payload.index].maximized = true
+      },
+      onRestore(state, payload) {
+        state.tabs[payload.index].maximized = false
+      },
+      toggleMinimize(state, payload) {
+        state.tabs[payload.index].minimized = !state.tabs[payload.index].minimized
+      },
+      toggleMaximize(state, payload) {
+        state.tabs[payload.index].maximized = !state.tabs[payload.index].maximized
       }
     }
 })
