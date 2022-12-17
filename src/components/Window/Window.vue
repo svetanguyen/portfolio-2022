@@ -8,7 +8,6 @@
         maximized || windowWidth <= 1024,
       'h-[70vh] absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
       'lg:w-[380px] lg:!min-w-0 lg:max-h-[540px]': !maximized && isFile,
-      'lg:resize': !maximized && !isFile,
       'z-20': !maximized && isActive,
       'z-10': !maximized && !isActive,
       'z-30': maximized && !isActive,
