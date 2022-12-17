@@ -27,7 +27,7 @@
         >
           <arrow-icon class="rotate-180" />
         </button>
-        <div class="bg-pink-light mt-2 lg:mt-0 flex-grow mb-1">
+        <div class="bg-pink-light mt-2 lg:mt-0 flex-grow mb-1 w-full lg:w-auto">
           <p
             class="rounded-lg shadow-xl-hovered py-1 px-3 text-xl leading-snug opacity-80"
           >
@@ -41,7 +41,7 @@
       </div>
     </div>
      <div
-      class="flex flex-grow font-normal py-6 px-2 text-lg leading-snug rounded-b-2xl text-[25px] bg-pink-light lg:px-3 lg:py-2 h-window-content-mob"
+      class="flex flex-grow font-normal py-6 px-2 text-lg leading-snug rounded-b-2xl text-[25px] bg-pink-light lg:px-3 lg:py-2 h-window-content-mob lg:h-window-content"
     >
       <sidebar-component
         class="overflow-hidden lg:block hidden"

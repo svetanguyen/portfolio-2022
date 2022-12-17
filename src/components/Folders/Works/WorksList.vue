@@ -3,6 +3,7 @@
     class="relative w-full"
     :class="{ 'lg:flex flex-wrap justify-center': maximized }"
   >
+    <h2 class="w-full mb-3 text-center text-3xl lg:text-6xl">Personal projects</h2>
     <card-component
       class="w-full mb-6"
       :class="{ 'lg:w-1/2': maximized }"
