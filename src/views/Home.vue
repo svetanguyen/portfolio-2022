@@ -1,8 +1,8 @@
 <template>
   <div
-    class="main min-h-page overflow-hidden py-11 lg:py-24 mx-auto px-6 lg:px-25 relative h-full-screen-mob lg:h-full-screen"
+    class="main min-h-page overflow-hidden mx-auto relative h-full-screen-mob lg:h-full-screen"
   >
-    <files-component class="absolute left-8 top-8 lg:top-20" :files="files" />
+    <files-component class="flex flex-col flex-wrap ml-8 mt-8 lg:mt-20" :files="files" />
     <window-component
       v-for="(tab, index) in tabs"
       :key="index"

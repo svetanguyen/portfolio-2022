@@ -238,8 +238,7 @@ export default {
       if (!newVal) {
           setTimeout(() => {
             if (!this.top || !this.left) {
-              const windowEl = document.querySelector(`#window-${this.index}`);
-              this.getInitialPosition(windowEl);
+              this.getInitialPosition(this.$refs.windowWrapper);
             }
           }, 0)
           this.getInitialPosition(this.$refs.windowWrapper);
@@ -247,9 +246,8 @@ export default {
     },
     minimized: function(newVal) {
       if (!newVal) {
-        const windowEl = document.querySelector(`#window-${this.index}`);
-        if (!this.top || !this.left && windowEl) {
-          this.getInitialPosition(windowEl);
+        if (!this.top || !this.left && this.$refs.windowWrapper) {
+          this.getInitialPosition(this.$refs.windowWrapper);
         }
       }
     }
@@ -295,8 +293,7 @@ export default {
     },
     addIsDragged(e) {
       this.isDragged = true;
-      const windowEl = document.querySelector(`#window-${this.index}`);
-      this.getMousePositionDifference(windowEl, e.clientX, e.clientY)
+      this.getMousePositionDifference(this.$refs.windowWrapper, e.clientX, e.clientY)
     },
     onActive() {
       this.updateQuery(this.$route.query.max, this.$route.query.folder, this.$route.query.file, this.isFile ? 'file' : 'folder')

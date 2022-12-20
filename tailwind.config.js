@@ -28,8 +28,8 @@ module.exports = {
       },
       height: {
         'page': 'calc(100vh - 73px)',
-        'full-screen': 'calc(100vh - 88px)',
-        'full-screen-mob': 'calc(100vh - 84px)',
+        'full-screen': 'calc(100vh - 61px)',
+        'full-screen-mob': 'calc(100vh - 56px)',
         'full-screen-container': 'calc(100vh - 117px)',
         'full-screen-container-mob': 'calc(100% - 95px)',
         'full-screen-container-mob-sm': 'calc(100% - 40px)',
