@@ -2,7 +2,7 @@
   <div
     ref="windowWrapper"
     v-if="currentTabData && !minimized && !closed"
-    class="shadow-sm rounded-2xl overflow-hidden transition-all"
+    class="shadow-sm rounded-2xl overflow-hidden"
     :class="{
       '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full':
         maximized || windowWidth <= 1024,
@@ -13,11 +13,7 @@
       'z-30': maximized && !isActive,
       'z-40': maximized && isActive,
     }"
-    @click="reset"
-    @mousedown="addIsDragged"
-    @dragstart="startDrag"
-    @drag="dragging"
-    :draggable="maximized || windowWidth <= 1024 ? false : true"
+    @mousedown="onActive"
     :style="{
       top: windowWidth <= 1024 || maximized ? 0 : (top && `${top}px`) || '50%',
       left:
@@ -27,6 +23,8 @@
   >
     <div
       class="flex flex-wrap items-center justify-between bg-pink-light mt-0.5 mr-1 ml-0.5 rounded-t-2xl"
+      @mousedown="addIsDragged"
+      @mouseup="removeIsDragged"
     >
       <div class="flex items-center gap-x-2.5 mt-1 mx-0.5">
         <img
@@ -123,26 +121,22 @@ export default {
       left: null,
       startTop: 0,
       startLeft: 0,
-      endTop: 0,
-      endLeft: 0,
       isDragged: false,
       isActive: false,
       currentTabData: {},
-      changeX: 0,
-      changeY: 0,
       prevTop: 0,
-      prevLeft: 0
+      prevLeft: 0,
+      diffY: 0,
+      diffX: 0
     };
   },
   props: [
-    "title",
     "minimized",
     "maximized",
     "closed",
     "index",
     "windowWidth",
     "openedWindows",
-    "openedFile",
     "disableMaximize",
     "isFile",
   ],
@@ -195,16 +189,14 @@ export default {
       );
       this.onClose({ index: this.index });
     }
-    const windowEl = document.querySelector(`#window-${this.index}`);
-    this.getInitialPosition(windowEl);
-    this.initDragAndDrop();
+    this.getInitialPosition(this.$refs.windowWrapper);
+    document.body.addEventListener("mousemove", this.handleMove)
   },
   mounted() {
-    this.initDragAndDrop();
+    document.body.addEventListener("mousemove", this.handleMove)
     setTimeout(() => {
       if (!this.top || !this.left) {
-        const windowEl = document.querySelector(`#window-${this.index}`);
-        this.getInitialPosition(windowEl);
+        this.getInitialPosition(this.$refs.windowWrapper);
       }
     }, 0);
   },
@@ -270,15 +262,6 @@ export default {
       "onMaximize",
       "onRestore",
     ]),
-    reset() {
-      this.startTop = 0;
-      this.startLeft = 0;
-      this.endTop = 0;
-      this.endLeft = 0;
-      this.changeX = 0;
-      this.changeY = 0;
-      this.isDragged = false
-    },
     updateOpen(query) {
       const isOpen =
         (!!query.folder && !this.isFile) || (!!query.file && this.isFile);
@@ -295,11 +278,6 @@ export default {
         path: this.$route.path,
         query: { max: max, folder: folder, file: file, active: active },
       });
-    },
-    initDragAndDrop() {
-      document.body.addEventListener("drop", this.drop);
-      document.body.addEventListener("dragover", this.allowDrop);
-      document.body.addEventListener("dragend", this.endDrag);
     },
     checkMaximize(maximized) {
       if (maximized) {
@@ -318,53 +296,24 @@ export default {
     addIsDragged(e) {
       this.isDragged = true;
       const windowEl = document.querySelector(`#window-${this.index}`);
-      this.getPosition(windowEl);
-      this.startTop = e.clientY;
-      this.startLeft = e.clientX;
-      this.$router.push({
-        path: this.$route.path,
-        query: {
-          ...this.$route?.query,
-          active: this.isFile ? "file" : "folder",
-        },
-      });
+      this.getMousePositionDifference(windowEl, e.clientX, e.clientY)
     },
-    startDrag() {
-      if (!this.isDragged) return;
-      if (this.maximized || this.window <= 1024) return;
+    onActive() {
+      this.updateQuery(this.$route.query.max, this.$route.query.folder, this.$route.query.file, this.isFile ? 'file' : 'folder')
     },
-    dragging() {
-      if (!this.isDragged) return;
-      if (this.maximized || this.window <= 1024) return;
+    removeIsDragged() {
+      this.isDragged = false
     },
-    drop(e) {
-      if (!this.isDragged) return;
-      if (this.maximized || this.window <= 1024) return;
-      e.preventDefault();
+    handleMove(e) {
+      if (!this.isDragged) return
+      this.top = e.clientY - this.diffY
+      this.left = e.clientX - this.diffX
     },
-    endDrag(e) {
-      if (!this.isDragged) return;
-      if (this.maximized || this.window <= 1024) return;
-      this.endTop = e.clientY;
-      this.endLeft = e.clientX;
-      const windowEl = document.querySelector(`#window-${this.index}`);
-      this.getPosition(windowEl);
-      this.reset();
-      this.isDragged = false;
-    },
-    allowDrop(e) {
-      if (!this.isDragged) return;
-      e.preventDefault();
-    },
-    getPosition(windowEl) {
-      if (!this.isDragged) return;
-      if (windowEl) {
-        var rect = windowEl?.getBoundingClientRect();
-        this.changeX = this.endLeft - this.startLeft;
-        this.changeY = this.endTop - this.startTop;
-        this.top = rect?.top + this.changeY;
-        this.left = rect?.left + this.changeX;
-      }
+    getMousePositionDifference(windowEl, mouseX, mouseY) {
+      if (!windowEl) return
+      var rect = windowEl?.getBoundingClientRect();
+      this.diffY = mouseY - rect?.top 
+      this.diffX = mouseX - rect?.left 
     },
     getInitialPosition(windowEl) {
       if (windowEl) {
