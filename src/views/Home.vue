@@ -2,7 +2,7 @@
   <div
     class="main min-h-page overflow-hidden mx-auto relative h-full-screen-mob lg:h-full-screen"
   >
-    <files-component class="flex flex-col flex-wrap ml-8 mt-8 lg:mt-20" :files="files" />
+    <files-component class="flex flex-col flex-wrap ml-8 mt-8 lg:mt-20" :files="desktopFiles" />
     <window-component
       v-for="(tab, index) in tabs"
       :key="index"
@@ -44,32 +44,10 @@ export default {
       openedWindows: this.$route?.query?.folder || "",
       openedFile: this.$route?.query?.file || "",
       windowWidth: 0,
-      files: [
-        {
-          name: "My portfolio",
-          icon: "computer.png",
-          query: "portfolio",
-        },
-        { name: "Hello", icon: "notepad.png", query: "hello" },
-        {
-          name: "Resume",
-          icon: "document.png",
-          query: "hello",
-          externalLink:
-            "https://drive.google.com/file/d/1ESfcj7M-kAtCWYJWQaJKbncB-KKvbukP/view?usp=sharing",
-        },
-        {
-          name: "Calculator",
-          icon: "calculator.png",
-          query: "calculator",
-          isFile: true,
-          hideSidebar: true
-        },
-      ],
     };
   },
   computed: {
-    ...mapState(["updatedLinks", "tabs"]),
+    ...mapState(["updatedLinks", "tabs", "desktopFiles"]),
   },
   created() {
     this.checkScreen();

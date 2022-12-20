@@ -93,6 +93,38 @@ export const store = createStore({
           small: true,
           isFile: true
         },
+        {
+          query: "notepad",
+          icon: "calculator.png",
+          alt: "notepad",
+          title: "Notepad",
+          component: 'NotepadComponent',
+          disableMaximize: false,
+          small: false,
+          isFile: true
+        },
+      ],
+      desktopFiles: [
+        {
+          title: "My portfolio",
+          icon: "computer.png",
+          query: "portfolio",
+        },
+        { title: "Hello", icon: "notepad.png", query: "hello" },
+        {
+          title: "Resume",
+          icon: "document.png",
+          query: "hello",
+          externalLink:
+            "https://drive.google.com/file/d/1ESfcj7M-kAtCWYJWQaJKbncB-KKvbukP/view?usp=sharing",
+        },
+        {
+          title: "Calculator",
+          icon: "calculator.png",
+          query: "calculator",
+          isFile: true,
+          hideSidebar: true
+        },
       ],
       tabs: [
         {
@@ -163,6 +195,10 @@ export const store = createStore({
       },
       toggleMaximize(state, payload) {
         state.tabs[payload.index].maximized = !state.tabs[payload.index].maximized
+      },
+      addFile(state, payload) {
+        state.desktopFiles.push(payload)
+        state.files.push(payload)
       }
     }
 })

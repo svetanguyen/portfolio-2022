@@ -15,10 +15,10 @@ export default {
   data() {
     return {
       files: [
-        { name: "Info", query: "info", icon: "notepad.png" },
-        { name: "Skills", query: "skills", icon: "notepad.png" },
+        { title: "Info", query: "info", icon: "notepad.png" },
+        { title: "Skills", query: "skills", icon: "notepad.png" },
         {
-          name: "Resume",
+          title: "Resume",
           icon: "document.png",
           query: "hello",
           externalLink:

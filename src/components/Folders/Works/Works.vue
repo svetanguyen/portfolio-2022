@@ -14,9 +14,9 @@ export default {
   data() {
     return {
       files: [
-        { name: "Projects", query: "worksList", icon: "notepad.png" },
+        { title: "Projects", query: "worksList", icon: "notepad.png" },
         {
-          name: "Github",
+          title: "Github",
           icon: "github.png",
           externalLink: "https://github.com/svetanguyen",
         },

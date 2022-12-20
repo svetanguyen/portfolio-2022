@@ -88,6 +88,7 @@
               <component
                 v-if="currentTabData.component"
                 :is="currentTabData.component"
+                :content="currentTabData.content"
               />
             </div>
           </div>
@@ -102,16 +103,20 @@ import FolderComponent from "./Folder.vue";
 import ControlsComponent from "./Controls.vue";
 import { mapState, mapMutations } from "vuex";
 
-// Content components
-import CalculatorComponent from "../Files/Calculator.vue";
+// Folder components
 import HelloComponent from "../Folders/Hello.vue";
 import PortfolioComponent from "../Folders/MyPortfolio.vue";
 import AboutComponent from "../Folders/About/About.vue";
 import WorksComponent from "../Folders/Works/Works.vue";
-import ContactComponent from "../Files/Contact.vue";
 import InfoComponent from "../Folders/About/Info.vue";
 import SkillsComponent from "../Folders/About/Skills.vue";
 import WorksList from "../Folders/Works/WorksList.vue";
+
+// File components
+import CalculatorComponent from "../Files/Calculator.vue";
+import ContactComponent from "../Files/Contact.vue";
+import NotepadComponent from "../Files/Notepad.vue"
+import TextComponent from "../Files/Text.vue"
 
 export default {
   name: "window-component",
@@ -152,6 +157,8 @@ export default {
     InfoComponent,
     SkillsComponent,
     WorksList,
+    NotepadComponent,
+    TextComponent
   },
   computed: {
     ...mapState(["folders", "files"]),

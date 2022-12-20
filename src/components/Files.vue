@@ -9,12 +9,12 @@
         <img
           class="mx-auto mb-2 h-[50px] object-contain"
           :src="require(`../assets/images/${file.icon}`)"
-          :alt="file.name"
+          :alt="file.title"
           width="60"
           height="60"
         />
         <p :class="{ 'text-black': text === 'black' }">
-          {{ file.name }}
+          {{ file.title }}
         </p>
       </button>
       <a
@@ -28,14 +28,14 @@
           <img
             class="h-full mx-auto object-contain"
             :src="require(`../assets/images/${file.icon}`)"
-            :alt="file.name"
+            :alt="file.alt"
              width="60"
             height="60"
           />
           <link-icon class="absolute w-4 h-4 left-3 -bottom-1" />
         </div>
         <p :class="{ 'text-black': text === 'black' }">
-          {{ file.name }}
+          {{ file.title }}
         </p>
       </a>
     </li>

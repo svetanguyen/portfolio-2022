@@ -14,7 +14,7 @@ export default {
     data() {
         return {
             files: [
-                {  name: "Hello", query: 'hello', icon: 'notepad.png' },
+                {  title: "Hello", query: 'hello', icon: 'notepad.png' },
             ],
         }
     }
