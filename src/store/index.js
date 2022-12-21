@@ -79,7 +79,7 @@ export const store = createStore({
           query: "contact",
           icon: "files.png",
           alt: "files",
-          title: "Contact",
+          title: "Contact form",
           component: 'ContactComponent',
           isFile: true,
         },
@@ -108,7 +108,7 @@ export const store = createStore({
           maximized: false,
           closed: true,
           disableMaximize: false,
-          small: true,
+          small: false,
           isFile: false
         },
       ],

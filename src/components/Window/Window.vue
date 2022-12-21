@@ -7,7 +7,9 @@
       '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full':
         maximized || windowWidth <= 1024,
       'h-[70vh] absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
-      'lg:w-[380px] lg:!min-w-0 lg:max-h-[540px]': !maximized && isFile,
+      'lg:max-h-[540px]': !maximized && isFile,
+      'lg:w-[380px]': currentTabData?.small && !maximized,
+      'lg:min-w-[800px]': !currentTabData.small && !maximized && isFile,
       'z-20': !maximized && isActive,
       'z-10': !maximized && !isActive,
       'z-30': maximized && !isActive,
@@ -77,20 +79,16 @@
           'lg:w-3/4 lg:ml-5': !maximized && !isFile,
         }"
       >
-        <div class="py-2 bg-white h-full shadow-lg">
-          <div
-            :class="{
-              'px-5 my-[4px] flex-grow': maximized,
+        <div class="bg-white h-full shadow-lg pt-0.5">
+
+             <component
+             :class="{
+              'px-5 flex-grow': maximized,
             }"
-            class="h-full overflow-y-scroll mr-1"
-          >
-            <div class="h-full w-full">
-              <component
+            class="overflow-y-scroll"
                 v-if="currentTabData.component"
                 :is="currentTabData.component"
               />
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -323,4 +321,10 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+  * {
+    &::-webkit-scrollbar {
+      background: transparent;
+    }
+  }
+</style>
