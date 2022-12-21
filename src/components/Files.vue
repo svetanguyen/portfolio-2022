@@ -47,7 +47,7 @@ import { mapMutations } from 'vuex';
 import LinkIcon from "../icons/Link.vue";
 export default {
   name: "files-component",
-  props: ["files", "text", "hideSidebar", "isFile"],
+  props: ["files", "text", "isFile"],
   components: {
     LinkIcon,
   },

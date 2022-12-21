@@ -1,7 +1,7 @@
 <template>
   <ul class="social-icons">
     <li class="shadowed">
-      <a class="text-center" href="mailto:phuonhhangnguyen0929@gmail.com">
+      <a class="text-center" href="mailto:phuonhhangnguyen0929@gmail.com" aria-label="send an email">
         <GmailIcon class="mx-auto" />
         <p
           class="text-[17px] leading-snug text-black text-center mt-3 lg:text-white"
@@ -16,6 +16,7 @@
         class="text-center"
         target="_blank"
         href="https://github.com/svetanguyen"
+        aria-label="github"
       >
         <Github class="mx-auto" />
         <p
@@ -31,6 +32,7 @@
         class="text-center"
         target="_blank"
         href="https://www.linkedin.com/in/sveta-nguyen-493a42218/"
+        aria-label="linkedin"
       >
         <Linkedin class="mx-auto" />
         <p
@@ -66,8 +68,8 @@ export default {
     width: 32px;
     height: 32px;
     @media screen and (min-width: 1008px) {
-      width: 45px;
-      height: 45px;
+      width: 40px;
+      height: 40px;
     }
   }
   li {

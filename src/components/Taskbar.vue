@@ -1,7 +1,7 @@
 <template>
   <div
     :style="{ position: position }"
-    class="left-0 w-full bg-pink-light p-4 bottom-0 relative shadow-sm flex z-50 justify-between taskbar"
+    class="left-0 w-full bg-pink-light px-4 py-2 bottom-0 relative shadow-sm flex z-50 justify-between taskbar"
   >
     <navigation-component :windowWidth="windowWidth" v-if="showNav" />
     <div class="flex h-full">
@@ -14,7 +14,7 @@
       />
       <label
         for="Nav"
-        class="shadow-sm cursor-pointer rounded-lg bg-pink-light flex items-center py-2.5 px-6 gap-2"
+        class="shadow-sm cursor-pointer bg-pink-light flex items-center py-1 px-6 gap-2"
         :class="{ '!shadow-lg': showNav }"
       >
         <computer-icon /> Start
@@ -22,7 +22,7 @@
       <div :key="index" v-for="(tab, index) in tabs">
         <div v-if="!tab.closed && ((tab.isFile && currentFile) || (!tab.isFile && currentFolder))" class="mx-1 h-full">
           <button
-            class="flex shadow-sm rounded-lg hover:shadow-lg gap-2 justify-center lg:justify-start items-center text-sm lg:text-[25px] leading-none h-full px-3 max-w-[60px] lg:max-w-[213px] text-left"
+            class="flex shadow-sm hover:shadow-lg gap-2 justify-center lg:justify-start items-center text-sm lg:text-lg leading-none h-full px-3 max-w-[60px] lg:max-w-[213px] text-left"
             @click="unMinimize(index)"
             aria-label="unminimize"
           >
@@ -44,7 +44,7 @@
       <social-icons class="gap-3 lg:gap-6" />
       <div class="hidden text-[18px] leading-none lg:flex flex-col gap-2">
         <p class="font-sans">@ Hang_Nguyen 2022</p>
-        <p class="font-sans">Design: Tin Bui</p>
+        <a href="https://www.behance.net/mishadistin" target="_blank" rel="noreferrer noopener" class="font-sans">Design: Tin Bui</a>
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@
 import ComputerIcon from "../icons/Computer.vue";
 import SocialIcons from "./SocialIcons.vue";
 import NavigationComponent from "./Navigation.vue";
-import {mapMutations,mapState} from 'vuex'
+import {mapMutations, mapState} from 'vuex'
 
 export default {
   name: "taskbar-component",
@@ -88,10 +88,10 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["toggleMinimize"]),
+    ...mapMutations(["unminimize"]),
     unMinimize(index) {
       const openedWindowType = index === 0 ? 'file' : 'folder'
-      this.$emit("unMinimize", index);
+      this.unminimize({index: index})
       this.$router.push({
         path: this.$route.path,
         query: {
@@ -105,8 +105,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.taskbar {
-  // cursor: url("../assets/images/cursor.png"), auto;
-}
+<style>
 </style>

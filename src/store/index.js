@@ -24,24 +24,28 @@ export const store = createStore({
         {
           query: "hello",
           icon: "notepad.png",
+          alt: "notepad",
           title: "Hello",
           component: 'HelloComponent',
         },
         {
           query: "portfolio",
           icon: "computer.png",
+          alt: "computer",
           title: "My portfolio",
           component: 'PortfolioComponent',
         },
         {
           query: "about",
           icon: "computer.png",
+          alt: "computer",
           title: "About me",
           component: 'AboutComponent',
         },
         {
           query: "info",
           icon: "notepad.png",
+          alt: "notepad",
           title: "Info",
           component: 'InfoComponent',
           folder: "About me",
@@ -49,6 +53,7 @@ export const store = createStore({
         {
           query: "skills",
           icon: "notepad.png",
+          alt: "notepad",
           title: "Skills",
           component: 'SkillsComponent',
           folder: "About me",
@@ -56,12 +61,14 @@ export const store = createStore({
         {
           query: "works",
           icon: "folder.png",
+          alt: "folder",
           title: "Works",
           component: 'WorksComponent',
         },
         {
           query: "worksList",
           icon: "notepad.png",
+          alt: "notepad",
           title: "Projects",
           component: 'WorksList',
           folder: "Works",
@@ -71,13 +78,15 @@ export const store = createStore({
         {
           query: "contact",
           icon: "files.png",
-          title: "Contact",
+          alt: "files",
+          title: "Contact form",
           component: 'ContactComponent',
           isFile: true,
         },
         {
           query: "calculator",
           icon: "calculator.png",
+          alt: "calculator",
           title: "Calculator",
           component: 'CalculatorComponent',
           disableMaximize: true,
@@ -99,7 +108,7 @@ export const store = createStore({
           maximized: false,
           closed: true,
           disableMaximize: false,
-          small: true,
+          small: false,
           isFile: false
         },
       ],

@@ -95,12 +95,6 @@ export default {
       "removePrev",
       "removeNext",
       "updateUpdatedLinks",
-      "resetLinks",
-      "onMinimize",
-      "onOpen",
-      "onClose",
-      "onMaximize",
-      "onRestore",
     ]),
     onBack() {
       const prevLinkOpen = this.prevLinks[this.prevLinks.length - 1]?.folder;
