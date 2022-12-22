@@ -1,10 +1,10 @@
 <template>
-  <div class="px-4 py-10">
-    <div class="lg:flex flex-wrap justify-between items-end lg:mb-10">
-      <h2 class="text-[32px] lg:text-[50px] leading-snug">Get in touch</h2>
+  <div class="ml-1 px-4 py-5 bg-yellow-100 h-full mr-1 my-[4px]">
+    <div class="mb-4 flex items-center">
+      <span class="block w-14 opacity-80 text-xl">To</span>
       <a
         href="mailto:phuonhhangnguyen0929@gmail.com"
-        class="text-base opacity-60 mb-4 lg:mb-2 leading-snug lg:text-[21px]"
+        class="text-base opacity-60 leading-snug lg:text-[21px]"
         >phuonhhangnguyen0929@gmail.com</a
       >
     </div>

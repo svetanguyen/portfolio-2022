@@ -1,25 +1,29 @@
 <template>
   <div>
     <form @submit.prevent="sendEmail">
-      <div class="mb-4">
-        <input
-          class="block w-full focus:outline-pink-bright focus-visible:outline-pink-bright lg:py-1 px-2 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-4xl placeholder:leading-none rounded-lg border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-4xl leading-none py-2"
-          v-model="name"
-          type="text"
-          placeholder="Full Name"
-          name="name"
-        />
-        <p v-show="errorName" class="text-red-600 text-sm mt-2 pl-2">
-          Please enter your name
-        </p>
+      <div class="mb-4 flex items-center">
+          <label for="Name" class="block w-14 mr-2 opacity-80 text-xl">Name</label>
+          <input
+            class="block w-full focus:outline-pink-bright focus-visible:outline-pink-bright px-2 py-1 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-xl placeholder:leading-none border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-xl leading-5"
+            v-model="name"
+            type="text"
+            placeholder="Full Name"
+            name="name"
+            id="Name"
+          />
+          <p v-show="errorName" class="text-red-600 text-sm mt-2 pl-2">
+            Please enter your name
+          </p>
       </div>
-      <div class="mb-4">
+      <div class="mb-4 flex items-center">
+        <label for="Email" class="block mr-2 w-14 opacity-80 text-xl">Email</label>
         <input
-          class="focus:outline-pink-bright focus-visible:outline-pink-bright block w-full lg:py-1 px-2 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-4xl placeholder:leading-none rounded-lg border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-4xl leading-none py-2"
+          class="block w-full focus:outline-pink-bright focus-visible:outline-pink-bright px-2 py-1 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-xl placeholder:leading-none border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-xl leading-5"
           v-model="email"
           type="email"
           placeholder="Email"
           name="email"
+          id="Email"
         />
         <p v-show="errorEmail" class="text-red-600 text-sm mt-2 pl-2">
           Please enter your email
@@ -27,12 +31,12 @@
       </div>
       <div class="mb-4">
         <textarea
-          class="block focus:outline-pink-bright focus-visible:outline-pink-bright lg:mb-14 w-full lg:py-1 px-2 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-4xl placeholder:leading-none rounded-lg border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-4xl leading-none py-2"
+          class="block w-full focus:outline-pink-bright focus-visible:outline-pink-bright px-2 py-1 text-base text-border-gray placeholder:text-border-gray placeholder:text-base placeholder:lg:text-xl placeholder:leading-none border-2 border-border-gray bg-gray-100 placeholder:opacity-40 lg:text-xl leading-5"
           v-model="message"
           name="message"
           placeholder="Message"
           cols="30"
-          rows="5"
+          rows="6"
         ></textarea>
         <p v-show="errorMessage" class="text-red-600 text-sm mt-2 pl-2">
           Please enter the message
