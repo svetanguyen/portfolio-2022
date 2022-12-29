@@ -7,3 +7,9 @@ This is my portfolio inspired by Windows 95 only everything is pink. You can fin
 - Vue.js
 - Tailwindcss
 
+### Features
+- Open/Close files
+- Maximize/Restore files
+- Minimize files
+- Move opened files
+- Calculator:D
