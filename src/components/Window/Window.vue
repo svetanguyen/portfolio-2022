@@ -104,6 +104,7 @@
 <script>
 import FolderComponent from "./Folder.vue";
 import ControlsComponent from "./Controls.vue";
+import { nextTick } from 'vue'
 import { mapState, mapMutations } from "vuex";
 
 // Folder components
@@ -231,25 +232,6 @@ export default {
       }
     }, 0);
   },
-  updated() {
-    setTimeout(() => {
-      let checkChangeQuery
-      switch (this.type) {
-        case "file":
-          checkChangeQuery = this.prevQuery.file !== this.$route.query.file
-          break;
-        case "folder":
-          checkChangeQuery = this.prevQuery.folder !== this.$route.query.folder
-          break;
-        case "dialog":
-          checkChangeQuery = this.prevQuery.dialog !== this.$route.query.dialog
-          break;
-      }
-      if ((!this.top || !this.left || checkChangeQuery) && !this.isDragged) {
-        this.getInitialPosition(this.$refs.windowWrapper);
-      }
-    }, 0);
-  },
   watch: {
     $route(to, from) {
       this.prevQuery = from.query
@@ -321,7 +303,7 @@ export default {
   },
   methods: {
     ...mapMutations(["onOpen", "onClose", "onMaximize", "onRestore"]),
-    updateOpen(query) {
+    async updateOpen(query) {
       const isOpen =
         (!!query.folder && !this.isFile) || (!!query.file && this.isFile);
       const isClosed =
@@ -330,6 +312,22 @@ export default {
         this.onOpen({ index: this.index });
       } else if (isClosed) {
         this.onClose({ index: this.index });
+      }
+      await nextTick()
+      let checkChangeQuery
+      switch (this.type) {
+        case "file":
+          checkChangeQuery = this.prevQuery.file !== this.$route.query.file
+          break;
+        case "folder":
+          checkChangeQuery = this.prevQuery.folder !== this.$route.query.folder
+          break;
+        case "dialog":
+          checkChangeQuery = this.prevQuery.dialog !== this.$route.query.dialog
+          break;
+      }
+      if ((!this.top || !this.left || checkChangeQuery)) {
+        this.getInitialPosition(this.$refs.windowWrapper);
       }
     },
     updateQuery(max, folder, file, dialog, active) {
