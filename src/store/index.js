@@ -74,7 +74,8 @@ export const store = createStore({
           title: "Contact form",
           component: 'ContactComponent',
           isFile: true,
-          inset: false
+          inset: false,
+          disableMaximize: true
         },
         {
           query: "calculator",
