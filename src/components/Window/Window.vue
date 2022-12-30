@@ -139,6 +139,7 @@ export default {
       prevLeft: 0,
       diffY: 0,
       diffX: 0,
+      prevQuery: '',
     };
   },
   props: [
@@ -232,13 +233,26 @@ export default {
   },
   updated() {
     setTimeout(() => {
-      if (!this.top || !this.left) {
+      let checkChangeQuery
+      switch (this.type) {
+        case "file":
+          checkChangeQuery = this.prevQuery.file !== this.$route.query.file
+          break;
+        case "folder":
+          checkChangeQuery = this.prevQuery.folder !== this.$route.query.folder
+          break;
+        case "dialog":
+          checkChangeQuery = this.prevQuery.dialog !== this.$route.query.dialog
+          break;
+      }
+      if ((!this.top || !this.left || checkChangeQuery) && !this.isDragged) {
         this.getInitialPosition(this.$refs.windowWrapper);
       }
     }, 0);
   },
   watch: {
     $route(to, from) {
+      this.prevQuery = from.query
       switch (this.type) {
         case "file":
           if (to.query.file !== from.query.file) {
