@@ -2,7 +2,7 @@
   <div
     class="main min-h-page overflow-hidden mx-auto relative h-full-screen-mob lg:h-full-screen"
   >
-    <files-component class="flex flex-col flex-wrap ml-8 mt-8 lg:mt-20" :files="desktopFiles" />
+    <files-component class="flex flex-col max-h-full items-start w-max justify-start pb-20 flex-wrap ml-8 mt-8 lg:mt-20" :files="desktopFiles" />
     <window-component
       v-for="(tab, index) in tabs"
       :key="index"
@@ -16,6 +16,7 @@
       :opened-file="openedFile"
       :is-file="tab.isFile"
       :maximized="tab.maximized"
+      :type="tab.type"
       class="bg-white"
     />
   </div>
@@ -56,8 +57,9 @@ export default {
       path: this.$route.path,
       query: {
         max: this.$route.query?.max,
-        folder: this.$route.query?.folder || "hello",
+        folder: this.$route.query?.folder || (this.windowWidth > 1024 && "hello"),
         file: this.$route.query.file,
+        dialog: '',
         active: this.$route.query.active ? this.$route.query.active : (this.$route.query?.folder && 'folder' )|| (this.$route.query?.file && 'file')
       },
     });

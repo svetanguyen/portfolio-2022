@@ -82,6 +82,7 @@ export const store = createStore({
           title: "Contact form",
           component: 'ContactComponent',
           isFile: true,
+          inset: false
         },
         {
           query: "calculator",
@@ -91,7 +92,8 @@ export const store = createStore({
           component: 'CalculatorComponent',
           disableMaximize: true,
           small: true,
-          isFile: true
+          isFile: true,
+          inset: true
         },
         {
           query: "notepad",
@@ -101,7 +103,19 @@ export const store = createStore({
           component: 'NotepadComponent',
           disableMaximize: false,
           small: false,
-          isFile: true
+          isFile: true,
+          inset: false
+        },
+      ],
+      dialogs: [
+        {
+          query: "save-dialog",
+          icon: "files.png",
+          alt: "files",
+          title: "Save as",
+          component: 'SaveDialog',
+          isFile: true,
+          inset: false
         },
       ],
       desktopFiles: [
@@ -133,7 +147,8 @@ export const store = createStore({
           closed: true,
           disableMaximize: true,
           small: true,
-          isFile: true
+          isFile: true,
+          type: 'file'
         },
         {
           minimized: false,
@@ -141,9 +156,22 @@ export const store = createStore({
           closed: true,
           disableMaximize: false,
           small: false,
-          isFile: false
+          isFile: false,
+          type: 'folder'
+        },
+        {
+          minimized: false,
+          maximized: false,
+          closed: true,
+          disableMaximize: true,
+          small: false,
+          isFile: false,
+          isDialog: true,
+          type: 'dialog'
         },
       ],
+      currentFileContent: null,
+      currentExistingFileContent: null,
       prevLinks: [],
       nextLinks: [],
       updatedLinks: false
@@ -199,6 +227,16 @@ export const store = createStore({
       addFile(state, payload) {
         state.desktopFiles.push(payload)
         state.files.push(payload)
+      },
+      updateCurrentFileContent(state, payload) {
+        state.currentFileContent = payload
+      },
+      updateCurrentExistingFileContent(state, payload) {
+        state.currentExistingFileContent = payload
+      },
+      updateFile(state, payload) {
+        const currentFile = state.files.find(file => file.query === payload.query)
+        currentFile.content = payload.content
       }
     }
 })

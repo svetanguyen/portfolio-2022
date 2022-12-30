@@ -6,20 +6,24 @@
     :class="{
       '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full':
         maximized || windowWidth <= 1024,
-      'h-[70vh] absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
-      'lg:max-h-[540px]': !maximized && isFile,
+      'absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
+      'h-[70vh]': !maximized && windowWidth > 1024 && this.type !== 'dialog',
+      'lg:max-h-[540px]': !maximized && this.type === 'file',
       'lg:w-[380px]': currentTabData?.small && !maximized,
-      'lg:min-w-[800px]': !currentTabData.small && !maximized && isFile,
-      'z-20': !maximized && isActive,
-      'z-10': !maximized && !isActive,
-      'z-30': maximized && !isActive,
-      'z-40': maximized && isActive,
+      'lg:min-w-[800px]':
+        !currentTabData.small && !maximized && this.type === 'file',
+      'lg:min-w-[564px]': this.type === 'dialog',
+      'z-20': !maximized && isActive && type !== 'dialog',
+      'z-10': !maximized && !isActive && type !== 'dialog',
+      'z-30': maximized && !isActive && type !== 'dialog',
+      'z-40': maximized && isActive && type !== 'dialog',
+      'z-50 pointer-events-auto': type === 'dialog',
     }"
     @mousedown="onActive"
     :style="{
-      top: windowWidth <= 1024 || maximized ? 0 : (top && `${top}px`) || '50%',
+      top: windowWidth <= 1024 || maximized ? 0 : (top && `${top}px`) || '30%',
       left:
-        windowWidth <= 1024 || maximized ? 0 : (left && `${left}px`) || '50%',
+        windowWidth <= 1024 || maximized ? 0 : (left && `${left}px`) || '30%',
     }"
     :id="`window-${index}`"
   >
@@ -48,6 +52,8 @@
         :index="index"
         :window-width="windowWidth"
         :disable-maximize="disableMaximize"
+        :is-dialog="isDialog"
+        :type="type"
         @restore="onRestore({ index: index })"
       />
     </div>
@@ -55,7 +61,7 @@
       :maximized="maximized"
       :folder="currentTabData.folder"
       :title="currentTabData.title"
-      v-if="!isFile"
+      v-if="type === 'folder'"
       class="ml-0.5 mr-1 flex-grow"
     >
       <component
@@ -66,30 +72,29 @@
       />
     </folder-component>
     <div
-      v-if="isFile"
-      class="h-file-content flex font-normal py-6 px-2 text-lg leading-snug mr-1 ml-0.5 rounded-b-2xl text-[25px] bg-pink-light lg:px-3 lg:py-2"
+      v-if="type === 'file' || type === 'dialog'"
+      class="h-file-content flex font-normal text-lg leading-snug mr-1 ml-0.5 rounded-b-2xl text-[25px] bg-pink-light"
       :class="{
-        'lg:h-full-screen-container ': maximized,
+        'px-2 lg:px-3': currentTabData.inset,
+        'lg:h-full-screen-container py-6 lg:py-2':
+          this.type !== 'dialog' && maximized,
       }"
     >
-      <div
-        class="overflow-hidden w-full"
-        :class="{
-          'lg:w-2/3 lg:ml-5': maximized && !isFile,
-          'lg:w-3/4 lg:ml-5': !maximized && !isFile,
-        }"
-      >
-        <div class="bg-white h-full shadow-lg pt-0.5">
-
-             <component
-             :class="{
+      <div class="overflow-hidden w-full">
+        <div
+          class="bg-white shadow-lg pt-0.5"
+          :class="{ 'h-full': this.type !== 'dialog' }"
+        >
+          <component
+            :class="{
               'px-5 flex-grow': maximized,
+              'overflow-y-scroll': currentTabData.inset,
             }"
-            class="overflow-y-scroll"
-                v-if="currentTabData.component"
-                :is="currentTabData.component"
-                :content="currentTabData.content"
-              />
+            v-if="currentTabData.component"
+            :is="currentTabData.component"
+            :content="currentTabData.content"
+            :title="currentTabData.title"
+          />
         </div>
       </div>
     </div>
@@ -113,8 +118,11 @@ import WorksList from "../Folders/Works/WorksList.vue";
 // File components
 import CalculatorComponent from "../Files/Calculator.vue";
 import ContactComponent from "../Files/Contact.vue";
-import NotepadComponent from "../Files/Notepad.vue"
-import TextComponent from "../Files/Text.vue"
+import NotepadComponent from "../Files/Notepad/Notepad.vue";
+import TextComponent from "../Files/Text.vue";
+
+// Dialog components
+import SaveDialog from "../Files/Notepad/SaveDialog.vue";
 
 export default {
   name: "window-component",
@@ -130,7 +138,7 @@ export default {
       prevTop: 0,
       prevLeft: 0,
       diffY: 0,
-      diffX: 0
+      diffX: 0,
     };
   },
   props: [
@@ -142,6 +150,8 @@ export default {
     "openedWindows",
     "disableMaximize",
     "isFile",
+    "isDialog",
+    "type",
   ],
   components: {
     ControlsComponent,
@@ -156,49 +166,64 @@ export default {
     SkillsComponent,
     WorksList,
     NotepadComponent,
-    TextComponent
+    TextComponent,
+    SaveDialog,
   },
   computed: {
-    ...mapState(["folders", "files"]),
+    ...mapState(["folders", "files", "dialogs"]),
   },
   created() {
-    this.currentTabData = this.isFile
-      ? this.files.find((file) => file.query === this.$route?.query.file)
-      : this.folders.find(
+    switch (this.type) {
+      case "file":
+        this.currentTabData = this.files.find(
+          (file) => file.query === this.$route?.query.file
+        );
+        break;
+      case "folder":
+        this.currentTabData = this.folders.find(
           (folder) => folder.query === this.$route?.query.folder
         );
+        break;
+      case "dialog":
+        this.currentTabData = this.dialogs.find(
+          (dialog) => dialog.query === this.$route?.query.dialog
+        );
+        break;
+    }
+
     if (!this.currentTabData) return;
     this.updateActive(
-      (this.isFile && this.$route?.query.active === "file") ||
-        (!this.isFile && this.$route?.query.active === "folder")
+      (this.type === "file" && this.$route?.query.active === "file") ||
+        (this.type === "folder" && this.$route?.query.active === "folder")
     );
     this.checkMaximize(
       (this.isFile && this.$route?.query.max === "file") ||
         (!this.isFile && this.$route?.query.max === "folder")
     );
-    const isFolderOpen = !this.isFile && !!this.$route.query.folder;
-    const isFileOpen = !!this.$route.query.file && this.isFile;
-    const maxQuery = this.$route.query.max
-      ? this.isFile
-        ? "file"
-        : "folder"
-      : "";
-    if (isFolderOpen || isFileOpen) {
+    const isFolderOpen =
+      !this.isFile && !!this.$route.query.folder && !this.isDialog;
+    const isFileOpen =
+      !!this.$route.query.file && this.isFile && !this.isDialog;
+    const isDialogOpen = this.isDialog && !!this.$route.query.dialog;
+    const maxQuery = this.type === "dialog" ? this.$route.query.max : this.type;
+
+    if (isFolderOpen || isFileOpen || isDialogOpen) {
       this.onOpen({ index: this.index });
     } else {
       this.updateQuery(
         maxQuery,
         this.$route?.query.folder,
         this.$route?.query.file,
+        this.$route?.query.dialog,
         this.$route?.query.active
       );
       this.onClose({ index: this.index });
     }
     this.getInitialPosition(this.$refs.windowWrapper);
-    document.body.addEventListener("mousemove", this.handleMove)
+    document.body.addEventListener("mousemove", this.handleMove);
   },
   mounted() {
-    document.body.addEventListener("mousemove", this.handleMove)
+    document.body.addEventListener("mousemove", this.handleMove);
     setTimeout(() => {
       if (!this.top || !this.left) {
         this.getInitialPosition(this.$refs.windowWrapper);
@@ -207,64 +232,74 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (
-        (this.isFile && to.query.file !== from.query.file) ||
-        (!this.isFile && to.query.folder !== from.query.folder)
-      ) {
-        this.currentTabData = this.isFile
-          ? this.files.find((file) => file?.query === to?.query?.file)
-          : this.folders.find((folder) => folder?.query === to?.query?.folder);
+      switch (this.type) {
+        case "file":
+          if (to.query.file !== from.query.file) {
+            this.currentTabData = this.files.find(
+              (file) => file.query === this.$route?.query.file
+            );
+          }
+          break;
+        case "folder":
+          if (to.query.folder !== from.query.folder) {
+            this.currentTabData = this.folders.find(
+              (folder) => folder.query === this.$route?.query.folder
+            );
+          }
+          break;
+        case "dialog":
+          this.currentTabData = this.dialogs.find(
+            (dialog) => dialog.query === this.$route?.query.dialog
+          );
+          break;
       }
       this.updateActive(
-        (this.isFile && to?.query.active === "file") ||
-          (!this.isFile && to?.query.active === "folder")
+        (this.type === "file" && to?.query.active === "file") ||
+          (this.type === "folder" && to?.query.active === "folder")
       );
       this.checkMaximize(
         (this.isFile && to.query.max === "file") ||
           (!this.isFile && to.query.max === "folder")
       );
       this.updateOpen(to.query);
+      if (!this.top || !this.left) {
+        this.getInitialPosition(this.$refs.windowWrapper);
+      }
     },
     windowWidth: function (newVal) {
       if (newVal <= 1024) this.onMaximize({ index: this.index });
     },
-    maximized: function(newVal) {
+    maximized: function (newVal) {
       if (!newVal) {
-        this.top = this.prevTop
-        this.left = this.prevLeft
-        this.prevTop = 0
-        this.prevLeft = 0
+        this.top = this.prevTop;
+        this.left = this.prevLeft;
+        this.prevTop = 0;
+        this.prevLeft = 0;
       } else {
-        this.prevTop = this.top
-        this.prevLeft = this.left
+        this.prevTop = this.top;
+        this.prevLeft = this.left;
       }
     },
-    closed: function(newVal) {
+    closed: function (newVal) {
       if (!newVal) {
-          setTimeout(() => {
-            if (!this.top || !this.left) {
-              this.getInitialPosition(this.$refs.windowWrapper);
-            }
-          }, 0)
-          this.getInitialPosition(this.$refs.windowWrapper);
+        setTimeout(() => {
+          if (!this.top || !this.left) {
+            this.getInitialPosition(this.$refs.windowWrapper);
+          }
+        }, 0);
+        this.getInitialPosition(this.$refs.windowWrapper);
       }
     },
-    minimized: function(newVal) {
+    minimized: function (newVal) {
       if (!newVal) {
-        if (!this.top || !this.left && this.$refs.windowWrapper) {
+        if (!this.top || (!this.left && this.$refs.windowWrapper)) {
           this.getInitialPosition(this.$refs.windowWrapper);
         }
       }
-    }
-
+    },
   },
   methods: {
-    ...mapMutations([
-      "onOpen",
-      "onClose",
-      "onMaximize",
-      "onRestore",
-    ]),
+    ...mapMutations(["onOpen", "onClose", "onMaximize", "onRestore"]),
     updateOpen(query) {
       const isOpen =
         (!!query.folder && !this.isFile) || (!!query.file && this.isFile);
@@ -276,10 +311,16 @@ export default {
         this.onClose({ index: this.index });
       }
     },
-    updateQuery(max, folder, file, active) {
+    updateQuery(max, folder, file, dialog, active) {
       this.$router.push({
         path: this.$route.path,
-        query: { max: max, folder: folder, file: file, active: active },
+        query: {
+          max: max,
+          folder: folder,
+          file: file,
+          dialog: dialog,
+          active: active,
+        },
       });
     },
     checkMaximize(maximized) {
@@ -294,34 +335,44 @@ export default {
       }
     },
     updateActive(active) {
+      if (this.$route.query.dialog) return;
       this.isActive = active;
     },
     addIsDragged(e) {
       this.isDragged = true;
-      this.getMousePositionDifference(this.$refs.windowWrapper, e.clientX, e.clientY)
+      this.getMousePositionDifference(
+        this.$refs.windowWrapper,
+        e.clientX,
+        e.clientY
+      );
     },
     onActive() {
-      this.updateQuery(this.$route.query.max, this.$route.query.folder, this.$route.query.file, this.isFile ? 'file' : 'folder')
+      this.updateQuery(
+        this.$route.query.max,
+        this.$route.query.folder,
+        this.$route.query.file,
+        this.$route.query.dialog,
+        this.isFile ? "file" : "folder"
+      );
     },
     removeIsDragged() {
-      this.isDragged = false
+      this.isDragged = false;
     },
     handleMove(e) {
-      if (!this.isDragged) return
-      this.top = e.clientY - this.diffY
-      this.left = e.clientX - this.diffX
+      if (!this.isDragged) return;
+      this.top = e.clientY - this.diffY;
+      this.left = e.clientX - this.diffX;
     },
     getMousePositionDifference(windowEl, mouseX, mouseY) {
-      if (!windowEl) return
+      if (!windowEl) return;
       var rect = windowEl?.getBoundingClientRect();
-      this.diffY = mouseY - rect?.top 
-      this.diffX = mouseX - rect?.left 
+      this.diffY = mouseY - rect?.top;
+      this.diffX = mouseX - rect?.left;
     },
     getInitialPosition(windowEl) {
       if (windowEl) {
-        var rect = windowEl?.getBoundingClientRect();
-        this.top = rect?.top - windowEl.clientHeight / 2;
-        this.left = rect?.left - windowEl.clientWidth / 2;
+        this.top = (window.innerHeight - 60) / 2 - windowEl.clientHeight / 2;
+        this.left = window.innerWidth / 2 - windowEl.clientWidth / 2;
       }
     },
   },
@@ -329,9 +380,10 @@ export default {
 </script>
 
 <style lang="scss">
-  * {
-    &::-webkit-scrollbar {
-      background: transparent;
-    }
+* {
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0;
   }
+}
 </style>

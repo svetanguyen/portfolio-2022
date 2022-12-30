@@ -20,7 +20,7 @@
         <computer-icon /> Start
       </label>
       <div :key="index" v-for="(tab, index) in tabs">
-        <div v-if="!tab.closed && ((tab.isFile && currentFile) || (!tab.isFile && currentFolder))" class="mx-1 h-full">
+        <div v-if="!tab.closed && ((tab.type === 'file' && currentFile) || (tab.type === 'folder' && currentFolder))" class="mx-1 h-full">
           <button
             class="flex shadow-sm hover:shadow-lg gap-2 justify-center lg:justify-start items-center text-sm lg:text-lg leading-none h-full px-3 max-w-[60px] lg:max-w-[213px] text-left"
             @click="unMinimize(index)"
