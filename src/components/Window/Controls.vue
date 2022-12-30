@@ -83,7 +83,7 @@ export default {
           this.openedWindows,
           this.$route.query.file,
           this.$route.query.dialog,
-          this.query
+          this.type
         );
       } else {
         this.updateQuery(
@@ -91,7 +91,7 @@ export default {
           this.openedWindows,
           this.$route.query.file,
           this.$route.query.dialog,
-          this.query
+          this.type
         );
       }
     },

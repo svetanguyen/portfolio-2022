@@ -218,9 +218,9 @@
                       name: 'Home',
                       query: {
                         max: $route.query.max ? 'folder' : '',
-                        folder: 'worksList',
-                        file: $route.query.file ? $route.query.file : '',
-                        active: 'folder'
+                        folder: $route.query.folder ? $route.query.folder : '',
+                        file: 'worksList',
+                        active: 'file'
                       },
                     }"
                   >
@@ -233,7 +233,7 @@
                     />
                     <span
                       :class="{
-                        'bg-blue text-white': $route.query.folder === 'worksList',
+                        'bg-blue text-white': $route.query.file === 'worksList',
                       }"
                       class="opacity-80 px-2 whitespace-nowrap"
                     >

@@ -51,7 +51,7 @@
         :is-file="isFile"
         :index="index"
         :window-width="windowWidth"
-        :disable-maximize="disableMaximize"
+        :disable-maximize="currentTabData?.disableMaximize"
         :is-dialog="isDialog"
         :type="type"
         @restore="onRestore({ index: index })"
@@ -88,7 +88,7 @@
           <component
             :class="{
               'px-5 flex-grow': maximized,
-              'overflow-y-scroll': currentTabData.inset,
+              'overflow-y-scroll h-full': currentTabData.inset,
             }"
             v-if="currentTabData.component"
             :is="currentTabData.component"
@@ -224,6 +224,13 @@ export default {
   },
   mounted() {
     document.body.addEventListener("mousemove", this.handleMove);
+    setTimeout(() => {
+      if (!this.top || !this.left) {
+        this.getInitialPosition(this.$refs.windowWrapper);
+      }
+    }, 0);
+  },
+  updated() {
     setTimeout(() => {
       if (!this.top || !this.left) {
         this.getInitialPosition(this.$refs.windowWrapper);

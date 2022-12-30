@@ -65,14 +65,6 @@ export const store = createStore({
           title: "Works",
           component: 'WorksComponent',
         },
-        {
-          query: "worksList",
-          icon: "notepad.png",
-          alt: "notepad",
-          title: "Projects",
-          component: 'WorksList',
-          folder: "Works",
-        },
       ],
       files: [
         {
@@ -105,6 +97,18 @@ export const store = createStore({
           small: false,
           isFile: true,
           inset: false
+        },
+        {
+          query: "worksList",
+          icon: "notepad.png",
+          alt: "notepad",
+          title: "Projects",
+          component: 'WorksList',
+          folder: "Works",
+          small: false,
+          disableMaximize: false,
+          inset: true,
+          isFile: true
         },
       ],
       dialogs: [
@@ -145,7 +149,6 @@ export const store = createStore({
           minimized: false,
           maximized: false,
           closed: true,
-          disableMaximize: true,
           small: true,
           isFile: true,
           type: 'file'
@@ -154,7 +157,6 @@ export const store = createStore({
           minimized: false,
           maximized: false,
           closed: true,
-          disableMaximize: false,
           small: false,
           isFile: false,
           type: 'folder'
@@ -163,7 +165,6 @@ export const store = createStore({
           minimized: false,
           maximized: false,
           closed: true,
-          disableMaximize: true,
           small: false,
           isFile: false,
           isDialog: true,
