@@ -118,10 +118,10 @@
                     :to="{
                       name: 'Home',
                       query: {
-                        max: $route.query.max ? 'folder' : '',
-                        folder: 'skills',
-                        file: $route.query.file ? $route.query.file : '',
-                        active: 'folder'
+                        max: $route.query.max ? 'file' : '',
+                        folder: $route.query.folder ? $route.query.folder : '',
+                        file: 'skills',
+                        active: 'file'
                       },
                     }"
                   >
@@ -134,7 +134,7 @@
                     />
                     <span
                       :class="{
-                        'bg-blue text-white': $route.query.folder === 'skills',
+                        'bg-blue text-white': $route.query.file === 'skills',
                       }"
                       class="opacity-80 px-2 whitespace-nowrap"
                     >

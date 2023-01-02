@@ -51,14 +51,6 @@ export const store = createStore({
           folder: "About me",
         },
         {
-          query: "skills",
-          icon: "notepad.png",
-          alt: "notepad",
-          title: "Skills",
-          component: 'SkillsComponent',
-          folder: "About me",
-        },
-        {
           query: "works",
           icon: "folder.png",
           alt: "folder",
@@ -106,6 +98,18 @@ export const store = createStore({
           title: "Projects",
           component: 'WorksList',
           folder: "Works",
+          small: false,
+          disableMaximize: false,
+          inset: true,
+          isFile: true
+        },
+        {
+          query: "skills",
+          icon: "notepad.png",
+          alt: "notepad",
+          title: "Skills",
+          component: 'SkillsComponent',
+          folder: "About me",
           small: false,
           disableMaximize: false,
           inset: true,
