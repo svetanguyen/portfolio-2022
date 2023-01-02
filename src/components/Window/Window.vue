@@ -7,12 +7,12 @@
       '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full':
         maximized || windowWidth <= 1024,
       'absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
-      'h-[70vh]': !maximized && windowWidth > 1024 && this.type !== 'dialog',
-      'lg:max-h-[540px]': !maximized && this.type === 'file',
+      'h-[70vh]': !maximized && windowWidth > 1024 && type !== 'dialog',
+      'lg:max-h-[540px]': !maximized && type === 'file',
       'lg:w-[380px]': currentTabData?.small && !maximized,
       'lg:min-w-[800px]':
-        !currentTabData.small && !maximized && this.type === 'file',
-      'lg:min-w-[564px]': this.type === 'dialog',
+        !currentTabData.small && !maximized && type === 'file',
+      'lg:min-w-[564px]': type === 'dialog',
       'z-20': !maximized && isActive && type !== 'dialog',
       'z-10': !maximized && !isActive && type !== 'dialog',
       'z-30': maximized && !isActive && type !== 'dialog',
@@ -73,17 +73,17 @@
     </folder-component>
     <div
       v-if="type === 'file' || type === 'dialog'"
-      class="h-file-content flex font-normal text-lg leading-snug mr-1 ml-0.5 rounded-b-2xl text-[25px] bg-pink-light"
+      class="flex h-file-content font-normal text-lg leading-snug mr-1 ml-0.5 rounded-b-2xl text-[25px] bg-pink-light"
       :class="{
         'px-2 lg:px-3': currentTabData.inset,
         'lg:h-full-screen-container py-6 lg:py-2':
-          this.type !== 'dialog' && maximized,
+          type !== 'dialog' && maximized,
       }"
     >
       <div class="overflow-hidden w-full">
         <div
           class="bg-white shadow-lg pt-0.5"
-          :class="{ 'h-full': this.type !== 'dialog' }"
+          :class="{ 'h-full': this.type !== 'dialog' || windowWidth <= 1024 }"
         >
           <component
             :class="{
@@ -124,6 +124,7 @@ import TextComponent from "../Files/Text.vue";
 
 // Dialog components
 import SaveDialog from "../Files/Notepad/SaveDialog.vue";
+import SuccessComponent from "../Dialogs/FormSuccess.vue"
 
 export default {
   name: "window-component",
@@ -170,6 +171,7 @@ export default {
     NotepadComponent,
     TextComponent,
     SaveDialog,
+    SuccessComponent
   },
   computed: {
     ...mapState(["folders", "files", "dialogs"]),

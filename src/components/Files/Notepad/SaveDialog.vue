@@ -1,6 +1,6 @@
 <template>
   <div class="bg-yellow-100 h-full text-center">
-    <form @submit="onSave" class="px-6 py-10">
+    <form @submit="onSave" class="px-6 pt-14 pb-10 lg:py-10">
       <div v-if="showTitle" class="flex justify-center mb-5 gap-4 flex-wrap">
         <label for="Title">Save as</label>
         <input class="shadow-xxl" id="Title" type="text" v-model="title" />

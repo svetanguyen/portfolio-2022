@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li
-      class="text-center w-[80px] text-white underline text-[17px] leading-snug mb-4"
+      class="text-center w-[80px] text-white underline text-[17px] leading-snug mb-4 mr-4"
       v-for="(file, index) in files"
       :key="index"
     >

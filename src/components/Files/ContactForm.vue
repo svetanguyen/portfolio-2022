@@ -102,6 +102,7 @@ export default {
             console.log("result", result);
             console.log("SUCCESS!", result.status, result.text);
             this.sentSuccessfully = true;
+            this.openSuccessDialog()
             this.name = "";
             this.email = "";
             this.message = "";
@@ -114,6 +115,15 @@ export default {
     closeWindow: function () {
       this.sentSuccessfully = false;
     },
+    openSuccessDialog: function() {
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          dialog: 'form-success'
+        }
+      })
+    }
   },
 };
 </script>

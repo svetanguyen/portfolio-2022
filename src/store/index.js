@@ -123,7 +123,14 @@ export const store = createStore({
           alt: "files",
           title: "Save as",
           component: 'SaveDialog',
-          isFile: true,
+          inset: false
+        },
+        {
+          query: "form-success",
+          icon: "files.png",
+          alt: "files",
+          title: "Form success",
+          component: 'SuccessComponent',
           inset: false
         },
       ],
