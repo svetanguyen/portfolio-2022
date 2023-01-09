@@ -82,7 +82,7 @@ export const store = createStore({
         },
         {
           query: "notepad",
-          icon: "calculator.png",
+          icon: "notepad.png",
           alt: "notepad",
           title: "Notepad",
           component: 'NotepadComponent',

@@ -61,7 +61,7 @@ export default {
         },
         {
           query: 'notepad',
-          icon: 'calculator.png',
+          icon: 'notepad.png',
           alt: 'notepad',
           title: 'Notepad',
           small: false,

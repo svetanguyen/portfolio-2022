@@ -61,7 +61,7 @@ export default {
     openSaveDialog() {
       const file = {
         query: "",
-        icon: "calculator.png",
+        icon: "notepad.png",
         alt: "",
         title: "",
         component: "TextComponent",

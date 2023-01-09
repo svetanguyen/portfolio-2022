@@ -5,20 +5,10 @@
   >
     <navigation-component :windowWidth="windowWidth" v-if="showNav" />
     <div class="flex h-full">
-      <input
-        type="checkbox"
-        name="Nav"
-        id="Nav"
-        class="hidden"
-        v-model="showNav"
-      />
-      <label
-        for="Nav"
-        class="shadow-sm cursor-pointer bg-pink-light flex items-center py-1 px-6 gap-2"
-        :class="{ '!shadow-lg': showNav }"
-      >
+      <button class="shadow-sm cursor-pointer bg-pink-light flex items-center py-1 px-6 gap-2"
+        :class="{ '!shadow-lg': showNav }" @click.stop="toggleNav">
         <computer-icon /> Start
-      </label>
+      </button>
       <div :key="index" v-for="(tab, index) in tabs">
         <div v-if="!tab.closed && ((tab.type === 'file' && currentFile) || (tab.type === 'folder' && currentFolder))" class="mx-1 h-full">
           <button
@@ -79,6 +69,9 @@ export default {
   created() {
     this.currentFile = this.files.find(file => file.query === this.$route.query.file)
     this.currentFolder = this.folders.find(folder => folder.query === this.$route.query.folder)
+    document.addEventListener('click', () => {
+      this.closeNav()
+    })
   },
   watch: {
     $route(to) {
@@ -101,6 +94,12 @@ export default {
         }
       })
     },
+    toggleNav() {
+      this.showNav = !this.showNav
+    },
+    closeNav() {
+      this.showNav = false
+    }
   },
 };
 </script>
