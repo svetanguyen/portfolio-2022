@@ -4,10 +4,11 @@
     v-if="currentTabData && !minimized && !closed"
     class="shadow-sm rounded-2xl overflow-hidden"
     :class="{
-      '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full':
-        maximized || windowWidth <= 1024,
-      'absolute top-10 mx-auto pb-1': !maximized && windowWidth > 1024,
-      'h-[70vh]': !maximized && windowWidth > 1024 && type !== 'dialog',
+      '!h-full-screen-mob lg:!h-full-screen !m-0 !max-w-none !fixed top-0 lg:top-0 left-0 !w-full': isMaximizedWindowStyle,
+      '!fixed': isMaximizedDialogStyle,
+      '!top-[45%] -translate-y-1/2 !left-3 right-3': (isMobile && type === 'dialog'),
+      'absolute top-10 mx-auto pb-1': !maximized && !isMobile,
+      'h-[70vh]': !maximized && !isMobile && type !== 'dialog',
       'lg:max-h-[540px]': !maximized && type === 'file',
       'lg:w-[380px]': currentTabData?.small && !maximized,
       'lg:min-w-[800px]':
@@ -21,9 +22,9 @@
     }"
     @mousedown="onActive"
     :style="{
-      top: windowWidth <= 1024 || maximized ? 0 : (top && `${top}px`) || '30%',
+      top: isMobile || maximized ? 0 : (top && `${top}px`) || '30%',
       left:
-        windowWidth <= 1024 || maximized ? 0 : (left && `${left}px`) || '30%',
+        isMobile || maximized ? 0 : (left && `${left}px`) || '30%',
     }"
     :id="`window-${index}`"
   >
@@ -142,6 +143,10 @@ export default {
       diffY: 0,
       diffX: 0,
       prevQuery: '',
+      isMobile: this.windowWidth <= 1024,
+      isMaximizedWindowStyle: (this.maximized && this.type !== 'dialog') || (this.isMobile && this.type !== 'dialog'),
+      isMaximizedDialogStyle:  (this.isMobile && this.type === 'dialog') || (this.maximized && this.type === 'dialog'),
+      isMobileDialog: (this.isMobile && this.type === 'dialog')
     };
   },
   props: [
