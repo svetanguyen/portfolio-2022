@@ -1,5 +1,5 @@
 <template>
-  <div class="ml-1 px-4 py-5 bg-yellow-100 h-full mr-1 my-[4px]">
+  <div class="ml-1 px-4 py-5 bg-yellow-100 h-full mr-1 my-[4px] overflow-y-auto">
     <div class="mb-4 flex items-center">
       <span class="block w-14 opacity-80 text-xl">To</span>
       <a
@@ -18,12 +18,7 @@ export default {
   name: "ContactComponent",
   components: {
     FormComponent,
-  },
-  data() {
-    return {
-      files: [{ name: "Contact", query: "contact", icon: "files.png", isFile: true, hideSidebar: true }],
-    };
-  },
+  }
 };
 </script>
 

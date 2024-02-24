@@ -9,7 +9,7 @@
       >
         <img
           class="w-7"
-          :src="require(`../assets/images/${link.img}`)"
+          :src="require(`../assets/images/${link.icon}`)"
           :alt="link.alt"
           width="30"
           height="30"
@@ -31,21 +31,21 @@ export default {
       menuLinks: [
         {
           query: 'about',
-          img: 'heart.png',
+          icon: 'heart.png',
           alt: 'heart',
           title: 'About',
           isFile: false
         },
         {
           query: 'works',
-          img: 'folder.png',
+          icon: 'folder.png',
           alt: 'folder',
           title: 'Works',
           isFile: false
         },
         {
           query: 'contact',
-          img: 'files.png',
+          icon: 'files.png',
           alt: 'files',
           title: 'Contacts',
           isFile: true,
@@ -53,11 +53,19 @@ export default {
         },
         {
           query: 'calculator',
-          img: 'calculator.png',
+          icon: 'calculator.png',
           alt: 'calculator',
           title: 'Calculator',
           isFile: true,
           disableMax: true
+        },
+        {
+          query: 'notepad',
+          icon: 'notepad.png',
+          alt: 'notepad',
+          title: 'Notepad',
+          small: false,
+          isFile: true
         },
       ]
     };

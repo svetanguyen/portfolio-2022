@@ -26,9 +26,9 @@
           name: 'Home',
           query: {
             max: $route.query.max ? 'worksList' : '',
-            folder: 'worksList',
-            file: $route.query.file,
-            active: 'folder'
+            folder: $route.query.folder,
+            file: 'worksList',
+            active: 'file'
           },
         }"
         >My works</router-link

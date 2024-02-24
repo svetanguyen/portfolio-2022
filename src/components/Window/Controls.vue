@@ -4,12 +4,14 @@
       @click="minimize(index)"
       class="cursor-pointer hover:opacity-80"
       aria-label="minimize"
+      v-if="this.type !== 'dialog'"
     >
       <minimize-icon />
     </button>
     <button
       @click="updateMaximize"
       class="cursor-pointer hover:opacity-80"
+      v-if="this.type !== 'dialog'"
       :class="{
         'pointer-events-none opacity-40':
           windowWidth <= 1024 || disableMaximize,
@@ -20,6 +22,7 @@
     </button>
     <button
       @click="handleClose"
+      v-if="this.type !== 'dialog'"
       class="cursor-pointer hover:opacity-80"
       aria-label="close"
     >
@@ -43,6 +46,8 @@ export default {
     "maximized",
     "query",
     "openedWindows",
+    "isDialog",
+    "type",
   ],
   components: {
     MinimizeIcon,
@@ -51,20 +56,21 @@ export default {
   },
   methods: {
     ...mapMutations([
-      "resetLinks",
       "updateUpdatedLinks",
       "onMinimize",
       "onRestore",
+      "emptyLinks",
     ]),
     handleClose() {
       if (!this.isFile) {
-        this.resetLinks();
         this.updateUpdatedLinks();
+        this.emptyLinks()
       }
       this.updateQuery(
         "",
-        !this.isFile ? "" : this.$route.query.folder,
-        this.isFile ? "" : this.$route.query.file,
+        this.type === "folder" ? "" : this.$route.query.folder,
+        this.type === "file" ? "" : this.$route.query.file,
+        this.type === "dialog" ? "" : this.$route.query.dialog,
         this.isFile ? this.$route.query.folder : this.$route.query.file
       );
       this.onRestore({ index: this.index });
@@ -73,24 +79,32 @@ export default {
       if (this.windowWidth <= 1024) return;
       if (!this.maximized) {
         this.updateQuery(
-          this.isFile ? "file" : "folder",
+          this.type,
           this.openedWindows,
           this.$route.query.file,
-          this.query
+          this.$route.query.dialog,
+          this.type
         );
       } else {
         this.updateQuery(
           "",
           this.openedWindows,
           this.$route.query.file,
-          this.query
+          this.$route.query.dialog,
+          this.type
         );
       }
     },
-    updateQuery(max, folder, file, active) {
+    updateQuery(max, folder, file, dialog, active) {
       this.$router.push({
         path: this.$route.path,
-        query: { max: max, folder: folder, file: file, active: active },
+        query: {
+          max: max,
+          folder: folder,
+          file: file,
+          dialog: dialog,
+          active: active,
+        },
       });
     },
     minimize() {

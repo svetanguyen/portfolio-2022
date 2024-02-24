@@ -118,10 +118,10 @@
                     :to="{
                       name: 'Home',
                       query: {
-                        max: $route.query.max ? 'folder' : '',
-                        folder: 'skills',
-                        file: $route.query.file ? $route.query.file : '',
-                        active: 'folder'
+                        max: $route.query.max ? 'file' : '',
+                        folder: $route.query.folder ? $route.query.folder : '',
+                        file: 'skills',
+                        active: 'file'
                       },
                     }"
                   >
@@ -134,7 +134,7 @@
                     />
                     <span
                       :class="{
-                        'bg-blue text-white': $route.query.folder === 'skills',
+                        'bg-blue text-white': $route.query.file === 'skills',
                       }"
                       class="opacity-80 px-2 whitespace-nowrap"
                     >
@@ -145,7 +145,7 @@
                 <li class="flex file relative items-center gap-2">
                   <a
                     class="flex items-center underline"
-                    href="https://drive.google.com/file/d/1ESfcj7M-kAtCWYJWQaJKbncB-KKvbukP/view?usp=sharing"
+                    href="https://drive.google.com/file/d/1FwnSy8mNUDzxNsYGdi91uahT8rdDuvky/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -218,9 +218,9 @@
                       name: 'Home',
                       query: {
                         max: $route.query.max ? 'folder' : '',
-                        folder: 'worksList',
-                        file: $route.query.file ? $route.query.file : '',
-                        active: 'folder'
+                        folder: $route.query.folder ? $route.query.folder : '',
+                        file: 'worksList',
+                        active: 'file'
                       },
                     }"
                   >
@@ -233,7 +233,7 @@
                     />
                     <span
                       :class="{
-                        'bg-blue text-white': $route.query.folder === 'worksList',
+                        'bg-blue text-white': $route.query.file === 'worksList',
                       }"
                       class="opacity-80 px-2 whitespace-nowrap"
                     >

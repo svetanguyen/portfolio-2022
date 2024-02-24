@@ -51,27 +51,11 @@ export const store = createStore({
           folder: "About me",
         },
         {
-          query: "skills",
-          icon: "notepad.png",
-          alt: "notepad",
-          title: "Skills",
-          component: 'SkillsComponent',
-          folder: "About me",
-        },
-        {
           query: "works",
           icon: "folder.png",
           alt: "folder",
           title: "Works",
           component: 'WorksComponent',
-        },
-        {
-          query: "worksList",
-          icon: "notepad.png",
-          alt: "notepad",
-          title: "Projects",
-          component: 'WorksList',
-          folder: "Works",
         },
       ],
       files: [
@@ -82,6 +66,8 @@ export const store = createStore({
           title: "Contact form",
           component: 'ContactComponent',
           isFile: true,
+          inset: false,
+          disableMaximize: true
         },
         {
           query: "calculator",
@@ -91,7 +77,91 @@ export const store = createStore({
           component: 'CalculatorComponent',
           disableMaximize: true,
           small: true,
+          isFile: true,
+          inset: true
+        },
+        {
+          query: "notepad",
+          icon: "notepad.png",
+          alt: "notepad",
+          title: "Notepad",
+          component: 'NotepadComponent',
+          disableMaximize: false,
+          small: false,
+          isFile: true,
+          inset: false
+        },
+        {
+          query: "worksList",
+          icon: "notepad.png",
+          alt: "notepad",
+          title: "Projects",
+          component: 'WorksList',
+          folder: "Works",
+          small: false,
+          disableMaximize: false,
+          inset: true,
           isFile: true
+        },
+        {
+          query: "skills",
+          icon: "notepad.png",
+          alt: "notepad",
+          title: "Skills",
+          component: 'SkillsComponent',
+          folder: "About me",
+          small: false,
+          disableMaximize: false,
+          inset: true,
+          isFile: true
+        },
+        {
+          query: "resume",
+          folder: "About me",
+          title: "Resume",
+          icon: "document.png",
+          externalLink:
+            "https://drive.google.com/file/d/1FwnSy8mNUDzxNsYGdi91uahT8rdDuvky/view?usp=sharing",
+        },
+      ],
+      dialogs: [
+        {
+          query: "save-dialog",
+          icon: "files.png",
+          alt: "files",
+          title: "Save as",
+          component: 'SaveDialog',
+          inset: false
+        },
+        {
+          query: "form-success",
+          icon: "files.png",
+          alt: "files",
+          title: "Form success",
+          component: 'SuccessComponent',
+          inset: false
+        },
+      ],
+      desktopFiles: [
+        {
+          title: "My portfolio",
+          icon: "computer.png",
+          query: "portfolio",
+        },
+        { title: "Hello", icon: "notepad.png", query: "hello" },
+        {
+          title: "Resume",
+          icon: "document.png",
+          query: "resume",
+          externalLink:
+            "https://drive.google.com/file/d/1FwnSy8mNUDzxNsYGdi91uahT8rdDuvky/view?usp=sharing",
+        },
+        {
+          title: "Calculator",
+          icon: "calculator.png",
+          query: "calculator",
+          isFile: true,
+          hideSidebar: true
         },
       ],
       tabs: [
@@ -99,46 +169,64 @@ export const store = createStore({
           minimized: false,
           maximized: false,
           closed: true,
-          disableMaximize: true,
           small: true,
-          isFile: true
+          isFile: true,
+          type: 'file'
         },
         {
           minimized: false,
           maximized: false,
           closed: true,
-          disableMaximize: false,
           small: false,
-          isFile: false
+          isFile: false,
+          type: 'folder'
+        },
+        {
+          minimized: false,
+          maximized: false,
+          closed: true,
+          small: false,
+          isFile: false,
+          isDialog: true,
+          type: 'dialog'
         },
       ],
-      prevLinks: [],
-      nextLinks: [],
-      updatedLinks: false
+      currentFileContent: null,
+      currentExistingFileContent: null,
+      linksList: [],
+      updatedLinks: false,
+      currentLinkIndex: 0
     },
     actions: {
     },
     modules: {
     },
     mutations: {
-      addPrev(state, payload) {
-        state.prevLinks.push(payload.query)
+      addLink(state, payload) {
+        if (state.currentLinkIndex + 1 < state.linksList.length) {
+          state.linksList = state.linksList.slice(0, state.currentLinkIndex + 1)
+          state.linksList.push(payload.query)
+          state.currentLinkIndex += 1
+          return
+        }
+        if (state.linksList.length > 0) state.currentLinkIndex += 1;
+        if (payload.query) {
+          state.linksList.push(payload.query)
+        }
       },
-      addNext(state, payload) {
-        state.nextLinks.push(payload.query)
+      goBack(state) {
+        state.currentLinkIndex -= 1
       },
-      removePrev(state) {
-        state.prevLinks.pop()
+      goNext(state) {
+        state.currentLinkIndex += 1
       },
-      removeNext(state) {
-        state.nextLinks.pop()
+      emptyLinks(state) {
+        state.linksList = []
+        state.currentLinkIndex = 0
+        state.updatedLinks = false
       },
       updateUpdatedLinks(state) {
         state.updatedLinks = !state.updatedLinks
-      },
-      resetLinks(state) {
-        state.prevLinks = []
-        state.nextLinks = []
       },
       onMinimize(state, payload) {
         state.tabs[payload.index].minimized = true
@@ -163,6 +251,20 @@ export const store = createStore({
       },
       toggleMaximize(state, payload) {
         state.tabs[payload.index].maximized = !state.tabs[payload.index].maximized
+      },
+      addFile(state, payload) {
+        state.desktopFiles.push(payload)
+        state.files.push(payload)
+      },
+      updateCurrentFileContent(state, payload) {
+        state.currentFileContent = payload
+      },
+      updateCurrentExistingFileContent(state, payload) {
+        state.currentExistingFileContent = payload
+      },
+      updateFile(state, payload) {
+        const currentFile = state.files.find(file => file.query === payload.query)
+        currentFile.content = payload.content
       }
     }
 })
