@@ -23,12 +23,25 @@
               v-if="!mainFolderOpened"
               class="absolute z-1 top-2 left-0 bg-white"
             />
-            <p class="ml-2 flex items-center gap-2">
+            <router-link
+              class="ml-2 flex items-center gap-2"
+              :to="{
+                name: 'Home',
+                query: {
+                  max: $route.query.max ? 'folder' : '',
+                  folder: 'portfolio',
+                  file: $route.query.file ? $route.query.file : '',
+                  active: 'folder'
+                },
+              }">
               <computer-icon class="w-5 h-5" />
-              <span class="opacity-80 whitespace-nowrap"
+              <span :class="{
+                      'bg-blue text-white': $route.query.folder === 'portfolio',
+                      'opacity-80 whitespace-nowrap': true
+                    }"
                 >Sveta's portfolio</span
               >
-            </p>
+            </router-link>
           </label>
           <ul
             v-if="mainFolderOpened"

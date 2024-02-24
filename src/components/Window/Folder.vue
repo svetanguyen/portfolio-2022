@@ -31,8 +31,7 @@
           <p
             class="rounded-lg shadow-xl-hovered py-1 px-3 text-xl leading-snug opacity-80"
           >
-            Sveta's portfolio
-            <span v-if="linksPath" class="capitalize"> / {{ linksPath }}</span>
+            <span v-if="linksPath" class="capitalize">{{ linksPath }}</span>
           </p>
         </div>
       </div>
@@ -80,7 +79,7 @@ export default {
   computed: {
     ...mapState(["updatedLinks", "folders", "files", "currentLinkIndex", "linksList"]),
     linksPath: function() {
-      const path = this.linksList.length > 1 ? this.linksList.slice(0, this.currentLinkIndex + 1).join(' / ') : this.linksList[0]
+      const path = this.linksList.length > 1 ? this.linksList.slice(0, this.currentLinkIndex + 1).map(link => link.title).join(' / ') : this.linksList[0].title
       return path
     }
   },
@@ -100,7 +99,7 @@ export default {
       this.updateUpdatedLinks();
       this.$router.push({
         path: this.$route.path,
-        query: { max: this.$route?.query.max ? "folder" || "" : "", folder: this.linksList[this.currentLinkIndex], file: this.$route?.query.file, active: "folder" },
+        query: { max: this.$route?.query.max ? "folder" || "" : "", folder: this.linksList[this.currentLinkIndex].query, file: this.$route?.query.file, active: "folder" },
       });
     },
     onNext() {
@@ -108,7 +107,7 @@ export default {
       this.updateUpdatedLinks();
       this.$router.push({
         path: this.$route.path,
-        query: { max: this.$route?.query.max ? "folder" || "" : "", folder: this.linksList[this.currentLinkIndex], file:  this.$route?.query.file, active: "folder" },
+        query: { max: this.$route?.query.max ? "folder" || "" : "", folder: this.linksList[this.currentLinkIndex].query, file:  this.$route?.query.file, active: "folder" },
       });
     },
   },

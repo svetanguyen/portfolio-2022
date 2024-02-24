@@ -32,7 +32,7 @@ export const store = createStore({
           query: "portfolio",
           icon: "computer.png",
           alt: "computer",
-          title: "My portfolio",
+          title: "Sveta portfolio",
           component: 'PortfolioComponent',
         },
         {
@@ -205,13 +205,19 @@ export const store = createStore({
       addLink(state, payload) {
         if (state.currentLinkIndex + 1 < state.linksList.length) {
           state.linksList = state.linksList.slice(0, state.currentLinkIndex + 1)
-          state.linksList.push(payload.query)
+          state.linksList.push({
+            query: payload.query,
+            title: payload.title
+          })
           state.currentLinkIndex += 1
           return
         }
         if (state.linksList.length > 0) state.currentLinkIndex += 1;
         if (payload.query) {
-          state.linksList.push(payload.query)
+          state.linksList.push({
+            query: payload.query,
+            title: payload.title
+          })
         }
       },
       goBack(state) {
