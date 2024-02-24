@@ -32,10 +32,7 @@
             class="rounded-lg shadow-xl-hovered py-1 px-3 text-xl leading-snug opacity-80"
           >
             Sveta's portfolio
-            <span v-if="folder"> / {{ folder }} / {{ title }}</span>
-            <span v-if="!folder && !title.includes('portfolio')">
-              / {{ title }}</span
-            >
+            <span v-if="linksPath" class="capitalize"> / {{ linksPath }}</span>
           </p>
         </div>
       </div>
@@ -82,6 +79,10 @@ export default {
   name: "folder-component",
   computed: {
     ...mapState(["updatedLinks", "folders", "files", "currentLinkIndex", "linksList"]),
+    linksPath: function() {
+      const path = this.linksList.length > 1 ? this.linksList.slice(0, this.currentLinkIndex + 1).join(' / ') : this.linksList[0]
+      return path
+    }
   },
   components: {
     ArrowIcon,

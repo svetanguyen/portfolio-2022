@@ -53,6 +53,9 @@ export default {
   created() {
     this.checkScreen();
     window.addEventListener("resize", this.checkScreen);
+    if (this.$route.query?.folder || (this.windowWidth > 1024 && "hello")) {
+      this.addLink({ query: this.$route.query?.folder })
+    }
     this.$router.push({
       path: this.$route.path,
       query: {
@@ -63,9 +66,6 @@ export default {
         active: this.$route.query.active ? this.$route.query.active : (this.$route.query?.folder && 'folder' )|| (this.$route.query?.file && 'file')
       },
     });
-    if (this.$route.query?.folder || (this.windowWidth > 1024 && "hello")) {
-      this.addLink({ query: this.$route.query?.folder || (this.windowWidth > 1024 && "hello") })
-    }
     this.openedWindows = this.$route?.query?.folder || "hello";
   },
   watch: {
