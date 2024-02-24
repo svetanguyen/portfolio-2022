@@ -22,7 +22,7 @@ export default {
           icon: "document.png",
           query: "hello",
           externalLink:
-            "https://drive.google.com/file/d/1ESfcj7M-kAtCWYJWQaJKbncB-KKvbukP/view?usp=sharing",
+            "https://drive.google.com/file/d/1FwnSy8mNUDzxNsYGdi91uahT8rdDuvky/view?usp=sharing",
         },
       ],
     };
