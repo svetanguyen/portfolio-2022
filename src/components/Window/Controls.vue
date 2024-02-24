@@ -56,15 +56,15 @@ export default {
   },
   methods: {
     ...mapMutations([
-      "resetLinks",
       "updateUpdatedLinks",
       "onMinimize",
       "onRestore",
+      "emptyLinks",
     ]),
     handleClose() {
       if (!this.isFile) {
-        this.resetLinks();
         this.updateUpdatedLinks();
+        this.emptyLinks()
       }
       this.updateQuery(
         "",

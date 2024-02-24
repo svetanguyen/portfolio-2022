@@ -5,9 +5,9 @@
         <button
           class="bg-button-gray mr-1 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
           :class="{
-            'opacity-50 pointer-events-none': !prevLinks.length,
+            'opacity-50 pointer-events-none': currentLinkIndex === 0,
             'hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]':
-              prevLinks.length,
+              currentLinkIndex > 0,
           }"
           aria-label="previous window"
           @click.prevent="onBack"
@@ -18,9 +18,9 @@
         <button
           class="bg-button-gray mr-3 shadow-sm flex items-center py-1 text-black rounded-lg px-2"
           :class="{
-            'opacity-50 pointer-events-none': !nextLinks.length,
+            'opacity-50 pointer-events-none': linksList.length === currentLinkIndex + 1,
             'hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]':
-              nextLinks.length,
+              linksList.length > currentLinkIndex + 1,
           }"
           aria-label="next window"
           @click.prevent="onNext"
@@ -81,7 +81,7 @@ import SidebarComponent from "./Sidebar.vue"
 export default {
   name: "folder-component",
   computed: {
-    ...mapState(["prevLinks", "nextLinks", "updatedLinks", "folders", "files"]),
+    ...mapState(["updatedLinks", "folders", "files", "currentLinkIndex", "linksList"]),
   },
   components: {
     ArrowIcon,
@@ -90,30 +90,24 @@ export default {
   props: ["folder", "title", "maximized"],
   methods: {
     ...mapMutations([
-      "addNext",
-      "addPrev",
-      "removePrev",
-      "removeNext",
       "updateUpdatedLinks",
+      "goBack",
+      "goNext"
     ]),
     onBack() {
-      const prevLinkOpen = this.prevLinks[this.prevLinks.length - 1]?.folder;
-      this.removePrev();
-      this.addNext({ query: this.$route?.query });
+      this.goBack()
       this.updateUpdatedLinks();
       this.$router.push({
         path: this.$route.path,
-        query: { max: this.$route?.query.max ? "folder" || "" : "", folder: prevLinkOpen || "", file:  this.$route?.query.file, active: prevLinkOpen || "" },
+        query: { max: this.$route?.query.max ? "folder" || "" : "", folder: this.linksList[this.currentLinkIndex], file: this.$route?.query.file, active: "folder" },
       });
     },
     onNext() {
-      const nextLinkOpen = this.nextLinks[this.nextLinks.length - 1]?.folder;
-      this.removeNext();
-      this.addPrev({ query: this.$route?.query });
+      this.goNext();
       this.updateUpdatedLinks();
       this.$router.push({
         path: this.$route.path,
-        query: { max: this.$route?.query.max ? "folder" || "" : "", folder: nextLinkOpen || "", file:  this.$route?.query.file, active: nextLinkOpen || "" },
+        query: { max: this.$route?.query.max ? "folder" || "" : "", folder: this.linksList[this.currentLinkIndex], file:  this.$route?.query.file, active: "folder" },
       });
     },
   },

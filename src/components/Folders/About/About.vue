@@ -16,13 +16,13 @@ export default {
     return {
       files: [
         { title: "Info", query: "info", icon: "notepad.png" },
-        { title: "Skills", query: "skills", icon: "notepad.png" },
+        { title: "Skills", query: "skills", icon: "notepad.png", isFile: true },
         {
           title: "Resume",
           icon: "document.png",
           query: "hello",
           externalLink:
-            "https://drive.google.com/file/d/1FwnSy8mNUDzxNsYGdi91uahT8rdDuvky/view?usp=sharing",
+            "https://drive.google.com/file/d/1ESfcj7M-kAtCWYJWQaJKbncB-KKvbukP/view?usp=sharing",
         },
       ],
     };

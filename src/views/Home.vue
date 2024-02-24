@@ -48,7 +48,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["updatedLinks", "tabs", "desktopFiles"]),
+    ...mapState(["updatedLinks", "tabs", "desktopFiles", "linksList", "currentLinkIndex"]),
   },
   created() {
     this.checkScreen();
@@ -63,14 +63,17 @@ export default {
         active: this.$route.query.active ? this.$route.query.active : (this.$route.query?.folder && 'folder' )|| (this.$route.query?.file && 'file')
       },
     });
+    if (this.$route.query?.folder || (this.windowWidth > 1024 && "hello")) {
+      this.addLink({ query: this.$route.query?.folder || (this.windowWidth > 1024 && "hello") })
+    }
     this.openedWindows = this.$route?.query?.folder || "hello";
   },
   watch: {
     $route(to, from) {
       this.openedWindows = to.query.folder;
       if (!this.updatedLinks) {
-        if (from.query.folder && from.query.folder !== to.query.folder) {
-          this.addPrev({ query: from.query });
+        if (from.query.folder !== to.query.folder) {
+          this.addLink({ query: to.query.folder })
         }
       } else {
         this.updateUpdatedLinks();
@@ -79,8 +82,8 @@ export default {
   },
   methods: {
     ...mapMutations([
-      "addPrev",
       "updateUpdatedLinks",
+      "addLink",
     ]),
     checkScreen() {
       this.windowWidth = window.innerWidth;

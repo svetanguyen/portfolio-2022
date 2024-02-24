@@ -115,6 +115,14 @@ export const store = createStore({
           inset: true,
           isFile: true
         },
+        {
+          query: "resume",
+          folder: "About me",
+          title: "Resume",
+          icon: "document.png",
+          externalLink:
+            "https://drive.google.com/file/d/1FwnSy8mNUDzxNsYGdi91uahT8rdDuvky/view?usp=sharing",
+        },
       ],
       dialogs: [
         {
@@ -144,7 +152,7 @@ export const store = createStore({
         {
           title: "Resume",
           icon: "document.png",
-          query: "hello",
+          query: "resume",
           externalLink:
             "https://drive.google.com/file/d/1FwnSy8mNUDzxNsYGdi91uahT8rdDuvky/view?usp=sharing",
         },
@@ -185,33 +193,40 @@ export const store = createStore({
       ],
       currentFileContent: null,
       currentExistingFileContent: null,
-      prevLinks: [],
-      nextLinks: [],
-      updatedLinks: false
+      linksList: [],
+      updatedLinks: false,
+      currentLinkIndex: 0
     },
     actions: {
     },
     modules: {
     },
     mutations: {
-      addPrev(state, payload) {
-        state.prevLinks.push(payload.query)
+      addLink(state, payload) {
+        if (state.currentLinkIndex + 1 < state.linksList.length) {
+          state.linksList = state.linksList.slice(0, state.currentLinkIndex + 1)
+          state.linksList.push(payload.query)
+          state.currentLinkIndex += 1
+          return
+        }
+        if (state.linksList.length > 0) state.currentLinkIndex += 1;
+        if (payload.query) {
+          state.linksList.push(payload.query)
+        }
       },
-      addNext(state, payload) {
-        state.nextLinks.push(payload.query)
+      goBack(state) {
+        state.currentLinkIndex -= 1
       },
-      removePrev(state) {
-        state.prevLinks.pop()
+      goNext(state) {
+        state.currentLinkIndex += 1
       },
-      removeNext(state) {
-        state.nextLinks.pop()
+      emptyLinks(state) {
+        state.linksList = []
+        state.currentLinkIndex = 0
+        state.updatedLinks = false
       },
       updateUpdatedLinks(state) {
         state.updatedLinks = !state.updatedLinks
-      },
-      resetLinks(state) {
-        state.prevLinks = []
-        state.nextLinks = []
       },
       onMinimize(state, payload) {
         state.tabs[payload.index].minimized = true
