@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:px-12 lg:pt-10">
+  <div class="lg:px-12 lg:pt-10 overflow-y-scroll h-full py-2 bg-white shadow-lg">
     <div class="relative mt-5 px-2 lg:px-0">
       <quotes-icon
         class="absolute bottom-full -translate-y-[20px] lg:translate-0 left-0 lg:left-auto lg:bottom-full lg:right-full"

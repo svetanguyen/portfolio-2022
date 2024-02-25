@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mx-auto h-full flex flex-col items-center justify-center lg:px-12"
+    class="mx-auto h-full flex flex-col items-center justify-center lg:px-12 overflow-y-scroll "
   >
     <p class="px-4 lg:px-0 mb-6 lg:mb-10 text-lg leading-[1.4] lg:text-2xl">
       My name is Sveta. I am a Front-End Web Developer passionate about creating

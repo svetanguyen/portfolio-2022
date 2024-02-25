@@ -69,7 +69,7 @@
         v-if="currentTabData.component"
         :maximized="maximized"
         :is="currentTabData.component"
-        :class="{ 'w-full lg:w-[650px]': !maximized, 'w-full': maximized }"
+        :class="{ 'w-full lg:w-[628px]': !maximized, 'w-full': maximized }"
       />
     </folder-component>
     <div
@@ -112,10 +112,11 @@ import { mapState, mapMutations } from "vuex";
 import HelloComponent from "../Folders/Hello.vue";
 import PortfolioComponent from "../Folders/MyPortfolio.vue";
 import AboutComponent from "../Folders/About/About.vue";
-import WorksComponent from "../Folders/Works/Works.vue";
+import ProjectsComponent from "../Folders/Projects/Projects.vue";
+import WorksComponent from "../Files/Works/Works.vue";
 import InfoComponent from "../Folders/About/Info.vue";
 import SkillsComponent from "../Folders/About/Skills.vue";
-import WorksList from "../Folders/Works/WorksList.vue";
+import WorksList from "../Files/Works/WorksList.vue";
 
 // File components
 import CalculatorComponent from "../Files/Calculator.vue";
@@ -165,6 +166,7 @@ export default {
     HelloComponent,
     PortfolioComponent,
     AboutComponent,
+    ProjectsComponent,
     WorksComponent,
     ContactComponent,
     InfoComponent,

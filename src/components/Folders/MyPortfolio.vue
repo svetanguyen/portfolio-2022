@@ -1,5 +1,5 @@
 <template>
-  <div class="relative md:min-w-[600px] w-full md:w-auto">
+  <div class="relative md:min-w-[600px] w-full md:w-auto overflow-y-scroll py-2 bg-white h-full md:shadow-lg">
     <files-component
       class="flex lg:pt-6 px-4 lg:px-6"
       text="black"
