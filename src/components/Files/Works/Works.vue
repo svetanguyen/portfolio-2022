@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       files: [
-        { title: "Projects", query: "worksList", icon: "notepad.png", isFile: true },
+        { title: "Projects", query: "projects", icon: "notepad.png" },
         {
           title: "Github",
           icon: "github.png",

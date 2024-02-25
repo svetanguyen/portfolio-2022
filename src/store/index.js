@@ -225,11 +225,6 @@ export const store = createStore({
         icon: 'computer.png',
         query: 'portfolio',
       },
-      {
-        title: 'Projects',
-        icon: 'computer.png',
-        query: 'projects',
-      },
       { title: 'Hello', icon: 'notepad.png', query: 'hello' },
       {
         title: 'Resume',
