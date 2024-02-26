@@ -29,13 +29,13 @@
     </div>
     <div>
       <a
-        class="mb-2 bg-button-gray shadow-sm text-xl flex-grow w-full py-3 rounded-lg block text-center text-black"
+        class="mb-2 bg-button-gray shadow-sm text-xl flex-grow w-full py-3 rounded-lg block text-center text-black hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
         :href="project.link"
         target="_blank"
         >Live</a
       >
       <a
-        class="bg-button-gray shadow-sm text-xl flex-grow w-full py-3 rounded-lg block text-center text-black"
+        class="bg-button-gray shadow-sm text-xl flex-grow w-full py-3 rounded-lg block text-center text-black hover:shadow-sm-hovered hover:translate-x-[2px] hover:translate-y-[2px]"
         :href="project.github"
         target="_blank"
         >Github</a
