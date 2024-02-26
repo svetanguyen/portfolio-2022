@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:px-4 pt-3 py-2 bg-white h-full shadow-lg" :class="{'lg:w-[600px]': !maximized}">
+  <div class="lg:px-4 pt-3 py-2 bg-white h-full shadow-lg">
     <files-component class="flex" :files="files" text="black" />
   </div>
 </template>
