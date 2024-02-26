@@ -48,13 +48,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["updatedLinks", "tabs", "desktopFiles", "linksList", "currentLinkIndex"]),
+    ...mapState(["updatedLinks", "tabs", "desktopFiles", "linksList", "currentLinkIndex", "folders"]),
   },
   created() {
     this.checkScreen();
     window.addEventListener("resize", this.checkScreen);
     if (this.$route.query?.folder || (this.windowWidth > 1024 && "hello")) {
-      this.addLink({ query: this.$route.query?.folder })
+      const title = this.folders.find(folder => folder.query === this.$route.query?.folder)?.title
+      this.addLink({ query: this.$route.query?.folder, title: title || '' })
     }
     this.$router.push({
       path: this.$route.path,
@@ -73,7 +74,8 @@ export default {
       this.openedWindows = to.query.folder;
       if (!this.updatedLinks) {
         if (from.query.folder !== to.query.folder) {
-          this.addLink({ query: to.query.folder })
+          const title = this.folders.find(folder => folder.query === this.$route.query?.folder)?.title
+          this.addLink({ query: to.query.folder, title: title || '' })
         }
       } else {
         this.updateUpdatedLinks();

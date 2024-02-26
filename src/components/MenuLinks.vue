@@ -59,14 +59,6 @@ export default {
           isFile: true,
           disableMax: true
         },
-        {
-          query: 'notepad',
-          icon: 'notepad.png',
-          alt: 'notepad',
-          title: 'Notepad',
-          small: false,
-          isFile: true
-        },
       ]
     };
   },

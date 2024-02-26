@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="p-4 bg-white h-full lg:shadow-lg">
     <files-component class="flex" :files="files" text="black" />
   </div>
 </template>
@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       files: [
-        { title: "Projects", query: "worksList", icon: "notepad.png", isFile: true },
+        { title: "Projects", query: "projects", icon: "notepad.png" },
         {
           title: "Github",
           icon: "github.png",
