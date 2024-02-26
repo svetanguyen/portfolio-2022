@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white h-full shadow-lg">
+  <div class="p-4 bg-white h-full lg:shadow-lg">
     <files-component class="flex" :files="files" text="black" />
   </div>
 </template>
