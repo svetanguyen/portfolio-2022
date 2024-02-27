@@ -1,6 +1,6 @@
 <template>
   <div
-    class="main min-h-page overflow-hidden mx-auto relative h-full-screen-mob lg:h-full-screen mb-[56px]"
+    class="main min-h-page overflow-hidden mx-auto relative h-full-screen-mob lg:h-full-screen"
   >
     <files-component class="flex flex-col max-h-full items-start w-max justify-start pb-20 flex-wrap ml-8 mt-8 lg:mt-20" :files="desktopFiles" />
     <window-component
