@@ -78,7 +78,7 @@ export default {
   computed: {
     ...mapState(["updatedLinks", "folders", "files", "currentLinkIndex", "linksList"]),
     linksPath: function() {
-      const path = this.linksList.length > 1 ? this.linksList.slice(0, this.currentLinkIndex + 1).map(link => link.title).join(' / ') : this.linksList[0].title
+      const path = this.linksList.length > 1 ? this.linksList.slice(0, this.currentLinkIndex + 1).map(link => link?.title).join(' / ') : this.linksList[0]?.title
       return path
     }
   },

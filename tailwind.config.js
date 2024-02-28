@@ -30,12 +30,12 @@ module.exports = {
         'container': '1440px',
       },
       minHeight: {
-        'page': 'calc(100vh - 73px)'
+        'page': 'calc(100dvh - 73px)'
       },
       height: {
-        'page': 'calc(100vh - 73px)',
+        'page': 'calc(100dvh - 73px)',
         'full-screen': 'calc(100vh - 61px)',
-        'full-screen-mob': 'calc(100vh - 56px)',
+        'full-screen-mob': 'calc(100dvh - 56px)',
         'full-screen-container': 'calc(100vh - 117px)',
         'window-content': 'calc(100% - 25px)',
         'window-content-mob': 'calc(100% - 60px)',

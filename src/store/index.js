@@ -314,6 +314,7 @@ export const store = createStore({
     },
     onClose(state, payload) {
       state.tabs[payload.index].closed = true;
+      state.tabs[payload.index].maximized = false;
     },
     onOpen(state, payload) {
       state.tabs[payload.index].closed = false;
